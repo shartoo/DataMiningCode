@@ -1,0 +1,12 @@
+使用方法：
+目前的测试数据是：  D:\数据挖掘\数据挖掘数据\6\nursery.txt
+
+首先运行的是OuterFace类，该类会调用Attri_select_method,而Attri_select_method类会调用InformationGain类
+  要求输入：属性列表    该文件夹下有
+   输出：按照 ing.getInformationGain(temp, (String[])attr, 8, 6); 方法 输出测试属性
+   
+   接着会在     d:\\predata\\   下生成当前测试属性 txt文件
+                 （将大数据按属性分隔成各个小文件，属性文件的奇数位表示当前属性的分类，偶数位表该属性的最终分类）
+                 
+   手动运行ShowStatics 会出现统计结果图              
+    
