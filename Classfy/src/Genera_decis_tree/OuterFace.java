@@ -1,21 +1,23 @@
 package Genera_decis_tree;
-import bayes.ShowBayesResult;
 import NeuralNetwork.Test_Classfy;
 import K_meanCluster.SetSelAttr;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.*;
+
+import com.datamining.bayes.ShowBayesResult;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 public class OuterFace implements ActionListener,MouseListener,MouseMotionListener{
 	public static int i=0;
-	//ÎªÁËÏìÓ¦ÎÒÃÇÔÚ´ò¿ªÎÄ¼şÊ±µÄ²Ù×÷
+	//Îªå“åº”å¯¹æ–‡ä»¶çš„æ“ä½œ
 	  PublicData pd=new PublicData();
-	  private Frame frame=new Frame("ÎÄ¼ş²Ù×÷");
-	  private FileDialog fd_load=new FileDialog(frame,"´ò¿ªÎÄ¼ş",FileDialog.LOAD);
-	  private FileDialog fd_save=new FileDialog(frame,"±£´æÎÄ¼ş",FileDialog.SAVE);
+	  private Frame frame=new Frame("æ–‡ä»¶æ“ä½œ");
+	  private FileDialog fd_load=new FileDialog(frame,"æ‰“å¼€",FileDialog.LOAD);
+	  private FileDialog fd_save=new FileDialog(frame,"ä¿å­˜",FileDialog.SAVE);
 	  String file="";
 	  DataScanPane dsp=new DataScanPane();
 	  FileAndFirstLine ffl=new FileAndFirstLine();  
@@ -25,26 +27,26 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
     JScrollPane scrollpane3=new JScrollPane();
     JScrollPane datascan=new JScrollPane();
 	JTree tree;
-    //ÀûÓÃDefaultTreeCellRenderer¶ÔÏóÉèÖÃÊ÷ÖĞ¸÷½áµãµÄÍ¼±ê
+    //åˆ©ç”¨DefaultTreeCellRendererå¯¹è±¡è®¾ç½®æ ‘ä¸­å„èŠ‚ç‚¹çš„å›¾æ ‡
     JScrollPane scrollpane1=new JScrollPane();
     ImageIcon image1=new ImageIcon("D:\\images\1.jpg");
 	ImageIcon image2=new ImageIcon("D:\\images\2.jpg");
 	ImageIcon image3=new ImageIcon("D:\\images\3.jpg");
-	String[][] data={{"±í¸ñÊı¾İ","ÎÄ¼ş2","ÎÄ¼ş3","ÎÄ¼ş4"},{"Êı¾İ¿âÊı¾İ","ÎÄ¼ş6","ÎÄ¼ş7","ÎÄ¼ş8"},
-	           {"ÎÄ¼şÊı¾İ","ÎÄ¼ş10","ÎÄ11"},{"ÊÓÆµÊı¾İ","ÎÄ¼ş12","ÎÄ¼ş13"},{"ÆäËûÊı¾İ","ÎÄ¼ş14","ÎÄ¼ş15"}};
+	String[][] data={{"è¡¨æ ¼æ•°æ®","æ–‡ä»¶2","æ–‡ä»¶3","æ–‡ä»¶4"},{"æ•°æ®åº“æ•°æ®","æ–‡ä»¶6","æ–‡ä»¶7","æ–‡ä»¶8"},
+	           {"æ–‡ä»¶æ•°æ®","æ–‡ä»¶10","æ–‡ä»¶11"},{"è§†é¢‘æ–‡ä»¶","æ–‡ä»¶12","æ–‡ä»¶13"},{"å…¶ä»–æ•°æ®","æ–‡ä»¶14","æ–‡ä»¶15"}};
 	JList list1=new JList();
 	JList list2=new JList();
 	
-	//µ÷ÓÃÆäËû°üÀïµÄÀà
+	//è°ƒç”¨å…¶ä»–åŒ…é‡Œçš„ç±»
 	Test_Classfy bp=new Test_Classfy();
 	Desion_Tree_SetAttr dts=new Desion_Tree_SetAttr();
     ShowBayesResult bayesresult=new ShowBayesResult();
     SetSelAttr cluster=new SetSelAttr(); 
-	DefaultListModel lim=new DefaultListModel();   //¶¨ÒåÁĞ±íµÄÄ£ĞÍ  
+	DefaultListModel lim=new DefaultListModel();   //å®šä¹‰åˆ—è¡¨æ¨¡å‹  
 	DefaultListModel lim2=new DefaultListModel();
 	public static JFrame f=new JFrame("X-DM");
     public void CreatUI(JTable jt){	
-    	  Image icon = Toolkit.getDefaultToolkit().getImage("D:\\predata\\120.jpg");
+    	  Image icon = Toolkit.getDefaultToolkit().getImage("img/logo.jpg");
     	  f.setIconImage(icon);
     	  f.addWindowListener(new WindowAdapter(){
     		   public void windowClosing(WindowEvent e){
@@ -52,15 +54,15 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
     		   }
     	    });
     	     		
-    	    //¸ºÔğ¹¹Ôì×ó±ßµÄÊ÷½áµãÀàµÄ¿ÉÊÓ»¯Í¼
+    	    //è´Ÿè´£æ„é€ å·¦è¾¹çš„æ ‘ç»“ç‚¹çš„å¯è§†åŒ–å›¾
     	    DefaultMutableTreeNode rootNode=creatNodes();
     	    tree=new JTree(rootNode);
     	    tree.setRootVisible(false);
     	    treepane.setViewportView(tree);
 
-    	    MenuBar menubar=creatMenu();   
+    	    JMenuBar menubar=creatJMenu();   
     	    f.add(treepane,"West");
-    	    f.setMenuBar(menubar);    //½«²Ëµ¥À¸·ÅÈëÃæ°åÖĞ
+    	    f.add(menubar,BorderLayout.NORTH);
     	    f.add("Center",this.getDataScanPane(jt));
     	    
     	    f.setSize(1300,750);
@@ -76,13 +78,13 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
     public  DefaultMutableTreeNode creatNodes(){
 	  DefaultMutableTreeNode root;
 		DefaultTreeModel model1;
-	   DefaultTreeCellRenderer tr=new DefaultTreeCellRenderer();//´´½¨Ê÷½áµãäÖÈ¾Æ÷£¬   
+	   DefaultTreeCellRenderer tr=new DefaultTreeCellRenderer();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½   
 
-	   root=new DefaultMutableTreeNode("root");//¸ù½áµã³õÊ¼»¯
-	   JTree tree=new JTree(root);   //Ê÷½øĞĞ³õÊ¼»¯£¬ÆäÊı¾İÀ´Ô´ÊÇroot¶ÔÏó
-	   tr.setClosedIcon(image1);   //ÉèÖÃ½áµã±ÕºÏÍ¼±ê
-	   tr.setOpenIcon(image2);     //ÉèÖÃ½áµã´ò¿ªÍ¼±ê
-	   tr.setLeafIcon(image3);   //ÉèÖÃÒ¶×Ó½áµãÍ¼±ê
+	   root=new DefaultMutableTreeNode("root");//åˆ›å»ºæ ‘èŠ‚ç‚¹æ¸²æŸ“å™¨
+	   JTree tree=new JTree(root);   //æ ‘è¿›è¡Œåˆå§‹åŒ–ï¼Œå…¶æ•°æ®æ¥æºæ˜¯rootå¯¹è±¡
+	   tr.setClosedIcon(image1);   //è®¾ç½®ç»“ç‚¹é—­åˆå›¾æ ‡
+	   tr.setOpenIcon(image2);     //è®¾ç½®ç»“ç‚¹æ‰“å¼€å›¾æ ‡
+	   tr.setLeafIcon(image3);   //è®¾ç½®å¶å­èŠ‚ç‚¹å›¾æ ‡
 	   tr.setBorder(null);
 	   tr.setVerifyInputWhenFocusTarget(false);
 	   tr.setDisplayedMnemonic('3');
@@ -90,10 +92,10 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 	   tr.setBorderSelectionColor(Color.red);
 	   tr.setTextNonSelectionColor(Color.DARK_GRAY);
 	   tr.setTextSelectionColor(Color.green);
-	   tree.setCellRenderer(tr);     //°ÑäÖÈ¾Æ÷Ìí¼Óµ½Ê÷ÖĞ
+	   tree.setCellRenderer(tr);     //æŠŠæ¸²æŸ“å™¨æ·»åŠ åˆ°æ ‘ä¸­
 	   //treepane.add(tree);
-	   model1=(DefaultTreeModel)tree.getModel();   //´´½¨²¢ÉèÖÃÍêÊ÷ºó£¬
-	                                               //ÀûÓÃDefaultTreeModelÀ´²Ù×÷Ê÷£¬´Ë¾äÀ´»ñµÃÊı¾İ¶ÔÏó
+	   model1=(DefaultTreeModel)tree.getModel();   //åˆ›å»ºå¹¶è®¾ç½®å®Œæ ‘å
+	                                               //åˆ©ç”¨DefaultTreeModelç±»æ¥æ“ä½œæ ‘ï¼Œæ­¤å¥æ¥è·å–æ•°æ®å¯¹è±¡
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	   for(int i=0;i<data.length;i++)
 	   {
@@ -109,146 +111,278 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 	   return root;
     }
   
-   public  MenuBar creatMenu(){ 
-	  // MyMonitor mm=new MyMonitor();   
-		
-	    MenuBar mb=new MenuBar();
-	    Menu m1=new Menu("ÎÄ¼ş");
-	    Menu m2=new Menu("Êı¾İÔ´");
-	    Menu m3=new Menu("Êı¾İ´¦Àí");
-	    Menu m4=new Menu("»ù´¡Í³¼Æ");
-	    Menu m5=new Menu("¸ß¼¶Í³¼Æ");
-	    Menu m6=new Menu("Êı¾İÍÚ¾ò");
-	    Menu m7=new Menu("Êı¾İÖÆÍ¼");
-	    Menu m8=new Menu("°ïÖú");	    
+   public  JMenuBar creatJMenu(){ 
+	    //MyMonitor mm=new MyMonitor();   		
+	    JMenuBar mb=new JMenuBar();
+	    JMenu m1=new JMenu("æ–‡ä»¶");
+	    JMenu m2=new JMenu("æ•°æ®æº");
+	    JMenu m3=new JMenu("æ•°æ®å¤„ç†");
+	    JMenu m4=new JMenu("åŸºç¡€ç»Ÿè®¡");
+	    JMenu m5=new JMenu("é«˜çº§ç»Ÿè®¡");
+	    JMenu m6=new JMenu("æ•°æ®æŒ–æ˜");
+	    JMenu m7=new JMenu("æ•°æ®åˆ¶å›¾");
+	    JMenu m8=new JMenu("å¸®åŠ©");	    
+
+	    JMenu mi11=new JMenu("æ–°å»º");  //äºŒçº§èœå•å’Œä¸€çº§èœå•ä¸€æ ·	    
+	    JMenuItem mi12=new JMenuItem("æ‰“å¼€");
+	    mi12.addActionListener(this);
+	    JMenuItem mi13=new JMenuItem("ä¿å­˜");
+	    mi13.addActionListener(this);
+	    JMenuItem mi14=new JMenuItem("å¦å­˜ä¸º");
+	    mi14.addActionListener(this);
+	    JMenuItem mi15=new JMenuItem("é¦–é€‰é¡¹");
+	    mi15.addActionListener(this);
+	    JMenuItem mi16=new JMenuItem("å…³é—­");
+	    mi16.addActionListener(this);
+    
+	    JMenuItem mi111=new JMenuItem("æ•°æ®æµ");    //åªæœ‰æœ€åä¸€é¡¹éœ€è¦ç”¨JMenuItem
+	    JMenuItem mi17=new JMenuItem("é€€å‡º");
+	    mi17.addActionListener(this);
 	    
+	    JMenuItem m21=new JMenuItem("é©¬å…‹å¨æ–‡ä»¶");
+	    m21.addActionListener(this);
+	    JMenuItem m22=new JMenuItem("æ•°æ®åº“");
+	    m22.addActionListener(this);
+	    JMenuItem m23=new JMenuItem("txtæ–‡ä»¶");
+	    m23.addActionListener(this);
+	    JMenuItem m24=new JMenuItem("Excel");
+	    m24.addActionListener(this);
+	    JMenuItem m25=new JMenuItem("DBFæ–‡ä»¶");
+	    m25.addActionListener(this);
+	    JMenuItem m26=new JMenuItem("ç”¨æˆ·è¾“å…¥");
+	    m26.addActionListener(this);
+	    JMenuItem m27=new JMenuItem("é€šç”¨æ•°æ®æº");
+	    m27.addActionListener(this);
+	    JMenuItem m28=new JMenuItem("æ•°æ®å­—å…¸");
+	    m28.addActionListener(this);
 	    
-	   // MenuItem[] mi1=new MenuItem[5];
-	    Menu mi11=new Menu("ĞÂ½¨");  //¶ş¼¶²Ëµ¥ºÍÒ»¼¶²Ëµ¥Ò»Ñù
-	    
-	    MenuItem mi12=new MenuItem("´ò¿ª");
-	    MenuItem mi13=new MenuItem("±£´æ");
-	    MenuItem mi14=new MenuItem("Áí´æÎª");
-	    MenuItem mi15=new MenuItem("Ê×Ñ¡Ïî");
-	    MenuItem mi16=new MenuItem("¹Ø±Õ");
-	    
-	    
-	    MenuItem mi111=new MenuItem("Êı¾İÁ÷");    //Ö»ÓĞ×îºóÒ»ÏîĞèÒªÓÃMenuItem
-	    MenuItem mi7=new MenuItem("ÍË³ö");
-	    
-	    MenuItem m21=new MenuItem("Âí¿ËÍşÎÄ¼ş");
-	    MenuItem m22=new MenuItem("Êı¾İ¿â");
-	    MenuItem m23=new MenuItem("txtÎÄ¼ş");
-	    MenuItem m24=new MenuItem("Excel");
-	    MenuItem m25=new MenuItem("DBFÎÄ¼ş");
-	    MenuItem m26=new MenuItem("ÓÃ»§ÊäÈë");
-	    MenuItem m27=new MenuItem("Í¨ÓÃÊı¾İÔ´");
-	    MenuItem m28=new MenuItem("Êı¾İ×Öµä");
-	    
-	    MenuItem m31=new MenuItem("¶àÎ¬²éÑ¯");
-	    MenuItem m32=new MenuItem("¼ÇÂ¼Ñ¡Ôñ");
-	    MenuItem m33=new MenuItem("±äÁ¿¼ÆËã");
-	    MenuItem m34=new MenuItem("¼ÇÂ¼ÅÅĞò");
-	    MenuItem m35=new MenuItem("È±Ê§ÖµÌî³ä");
-	    MenuItem m36=new MenuItem("Êı¾İ³éÑù");
-	    MenuItem m37=new MenuItem("ÖØĞÂ±àÂë");
-	    Menu m3d=new Menu("±äÁ¿´¦Àí");
-	    Menu m3e=new Menu("ÎÄ¼şºÏ²¢");
-	    MenuItem m3d1=new MenuItem("²åÈë±äÁ¿");
-	    MenuItem m3d2=new MenuItem("É¾³ı±äÁ¿");
-	    MenuItem m3d3=new MenuItem("±äÁ¿ÀàĞÍĞŞ¸Ä");
+	    JMenuItem m31=new JMenuItem("å¤šç»´æŸ¥è¯¢");
+	    m31.addActionListener(this);
+	    JMenuItem m32=new JMenuItem("è®°å½•é€‰æ‹©");
+	    m32.addActionListener(this);
+	    JMenuItem m33=new JMenuItem("å˜é‡è®¡ç®—");
+	    m33.addActionListener(this);
+	    JMenuItem m34=new JMenuItem("è®°å½•æ’åº");
+	    m34.addActionListener(this);
+	    JMenuItem m35=new JMenuItem("ç¼ºå¤±å€¼å¡«å……");
+	    m35.addActionListener(this);
+	    JMenuItem m36=new JMenuItem("æ•°æ®æŠ½å–");
+	    m36.addActionListener(this);
+	    JMenuItem m37=new JMenuItem("é‡æ–°ç¼–ç ");
+	    m37.addActionListener(this);
+	    JMenu m3d=new JMenu("å˜é‡å¤„ç†");
+	    JMenu m3e=new JMenu("æ–‡ä»¶åˆå¹¶");
+	    JMenuItem m3d1=new JMenuItem("æ’å…¥å˜é‡");
+	    m3d1.addActionListener(this);
+	    JMenuItem m3d2=new JMenuItem("åˆ é™¤å˜é‡");
+	    m3d2.addActionListener(this);
+	    JMenuItem m3d3=new JMenuItem("å˜é‡ç±»å‹ä¿®æ”¹");
+	    m3d3.addActionListener(this);
 	    m3d.add(m3d1);
 	    m3d.add(m3d2);
 	    m3d.add(m3d3);
-	    MenuItem m3e1=new MenuItem("¼ÇÂ¼ºÏ²¢");
-	    MenuItem m3e2=new MenuItem("±äÁ¿ºÏ²¢");
+	    JMenuItem m3e1=new JMenuItem("å˜é‡åˆå¹¶");
+	    m3e1.addActionListener(this);
+	    JMenuItem m3e2=new JMenuItem("è®°å½•åˆå¹¶");
+	    m3e2.addActionListener(this);
 	    m3e.add(m3e1);
 	    m3e.add(m3e2);
-	    MenuItem m38=new MenuItem("ĞĞÁĞ±ä»»");
-	    MenuItem m39=new MenuItem("Êı¾İºÏ²¢");
-	    MenuItem m3a=new MenuItem("Êı¾İÖØ¹¹");
-	    MenuItem m3b=new MenuItem("·ÖÀà»ã×Ü");
-	    MenuItem m3c=new MenuItem("Ëæ»úÊıÉú³É");
+	    JMenuItem m38=new JMenuItem("è¡Œåˆ—è½¬æ¢");
+	    m38.addActionListener(this);
+	    JMenuItem m39=new JMenuItem("æ•°æ®åˆå¹¶");
+	    m39.addActionListener(this);
+	    JMenuItem m3a=new JMenuItem("æ•°æ®é‡æ„");
+	    m3a.addActionListener(this);
+	    JMenuItem m3b=new JMenuItem("åˆ†ç±»æ±‡æ€»");
+	    m3b.addActionListener(this);
+	    JMenuItem m3c=new JMenuItem("éšæœºæ•°ç”Ÿæˆ");
+	    m3c.addActionListener(this);
 	    
-	    Menu m41=new Menu("Ïà¹Ø·ÖÎö");
-	    Menu m42=new Menu("²ÎÊı¼ìÑé");
-	    Menu m43=new Menu("·Ç²ÎÊı¼ìÑé");
-	    m41.add(new MenuItem("±äÁ¿Ïà¹Ø·ÖÎö"));
-	    m41.add(new MenuItem("Æ«Ïà¹Ø·ÖÎö"));
-	    m41.add(new MenuItem("µäĞÍÏà¹Ø·ÖÎö"));
-	    m42.add(new MenuItem("µ¥Ñù±¾¾ùÖµ¼ìÑé"));
-	    m42.add(new MenuItem("µ¥Ñù±¾±ÈÀı¼ìÑé"));
-	    m42.add(new MenuItem("µ¥Ñù±¾·½²î¼ìÑé"));
-	    m42.add(new MenuItem("Ë«Ñù±¾¾ùÖµ¼ìÑé"));
-	    m42.add(new MenuItem("Ë«Ñù±¾¼ìÑé"));
-	    m42.add(new MenuItem("Ë«Ñù±¾·½²î¼ìÑé"));
-	    m42.add(new MenuItem("Åä¶ÔË«Ñù±¾¾ùÖµ¼ìÑé"));
-	    m43.add(new MenuItem("¿¨·½¼ìÑé"));
-	    m43.add(new MenuItem("¶şÏî·Ö²¼¼ìÑé"));
-	    m43.add(new MenuItem("ÓÎ³Ì¼ìÑé"));
-	    m43.add(new MenuItem("µ¥Ñù±¾K-S¼ìÑé"));
-	    m43.add(new MenuItem("Á½¸ö¶ÀÁ¢Ñù±¾¼ìÑé"));
-	    m43.add(new MenuItem("¶à¸ö¶ÀÁ¢Ñù±¾¼ìÑé"));
-	    m43.add(new MenuItem("Á½¸öÏà¹ØÑù±¾¼ìÑé"));
-	    m43.add(new MenuItem("¶à¸öÏà¹ØÑù±¾¼ìÑé"));
+	    JMenu m41=new JMenu("ç›¸å…³åˆ†æ");
+	    JMenu m42=new JMenu("å‚æ•°æ£€éªŒ");
+	    JMenu m43=new JMenu("éå‚æ•°æ£€éªŒ");
+	    JMenuItem m411=new JMenuItem("å˜é‡ç›¸å…³åˆ†æ");
+	    m411.addActionListener(this);
+	    JMenuItem m412=new JMenuItem("åç›¸å…³åˆ†æ");
+	    m412.addActionListener(this);
+	    JMenuItem m413=new JMenuItem("å…¸å‹ç›¸å…³åˆ†æ");
+	    m413.addActionListener(this);
+	    JMenuItem m421=new JMenuItem("å•æ ·æœ¬å‡å€¼æ£€éªŒ");
+	    m421.addActionListener(this);
+	    JMenuItem m422=new JMenuItem("å•æ ·æœ¬æ¯”ä¾‹æ£€éªŒ");
+	    m422.addActionListener(this);
+	    JMenuItem m423=new JMenuItem("å•æ ·æœ¬æ–¹å·®æ£€éªŒ");
+	    m423.addActionListener(this);
+	    JMenuItem m424=new JMenuItem("åŒæ ·æœ¬å‡å€¼æ£€éªŒ");
+	    m424.addActionListener(this);
+	    JMenuItem m425=new JMenuItem("åŒæ ·æœ¬æ¯”ä¾‹æ£€éªŒ");
+	    m425.addActionListener(this);
+	    JMenuItem m426=new JMenuItem("åŒæ ·æœ¬æ–¹å·®æ£€éªŒ");
+	    m426.addActionListener(this);
+	    JMenuItem m427=new JMenuItem("é…å¯¹åŒæ ·æœ¬å‡å€¼æ£€éªŒ");
+	    m427.addActionListener(this);
+	    JMenuItem m431=new JMenuItem("å¡æ–¹æ£€éªŒ");
+	    m431.addActionListener(this);
+	    JMenuItem m432=new JMenuItem("äºŒé¡¹åˆ†å¸ƒæ£€éªŒ");
+	    m432.addActionListener(this);
+	    JMenuItem m433=new JMenuItem("æ¸¸ç¨‹æ£€éªŒ");
+	    m433.addActionListener(this);
+	    JMenuItem m434=new JMenuItem("å•æ ·æœ¬K-Sæ£€éªŒ");
+	    m434.addActionListener(this);
+	    JMenuItem m435=new JMenuItem("ä¸¤ä¸ªç‹¬ç«‹æ ·æœ¬æ£€éªŒ");
+	    m435.addActionListener(this);
+	    JMenuItem m436=new JMenuItem("å¤šä¸ªç‹¬ç«‹æ ·æœ¬æ£€éªŒ");
+	    m436.addActionListener(this);
+	    JMenuItem m437=new JMenuItem("ä¸¤ä¸ªç›¸å…³æ ·æœ¬æ£€éªŒ");
+	    m437.addActionListener(this);
+	    JMenuItem m438=new JMenuItem("å¤šä¸ªç›¸å…³æ ·æœ¬æ£€éªŒ");
+	    m438.addActionListener(this);
+	    
+	    m41.add(m411);
+	    m41.add(m412);
+	    m41.add(m413);
+	    m42.add(m421);
+	    m42.add(m422);
+	    m42.add(m423);
+	    m42.add(m424);
+	    m42.add(m425);
+	    m42.add(m426);
+	    m42.add(m427);
+	    m43.add(m431);
+	    m43.add(m432);
+	    m43.add(m433);
+	    m43.add(m434);
+	    m43.add(m435);
+	    m43.add(m436);
+	    m43.add(m437);
+	    m43.add(m438);
+	    
+	    JMenu m51=new JMenu("å›å½’åˆ†æ");
+	    JMenuItem m511=new JMenuItem("çº¿æ€§å›å½’");
+	    m511.addActionListener(this);
+	    JMenuItem m512=new JMenuItem("å¹¿ä¹‰å›å½’");
+	    m512.addActionListener(this);
+	    JMenuItem m513=new JMenuItem("æœ‰åºå›å½’");
+	    m513.addActionListener(this);
+	    JMenuItem m514=new JMenuItem("æ¦‚ç‡å•ä½å›å½’");
+	    m514.addActionListener(this);
+	    JMenuItem m515=new JMenuItem("äºŒå€¼é€»è¾‘å›å½’");
+	    m515.addActionListener(this);
+	    JMenuItem m516=new JMenuItem("å¤šå€¼é€»è¾‘å›å½’");
+	    m516.addActionListener(this);
+	    JMenuItem m517=new JMenuItem("æ›²çº¿å›å½’");
+	    m517.addActionListener(this);
+	    JMenuItem m518=new JMenuItem("å²­å›å½’");
+	    m518.addActionListener(this);
+	    JMenuItem m519=new JMenuItem("ä¸»æˆåˆ†å›å½’");
+	    m519.addActionListener(this);
+	    
+	    m51.add(m511);
+	    m51.add(m512);
+	    m51.add(m513);
+	    m51.add(m514);
+	    m51.add(m515);
+	    m51.add(m516);
+	    m51.add(m517);
+	    m51.add(m518);
+	    m51.add(m519);
+	    
+	    JMenu m52=new JMenu("èšç±»åˆ†æ");
+	    JMenuItem m521=new JMenuItem("åˆ†å±‚èšç±»");
+	    m521.addActionListener(this);
+	    JMenuItem m522=new JMenuItem("å¿«é€Ÿèšç±»");
+	    m522.addActionListener(this);
+	    m52.add(m521);
+	    m52.add(m522);
+	    
+	    JMenu m53=new JMenu("æ—¶é—´åºåˆ—");
+	    JMenuItem m531=new JMenuItem("ç§»åŠ¨å¹³è¡¡æ¨¡å‹");
+	    m531.addActionListener(this);
+	    JMenuItem m532=new JMenuItem("ARIMAæ¨¡å‹");
+	    m532.addActionListener(this);
+	    JMenuItem m533=new JMenuItem("å­£èŠ‚è§£æ„æ¨¡å‹");
+	    m533.addActionListener(this);
+	    JMenuItem m534=new JMenuItem("æŒ‡æ•°å¹³æ»‘æ¨¡å‹");
+	    m534.addActionListener(this);
+	    JMenuItem m535=new JMenuItem("X11æ¨¡å‹");
+	    m535.addActionListener(this);
+	    JMenuItem m536=new JMenuItem("X-12-ARIMAæ¨¡å‹");
+	    m536.addActionListener(this);
+	    m53.add(m531);
+	    m53.add(m532);
+	    m53.add(m533);
+	    m53.add(m534);
+	    m53.add(m535);
+	    m53.add(m536);
+	    
+	    JMenu m54=new JMenu("ç”Ÿå­˜åˆ†æ");
+	    JMenuItem m541=new JMenuItem("å¯¿å‘½è¡¨");
+	    m541.addActionListener(this);
+	    JMenuItem m542=new JMenuItem("KMè¿‡ç¨‹");
+	    m542.addActionListener(this);
+	    JMenuItem m543=new JMenuItem("æ¯”ä¾‹é£é™©æ¨¡å‹");
+	    m543.addActionListener(this);
+	    m54.add(m541);
+	    m54.add(m542);
+	    m54.add(m543);
+	    
+	    JMenu m55=new JMenu("åæ•´åˆ†æ");
+	    JMenuItem m551=new JMenuItem("å•ä½æ ¹æ£€éªŒ");
+	    m551.addActionListener(this);
+	    JMenuItem m552=new JMenuItem("åæ•´æ£€éªŒ");
+	    m552.addActionListener(this);
+	    JMenuItem m553=new JMenuItem("è¯¯å·®ä¿®æ­£æ¨¡å‹");
+	    m553.addActionListener(this);
+	    m55.add(m551);
+	    m55.add(m552);
+	    m55.add(m553);
 	    
 	    
-	    Menu m51=new Menu("»Ø¹é·ÖÎö");
-	    m51.add(new MenuItem("ÏßĞÔ»Ø¹é"));
-	    m51.add(new MenuItem("¹ãÒå»Ø¹é"));
-	    m51.add(new MenuItem("ÓĞĞò»Ø¹é"));
-	    m51.add(new MenuItem("¸ÅÂÊµ¥Î»»Ø¹é"));
-	    m51.add(new MenuItem("¶şÖµÂß¼­»Ø¹é"));
-	    m51.add(new MenuItem("¶àÖµÂß¼­»Ø¹é"));
-	    m51.add(new MenuItem("ÇúÏß»Ø¹é"));
-	    m51.add(new MenuItem("Áë»Ø¹é"));
-	    m51.add(new MenuItem("Ö÷³É·Ö»Ø¹é"));
-	    
-	    Menu m52=new Menu("¾ÛÀà·ÖÎö");
-	    m52.add(new MenuItem("·Ö²ã¾ÛÀà"));
-	    m52.add(new MenuItem("¿ìËÙ¾ÛÀà"));
-	    
-	    Menu m53=new Menu("Ê±¼äĞòÁĞ");
-	    m53.add(new MenuItem("ÒÆ¶¯Æ½¾ùÄ£ĞÍ"));
-	    m53.add(new MenuItem("ARIMAÄ£ĞÍ"));
-	    m53.add(new MenuItem("¼¾½Ú½â¹¹Ä£ĞÍ"));
-	    m53.add(new MenuItem("Ö¸ÊıÆ½»¬Ä£ĞÍ"));
-	    m53.add(new MenuItem("X11Ä£ĞÍ"));
-	    m53.add(new MenuItem("X-12-ARIMAÄ£ĞÍ"));
-	    
-	    Menu m54=new Menu("Éú´æ·ÖÎö");
-	    m54.add(new MenuItem("ÊÙÃü±í"));
-	    m54.add(new MenuItem("KM¹ı³Ì"));
-	    m54.add(new MenuItem("±ÈÂÊ·çÏÕÄ£ĞÍ"));
-	    Menu m55=new Menu("Ğ­Õû·ÖÎö");
-	    m55.add(new MenuItem("µ¥Î»¸ù¼ìÑé"));
-	    m55.add(new MenuItem("Ğ­Õû¼ìÑé"));
-	    m55.add(new MenuItem("Îó²îĞŞÕıÄ£ĞÍ"));
-	    Menu m56=new Menu("Ö¸±ê·ÖÎö");
-	    m56.add(new MenuItem("Ê±²îÏà¹Ø·ÖÎö"));
-	    m56.add(new MenuItem("K-LĞÅÏ¢Á¿"));
+	    JMenu m56=new JMenu("æŒ‡æ ‡åˆ†æ");
+	    JMenuItem m561=new JMenuItem("æ—¶å·®ç›¸å…³åˆ†æ");
+	    m561.addActionListener(this);
+	    JMenuItem m562=new JMenuItem("K-Lä¿¡æ¯é‡");
+	    m562.addActionListener(this);
+	    m56.add(m561);
+	    m56.add(m562);
 
+	    JMenu m61=new JMenu("ç¥ç»ç½‘ç»œ");
+	    JMenuItem m611=new JMenuItem("HopFieldç¥ç»ç½‘ç»œ");
+	    m611.addActionListener(this);
+	    JMenuItem m612=new JMenuItem("Kohononç¥ç»ç½‘ç»œ");
+	    m612.addActionListener(this);
+	    JMenuItem m613=new JMenuItem("ART1ç¥ç»ç½‘ç»œ");
+	    m613.addActionListener(this);
+	    JMenuItem m614=new JMenuItem("BPç¥ç»ç½‘ç»œ");
+	    m614.addActionListener(this);
+	    JMenuItem m615=new JMenuItem("RBFç¥ç»ç½‘ç»œ");
+	    m615.addActionListener(this);
+	    JMenuItem m616=new JMenuItem();
+	    m616.addActionListener(this);
+	    JMenuItem m617=new JMenuItem();
+	    m617.addActionListener(this);
+	    m61.add(m611);
+	    m61.add(m612);
+	    m61.add(m613);
+	    m61.add(m614);
+	    m61.add(m615);
 	    
-	    Menu m61=new Menu("Éñ¾­ÍøÂç");
-	    m61.add(new MenuItem("HopFieldÉñ¾­ÍøÂç"));
-	    m61.add(new MenuItem("KohononÉñ¾­ÍøÂç"));
-	    m61.add(new MenuItem("ART1Éñ¾­ÍøÂç"));
-	    m61.add(new MenuItem("BPÉñ¾­ÍøÂç"));
-	    m61.add(new MenuItem("RBFÉñ¾­ÍøÂç"));
-	    Menu m62=new Menu("¹ØÁª¹æÔò");
-	    m62.add(new MenuItem("µ¥Î¬¹ØÁª¹æÔò"));
-	    m62.add(new MenuItem("¶àÎ¬¹ØÁª¹æÔò"));
+	    JMenu m62=new JMenu("å…³è”è§„åˆ™");
+	    JMenuItem m621=new JMenuItem("å•çº¬å…³è”è§„åˆ™");
+	    m621.addActionListener(this);
+	    JMenuItem m622=new JMenuItem("å¤šç»´å…³è”è§„åˆ™");
+	    m622.addActionListener(this);
+	    m62.add(m621);
+	    m62.add(m622);
 
 	    mi11.add(mi111);
- 
 	    m1.add(mi11);
 	    m1.add(mi12);
 	    m1.add(mi13);
 	    m1.add(mi14);
 	    m1.add(mi15);
 	    m1.add(mi16);
-	    m1.add(mi7);
-	    m1.addActionListener(this);
+	    m1.add(mi17);
 	    
 	    m2.add(m21);
 	    m2.add(m22);
@@ -276,11 +410,19 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 	    m3.add(m3e);
 	    
 	    
+	    JMenuItem m401=new JMenuItem("å‡å€¼åˆ†æ");
+	    m401.addActionListener(this);
+	    JMenuItem m402=new JMenuItem("é¢‘ç‡åˆ†æ");
+	    m402.addActionListener(this);
+	    JMenuItem m403=new JMenuItem("æè¿°ç»Ÿè®¡");
+	    m403.addActionListener(this);
+	    JMenuItem m404=new JMenuItem("äº¤å‰è¡¨");
+	    m404.addActionListener(this);
 	    
-	    m4.add(new MenuItem("¾ùÖµ·ÖÎö"));
-	    m4.add(new MenuItem("ÆµÂÊ·ÖÎö"));
-	    m4.add(new MenuItem("ÃèÊöÍ³¼Æ"));
-	    m4.add(new MenuItem("½»²æ±í"));
+	    m4.add(m401);
+	    m4.add(m402);
+	    m4.add(m403);
+	    m4.add(m404);
 	    m4.add(m41);
 	    m4.add(m42);
 	    m4.add(m43);
@@ -291,65 +433,131 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 	    m5.add(m54);
 	    m5.add(m55);
 	    m5.add(m56);
-	    m5.add(new MenuItem("ÅĞ±ğ·ÖÎö"));
-	    m5.add(new MenuItem("Ö÷³É·Ö·ÖÎö"));
-	    m5.add(new MenuItem("Òò×Ó·ÖÎö"));
-	    m5.add(new MenuItem("·½²î·ÖÎö"));
-	    m5.add(new MenuItem("ÏòÁ¿×Ô»Ø¹éÄ£ĞÍ"));
-	    m5.add(new MenuItem("GrangerÒò¹û¼ìÑé"));
-	    m5.add(new MenuItem("ÁªÁ¢·½³Ì"));
-	    m5.add(new MenuItem("Ãæ°åÊı¾İÄ£ĞÍ"));
+	    JMenuItem m571=new JMenuItem("åˆ¤åˆ«åˆ†æ");
+	    m571.addActionListener(this);
+	    JMenuItem m572=new JMenuItem("ä¸»æˆåˆ†åˆ†æ");
+	    m572.addActionListener(this);
+	    JMenuItem m573=new JMenuItem("å› å­åˆ†æ");
+	    m573.addActionListener(this);
+	    JMenuItem m574=new JMenuItem("æ–¹å·®åˆ†æ");
+	    m574.addActionListener(this);
+	    JMenuItem m575=new JMenuItem("å‘é‡è‡ªå›å½’é€»è¾‘");
+	    m575.addActionListener(this);
+	    JMenuItem m576=new JMenuItem("Grangerå› æœæ£€éªŒ");
+	    m576.addActionListener(this);
+	    JMenuItem m577=new JMenuItem("è”ç«‹æ–¹ç¨‹");
+	    m577.addActionListener(this);
+	    JMenuItem m578=new JMenuItem("é¢æ¿æ•°æ®æ¨¡å‹");
+	    m578.addActionListener(this);
+	    
+	    m5.add(m571);
+	    m5.add(m572);
+	    m5.add(m573);
+	    m5.add(m574);
+	    m5.add(m575);
+	    m5.add(m576);
+	    m5.add(m577);
+	    m5.add(m578);
 	    
 	    m6.add(m61);
 	    m6.add(m62);
-	    m6.add(new MenuItem("¾ö²ßÊ÷"));
-	    m6.add(new MenuItem("Ö§³ÖÏòÁ¿»ú"));
-	    m6.add(new MenuItem("Ä£ºı¾ÛÀà"));
-	    m6.add(new MenuItem("´Ö²Ú¼¯"));
-	    m6.add(new MenuItem("¹ÂÁ¢µã·ÖÎö"));
-	    MenuItem m631=new MenuItem("ÔØÈëÑµÁ·Êı¾İ");
-	    MenuItem m632=new MenuItem("ÔØÈëÔ¤²âÊı¾İ");
-	    Menu m63=new Menu("±´Ò¶Ë¹Ô¤²â");
-	    m63.add(m631);
-	    m63.add(m632);
-	    m6.add(m63);
-         
+	    JMenuItem m631=new JMenuItem("å†³ç­–æ ‘");
+	    m631.addActionListener(this);
+	    JMenuItem m632=new JMenuItem("æ”¯æŒå‘é‡æœº");
+	    m632.addActionListener(this);
+	    JMenuItem m633=new JMenuItem("æ¨¡ç³Šèšç±»");
+	    m633.addActionListener(this);
+	    JMenuItem m634=new JMenuItem("ç²—ç³™é›†");
+	    m634.addActionListener(this);
+	    JMenuItem m635=new JMenuItem("å­¤ç«‹ç‚¹åˆ†æ");
+	    m635.addActionListener(this);
+	    JMenuItem m636=new JMenuItem("è´å¶æ–¯ç½‘ç»œ");
+	    m636.addActionListener(this);
 	    
-        m7.add(new MenuItem("Ö±ÏßÍ¼"));
-        m7.add(new MenuItem("Ìõ×´Í¼"));
-        m7.add(new MenuItem("Ô²±ıÍ¼"));
-        m7.add(new MenuItem("Ãæ»ıÍ¼"));
-        m7.add(new MenuItem("ºĞ×´Í¼"));
-        m7.add(new MenuItem("Ö±·½Í¼"));
-        m7.add(new MenuItem("ÅÅÁĞÍ¼"));
-        m7.add(new MenuItem("Îó²îÍ¼"));
-        m7.add(new MenuItem("ĞòÁĞÍ¼"));
-        m7.add(new MenuItem("É¢µãÍ¼"));
-        m7.add(new MenuItem("×ÔÏà¹ØÍ¼"));
-        m7.add(new MenuItem("»¥Ïà¹ØÍ¼"));
-        m7.add(new MenuItem("¿ØÖÆÍ¼"));
-        m7.add(new MenuItem("ROCÇúÏß"));
-        m7.add(new MenuItem("¸ßµÍÍ¼"));
-        m7.add(new MenuItem("P-PÍ¼"));
-        m7.add(new MenuItem("Q-QÍ¼"));
-        m7.add(new MenuItem("¾­ÑéÍ¼"));
+	    m6.add(m631);
+	    m6.add(m632);
+	    m6.add(m633);
+	    m6.add(m634);
+	    m6.add(m635);
+	    m6.add(m636);   
+	    
+	    JMenuItem m71=new JMenuItem("ç›´çº¿å›¾");
+	    m71.addActionListener(this);
+	    JMenuItem m72=new JMenuItem("æ¡çŠ¶å›¾");
+	    m72.addActionListener(this);
+	    JMenuItem m73=new JMenuItem("åœ†é¥¼å›¾");
+	    m73.addActionListener(this);
+	    JMenuItem m74=new JMenuItem("é¢ç§¯å›¾");
+	    m74.addActionListener(this);
+	    JMenuItem m75=new JMenuItem("ç›’çŠ¶å›¾");
+	    m75.addActionListener(this);
+	    JMenuItem m76=new JMenuItem("ç›´æ–¹å›¾");
+	    m76.addActionListener(this);
+	    JMenuItem m77=new JMenuItem("æ’åˆ—å›¾");
+	    m77.addActionListener(this);
+	    JMenuItem m78=new JMenuItem("è¯¯å·®å›¾");
+	    m78.addActionListener(this);
+	    JMenuItem m79=new JMenuItem("åºåˆ—å›¾");
+	    m79.addActionListener(this);
+	    JMenuItem m7a=new JMenuItem("æ•£ç‚¹å›¾");
+	    m7a.addActionListener(this);
+	    JMenuItem m7b=new JMenuItem("è‡ªç›¸å…³å›¾");
+	    m7b.addActionListener(this);
+	    JMenuItem m7c=new JMenuItem("äº’ç›¸å…³å›¾");
+	    m7c.addActionListener(this);
+	    JMenuItem m7d=new JMenuItem("æ§åˆ¶å›¾");
+	    m7d.addActionListener(this);
+	    JMenuItem m7e=new JMenuItem("ROCæ›²çº¿");
+	    m7e.addActionListener(this);
+	    JMenuItem m7f=new JMenuItem("é«˜ä½å›¾");
+	    m7f.addActionListener(this);
+	    JMenuItem m7g=new JMenuItem("P-På›¾");
+	    m7g.addActionListener(this);
+	    JMenuItem m7h=new JMenuItem("Q-Qå›¾");
+	    m7h.addActionListener(this);
+	    JMenuItem m7i=new JMenuItem("ç»éªŒå›¾");
+	    m7i.addActionListener(this);
+	    
+        m7.add(m71);
+        m7.add(m72);
+        m7.add(m73);
+        m7.add(m74);
+        m7.add(m75);
+        m7.add(m76);
+        m7.add(m77);
+        m7.add(m78);
+        m7.add(m79);
+        m7.add(m7a);
+        m7.add(m7b);
+        m7.add(m7c);
+        m7.add(m7d);
+        m7.add(m7e);
+        m7.add(m7f);
+        m7.add(m7g);
+        m7.add(m7h);
+        m7.add(m7i);
        
-	    m8.add(new MenuItem("°ïÖú"));
-	    m8.add(new MenuItem("Âí¿ËÍş²úÆ·ÏµÁĞ"));
-	    m8.add(new MenuItem("¹ØÓÚÂí¿ËÍş"));
+        JMenuItem m81=new JMenuItem("å¸®åŠ©å›¾");
+        m81.addActionListener(this);
+        JMenuItem m82=new JMenuItem("å…³äºæœ¬è½¯ä»¶");
+        m82.addActionListener(this);
+        JMenuItem m83=new JMenuItem("å…³äºä½œè€…");
+        m83.addActionListener(this);
+	    m8.add(m81);
+	    m8.add(m82);
+	    m8.add(m83);
 	    
-	    m61.addActionListener(this);
-	    m52.addActionListener(this);
-	    m63.addActionListener(this);
-	    m6.addActionListener(this);
-	    mi7.addActionListener(this);
-	    m1.addActionListener(this);
+	    m1.addActionListener(this);    
 	    m2.addActionListener(this);
 	    m3.addActionListener(this);
 	    m4.addActionListener(this);
 	    m5.addActionListener(this);
+	    m52.addActionListener(this);
 	    m6.addActionListener(this);
+	    m61.addActionListener(this);
 	    m7.addActionListener(this);
+	  
+	    mi17.addActionListener(this);
 	    m8.addActionListener(this);
 	    mb.add(m1);
 	    mb.add(m2);
@@ -368,43 +576,46 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
    public JTable getTable(){
 	   JTable jt= jt=new JTable(100,20);
 	   for(int i=0;i<20;i++){
-		   jt.setValueAt("ÊôĞÔ"+i,0,i);
+		   jt.setValueAt("å±æ€§"+i,0,i);
 	   }
 	   return jt;
    }
    public void actionPerformed(ActionEvent e){
 		String s=e.getActionCommand();
-		if(s.equals("ÍË³ö")){
+		System.out.println("ç‚¹å‡»äº†---"+s);
+		if(s.equals("é€€å‡º")){
 			System.exit(0);
 		}
 	
-		if(s.equals("¾ö²ßÊ÷"))
+		if(s.equals("å†³ç­–æ ‘"))
 		{
 			dts.creatUI();
 			
 		}
 		
-		if(s.equals("Ô²±ıÍ¼")){
+		if(s.equals("åœ†é¥¼å›¾")){
 			spc.Look();
 		}
 		
-		if(s.equals("´ò¿ª"))
+		if(s.equals("æ‰“å¼€"))
 		{
 		  fd_load.setVisible(true);
 		  String d=fd_load.getDirectory();
 		  String fl=fd_load.getFile();
 		  if((d!=null)&&(fl!=null)){
 				 file=d+fl;				 	
-				 if(file.endsWith(".txt")){
-					 ffl.creatUI();             //Èç¹û²Ù×÷µÄÊÇtxtÎÄ¼ş£¬ĞèÒªÊÖ¶¯Ö¸¶¨ÊôĞÔÃû³Æ
-					 PublicData.setFile(file);    //Í¬Ê±½«ÎÄ¼şÃûÉèÖÃ³Éµ±Ç°µÄ£¬²»¹ı´ËÊ±ÎÄ¼şÃûÊÇtxtÎÄ¼ş£¬
-					                            //½«»áÔÚfflµÄ´°¿Ú½çÃæµã»÷Ìá½»ÔÙ´Î±»ÖØÃüÃûÎªxlsÎÄ¼ş
-				 System.out.println(PublicData.getFile());
+				 if(file.endsWith(".txt"))
+				 {
+					 ffl.creatUI();             //å¦‚æœç”¨æˆ·é€‰æ‹©çš„æ–‡ä»¶æ—¶txtæ ¼å¼çš„ï¼Œéœ€è¦æ‰‹åŠ¨è®¾ç½®åˆ—åå’Œåˆ†éš”ç¬¦å·
+					 PublicData.setFile(file);  //å°†é€‰æ‹©çš„æ–‡ä»¶å†™å…¥åˆ°å­˜å‚¨æ–‡ä»¶ä¸­ä¿å­˜
+				     System.out.println(PublicData.getFile());
 				 }
-				 else if(file.endsWith(".xls")){            //Èç¹ûÊÇExcelÎÄ¼ş£¬¸üĞÂµ±Ç°µÄÊı¾İä¯ÀÀ´°¿Ú
+				 //å¦‚æœç”¨æˆ·é€‰æ‹©çš„æ–‡ä»¶æ—¶excelæ–‡ä»¶ å¯ä»¥ç›´æ¥å–ç¬¬ä¸€è¡Œä½œä¸ºå±æ€§åç§°
+				 else if(file.endsWith(".xls"))
+				 {            
 					 PublicData.setFile(file);
-					 ffl.UpdateAttr();                          //ÎªÓ¦¶ÔExcelÎÄ¼şµÄÎªFileAndFirstLine¶à¼ÓµÄ¸üĞÂµ±Ç°ÎÄ¼şÊôĞÔÃûµÄ·½·¨
-					 f.dispose();
+					 ffl.UpdateAttr();      //å¯ä»¥ç›´æ¥æ ¹æ®Excelæ–‡ä»¶ç¬¬ä¸€è¡Œå¾—åˆ°æ•°æ®å±æ€§åç§°åˆ—è¡¨
+					 f.dispose();          //ä»è€Œ ç›´æ¥è®©ç”¨æˆ·ç»§ç»­é€‰æ‹©å“ªäº›ä½œä¸ºé€‰æ‹©å±æ€§ï¼Œå“ªäº›ä½œä¸ºå†³ç­–å±æ€§
 					 this.CreatUI(dsp.getTable());
 					 f.invalidate();
 					 f.repaint();
@@ -412,8 +623,8 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 				 }
 			   }
 		   }
-		//ÔÚ¿ª·¢³õÆÚ£¬Ã»ÓĞ¶¨ÒåÊı¾İ¸ñÊ½£¬ÎŞ·¨´¦Àí±£´æºÍÁí´æÎªÊı¾İ£¬ËùÒÔ»ù±¾Ã»ÓÃ
-		 else if(s.equals("Áí´æÎª"))
+		//ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½Ã»ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½İ¸ï¿½Ê½ï¿½ï¿½ï¿½Ş·ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½Ô»ï¿½Ã»ï¿½ï¿½
+		 else if(s.equals("ä¿å­˜"))
 		 {		   
 		   fd_save.setVisible(true);
 		   String d=fd_save.getDirectory();
@@ -421,34 +632,34 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 		   if((d!=null)&&(f!=null))
 		         {
 				   file=d+f;					
-				   frame.setTitle("ÎÄ¼şÁí´æÎª"+file);
+				   frame.setTitle("ä¿å­˜æ–‡ä»¶"+file);
 				   }
 		  }
-		 else if(s.equals("±£´æ")){
+		 else if(s.equals("ï¿½ï¿½ï¿½ï¿½")){
 			   try{
 				   PrintWriter pw=new PrintWriter(new FileWriter(file));
 				   pw.close();
 			   }catch(IOException e1){
 				   e1.printStackTrace();
 			   }
-	 
 		 }
-		 else if(s.equals("ÔØÈëÑµÁ·Êı¾İ")){           //ÔØÈëÑµÁ·Êı¾İµÈÍ¬ÓÚ¸Õ¿ªÊ¼µÄÊ±ºòÓÃ»§Ñ¡ÔñÊı¾İ
-			System.out.println(s);
+		 else if(s.equals("ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ï¿½ï¿½ï¿½")){           //ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ï¿½ï¿½İµï¿½Í¬ï¿½Ú¸Õ¿ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½
+			System.out.println(s+"==========");
 			 fd_load.setVisible(true);
 			  String d=fd_load.getDirectory();
 			  String fl=fd_load.getFile();
 			  if((d!=null)&&(fl!=null)){
 					 file=d+fl;				 	
-					 if(file.endsWith(".txt")){
-						 ffl.creatUI();             //Èç¹û²Ù×÷µÄÊÇtxtÎÄ¼ş£¬ĞèÒªÊÖ¶¯Ö¸¶¨ÊôĞÔÃû³Æ
-						 PublicData.setFile(file);    //Í¬Ê±½«ÎÄ¼şÃûÉèÖÃ³Éµ±Ç°µÄ£¬²»¹ı´ËÊ±ÎÄ¼şÃûÊÇtxtÎÄ¼ş£¬
-						                            //½«»áÔÚfflµÄ´°¿Ú½çÃæµã»÷Ìá½»ÔÙ´Î±»ÖØÃüÃûÎªxlsÎÄ¼ş
-					 System.out.println(PublicData.getFile());
+					 if(file.endsWith(".txt"))
+					 {
+						 ffl.creatUI();             //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½txtï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ö¶ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						 PublicData.setFile(file);    //Í¬Ê±ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã³Éµï¿½Ç°ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½txtï¿½Ä¼ï¿½ï¿½ï¿½
+						                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fflï¿½Ä´ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½Ù´Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªxlsï¿½Ä¼ï¿½
+					     System.out.println(PublicData.getFile());
 					 }
-					 else if(file.endsWith(".xls")){            //Èç¹ûÊÇExcelÎÄ¼ş£¬¸üĞÂµ±Ç°µÄÊı¾İä¯ÀÀ´°¿Ú
+					 else if(file.endsWith(".xls")){            //ï¿½ï¿½ï¿½ï¿½ï¿½Excelï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 						 PublicData.setFile(file);
-						 ffl.UpdateAttr();                          //ÎªÓ¦¶ÔExcelÎÄ¼şµÄÎªFileAndFirstLine¶à¼ÓµÄ¸üĞÂµ±Ç°ÎÄ¼şÊôĞÔÃûµÄ·½·¨
+						 ffl.UpdateAttr();                          //ÎªÓ¦ï¿½ï¿½Excelï¿½Ä¼ï¿½ï¿½ï¿½ÎªFileAndFirstLineï¿½ï¿½ÓµÄ¸ï¿½ï¿½Âµï¿½Ç°ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
 						 f.dispose();
 						 this.CreatUI(dsp.getTable());
 						 f.invalidate();
@@ -457,7 +668,7 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 					 }
 				   }			
 		}
-		 else if(s.equals("ÔØÈëÔ¤²âÊı¾İ")){		
+		 else if(s.equals("è´å¶æ–¯ç½‘ç»œ")){		
 			 fd_load.setVisible(true);
 			  String d=fd_load.getDirectory();
 			  String fl=fd_load.getFile();
@@ -465,19 +676,20 @@ public class OuterFace implements ActionListener,MouseListener,MouseMotionListen
 			  {
 			    file=d+fl;		 
 			    PublicData.setFile(file);
-			    ffl.UpdateAttr();                          //ÎªÓ¦¶ÔExcelÎÄ¼şµÄÎªFileAndFirstLine¶à¼ÓµÄ¸üĞÂµ±Ç°ÎÄ¼şÊôĞÔÃûµÄ·½·¨
+			    ffl.UpdateAttr();                          //ÎªÓ¦ï¿½ï¿½Excelï¿½Ä¼ï¿½ï¿½ï¿½ÎªFileAndFirstLineï¿½ï¿½ÓµÄ¸ï¿½ï¿½Âµï¿½Ç°ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
 			    f.dispose();
 			    this.CreatUI(dsp.getTable());
 			    f.invalidate();
 			    f.repaint();
+			    
 			    f.setVisible(true);
 			  }
 			 bayesresult.show();
 		 }
-		 else if(s.equals("¿ìËÙ¾ÛÀà")){
+		 else if(s.equals("å¿«é€Ÿèšç±»")){
 			 cluster.CreateUI();
 		 }
-		 else if(s.equals("BPÉñ¾­ÍøÂç")){
+		 else if(s.equals("BPç¥ç»ç½‘ç»œ")){
 				bp.test_bp();
 		 }
 	}

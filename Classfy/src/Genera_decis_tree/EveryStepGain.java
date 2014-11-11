@@ -29,21 +29,21 @@ public class EveryStepGain {
 	public static final float MIN_GAIN=(float)0.001;
 	InformationGain ing=new InformationGain();
 	ShowTreePane tree=new ShowTreePane();
-	MathLog mlog=new MathLog();      //ÒıÓÃ×Ô¶¨ÒåµÄ¼ÆËã2µÄ¶ÔÊıº¯Êı£¬´Ëº¯ÊıÓĞgetLog()·½·¨
-	public HashMap<String,String[]> hs=ing.getMap();//½÷É÷µ÷ÓÃ£¬Ã¿´Îµ÷ÓÃÖ®ºó¶¼Òª¶à´Î±éÀúExcel±í£¬Ö»ÒªÒ»´Îµ÷ÓÃÖ»ÓĞ¾Í¿ÉÒÔÖ»½ÓÔÚÆäÍ¬ÃûÎÄ¼şÖĞµÃµ½list
+	MathLog mlog=new MathLog();      //å¼•ç”¨è‡ªå®šä¹‰çš„è®¡ç®—2çš„å¯¹æ•°å‡½æ•°ï¼Œæ­¤å‡½æ•°æœ‰getLog()æ–¹æ³•
+	public HashMap<String,String[]> hs=ing.getMap();//è°¨æ…è°ƒç”¨ï¼Œæ¯æ¬¡è°ƒç”¨ä¹‹åéƒ½è¦å¤šæ¬¡éå†Excelè¡¨ï¼Œåªè¦ä¸€æ¬¡è°ƒç”¨åªæœ‰å°±å¯ä»¥åªæ¥åœ¨å…¶åŒåæ–‡ä»¶ä¸­å¾—åˆ°list
     public  void showDescionTree(){
     	EveryStepGain  erv=new EveryStepGain();  
-        System.out.println("*************************************Ö´ĞĞÕû¸ö¹ı³ÌÖ®Ç°****************************");
+        System.out.println("*************************************æ‰§è¡Œæ•´ä¸ªè¿‡ç¨‹ä¹‹å‰****************************");
         LinkedList<TreeNode> newlist=erv.SetTree();
-        System.out.println("*************************************Ö´ĞĞÕû¸ö¹ı³ÌÖ®ºó****************************");
-        System.out.println("ÒÑ¾­¼ÓÈë¶àÉÙ¸ö½áµãµ½Ê÷ÖĞÁË£¿£¿£¿£¿£¿£¿£¿£¿£¿£¿"+newlist.size());
+        System.out.println("*************************************æ‰§è¡Œæ•´ä¸ªè¿‡ç¨‹ä¹‹å****************************");
+        System.out.println("å·²ç»åŠ å…¥å¤šå°‘ä¸ªç»“ç‚¹åˆ°æ ‘ä¸­äº†ï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿ"+newlist.size());
         for(int i=0;i<newlist.size();i++){
-        System.out.println("µ±Ç°½áµãÊÇ£º"+newlist.get(i).name+"\tĞÅÏ¢ÔöÒæÊÇ"+newlist.get(i).gain+"\tÖ§³Ö¶ÈÊÇ"+newlist.get(i).YES
-        		+"\t·ñ¾ö¶ÈÊÇ"+newlist.get(i).NO+"\tÉî¶ÈÊÇ"+newlist.get(i).Row+"\t¹ã¶ÈÊÇ"+newlist.get(i).Comlumn);
+        System.out.println("å½“å‰ç»“ç‚¹æ˜¯ï¼š"+newlist.get(i).name+"\tä¿¡æ¯å¢ç›Šæ˜¯"+newlist.get(i).gain+"\tæ”¯æŒåº¦æ˜¯"+newlist.get(i).YES
+        		+"\tå¦å†³åº¦æ˜¯"+newlist.get(i).NO+"\tæ·±åº¦æ˜¯"+newlist.get(i).Row+"\tå¹¿åº¦æ˜¯"+newlist.get(i).Comlumn);
    
         }
-        JFrame f=new JFrame("¾ö²ßÊ÷ÏÔÊ¾");
-        Image icon = Toolkit.getDefaultToolkit().getImage("D:\\predata\\120.jpg");
+        JFrame f=new JFrame("å†³ç­–æ ‘æ˜¾ç¤º");
+        Image icon = Toolkit.getDefaultToolkit().getImage("img/logo.jpg");
   	    f.setIconImage(icon);
         JScrollPane scroll=new JScrollPane();
         scroll.setViewportView(new ShowTreePane());
@@ -52,23 +52,26 @@ public class EveryStepGain {
         f.setSize(1000,900);
         f.setVisible(true);
     }
-    //²ÎÊıÖĞname´ú±íÁËÊôĞÔµÄÆäÖĞÒ»¸ö·ÖÖ§Ãû³Æ£¬·µ»ØµÄ½«ÊÇ¸ÃÃû³ÆÔÚExcel±íÖĞËùÓĞÎ»ÖÃ
+    //å‚æ•°ä¸­nameä»£è¡¨äº†å±æ€§çš„å…¶ä¸­ä¸€ä¸ªåˆ†æ”¯åç§°ï¼Œè¿”å›çš„å°†æ˜¯è¯¥åç§°åœ¨Excelè¡¨ä¸­æ‰€æœ‰ä½ç½®
     public TreeSet<Integer> setLocation(String name,TreeSet<Integer> field){
     	int yes_attr=0;
-    	System.out.println("²úÉú·ÖÖ§¹ı³ÌÑ¡ÔñµÄÊôĞÔ·ÖÖ§ÊÇ£º"+name);
+    	System.out.println("äº§ç”Ÿåˆ†æ”¯è¿‡ç¨‹é€‰æ‹©çš„å±æ€§åˆ†æ”¯æ˜¯ï¼š"+name);
     	TreeSet<Integer> set=new TreeSet<Integer>();
     	String[] t={};
-    	int mp=0;    //´æ´¢Ëù¸øÃû³ÆµÄÊôĞÔÔÚExcel±íÖĞµÄÁĞÊı
+    	int mp=0;    //å­˜å‚¨æ‰€ç»™åç§°çš„å±æ€§åœ¨Excelè¡¨ä¸­çš„åˆ—æ•°
     	int c=0;
     	String local="";
     	String[] sel=PublicData.getSelvar();
-    	for(int l=0;l<sel.length;l++){
+    	for(int l=0;l<sel.length;l++)
+    	{
     		t=hs.get(sel[l]);
-    		System.out.println("ÊôĞÔÊÇ"+sel[l]+"ÓĞ"+t.length+"¸ö·ÖÖ§");
-    		System.out.print("·Ö±ğÊÇ£º");
-    		for(int n=0;n<t.length;n++){
+    		System.out.println("å±æ€§æ˜¯"+sel[l]+"æœ‰"+t.length+"ä¸ªåˆ†æ”¯");
+    		System.out.print("åˆ†åˆ«æ˜¯ï¼š");
+    		for(int n=0;n<t.length;n++)
+    		{
     			System.out.print(t[n]+"\t");
-    			if(t[n].equals(name)){
+    			if(t[n].equals(name))
+    			{
     				local=sel[l];
     			}
     		}
@@ -86,14 +89,14 @@ public class EveryStepGain {
             Workbook book = Workbook.getWorkbook(new File(PublicData.getFile()));    
             Sheet sheet = book.getSheet(0);     
             Iterator<Integer> it=field.iterator();
-            //for(int i=1;i<sheet.getRows();i++)   //Ä¬ÈÏµÚÒ»ÁĞÎªÊôĞÔ±æ±ğÁĞ£¬²»²ÎÓë¼ÆËã
+            //for(int i=1;i<sheet.getRows();i++)   //é»˜è®¤ç¬¬ä¸€åˆ—ä¸ºå±æ€§è¾¨åˆ«åˆ—ï¼Œä¸å‚ä¸è®¡ç®—
             while(it.hasNext())
             {        int i=it.next(); 	  
-           		     Cell cell = sheet.getCell(mp, i);   //»ñÈ¡µ±Ç°ÊôĞÔËùÔÚÁĞ
+           		     Cell cell = sheet.getCell(mp, i);   //è·å–å½“å‰å±æ€§æ‰€åœ¨åˆ—
                      String result = cell.getContents().replaceAll("\"", "").trim();  
                      //System.out.print(result+"\t");
                      Cell c2=sheet.getCell(c,i);
-                     String tar=c2.getContents().replaceAll("\"", "").trim();    //±ØĞëÈ¥³ı×Ö·ûÖĞµÄË«ÒıºÅ
+                     String tar=c2.getContents().replaceAll("\"", "").trim();    //å¿…é¡»å»é™¤å­—ç¬¦ä¸­çš„åŒå¼•å·
     	             if(result.equals(name)){    	
     	            	 set.add(i);
     	            	 if(tar.equals("yes")||tar.equals("y")){ 	            		 
@@ -105,36 +108,36 @@ public class EveryStepGain {
         } catch (Exception e) {   
             e.printStackTrace();   
         }   	
-        System.out.println("×îºóµÄset´óĞ¡ÊÇ£º"+set.size());
-        int last=0;   //¼øÓÚTreeSetµÄË³ĞòĞÔ£¬×îºóÒ»¸öÔªËØ±ØÈ»×î´ó£¬Òò´Ë½«Ö§³Ö¶ÈÓë×îºóÒ»¸ö½ÚµãÏà¼ÓºóÔÙ·ÅÈësetÖĞ¾Í¿É
-                                       //¼´´æ´¢ÁËµ±Ç°×Ö·ûµÄĞĞÎ»ÖÃ£¬Ò²ÄÜÖªµÀÆäÖ§³Ö¶È
+        System.out.println("æœ€åçš„setå¤§å°æ˜¯ï¼š"+set.size());
+        int last=0;   //é‰´äºTreeSetçš„é¡ºåºæ€§ï¼Œæœ€åä¸€ä¸ªå…ƒç´ å¿…ç„¶æœ€å¤§ï¼Œå› æ­¤å°†æ”¯æŒåº¦ä¸æœ€åä¸€ä¸ªèŠ‚ç‚¹ç›¸åŠ åå†æ”¾å…¥setä¸­å°±å¯
+                                       //å³å­˜å‚¨äº†å½“å‰å­—ç¬¦çš„è¡Œä½ç½®ï¼Œä¹Ÿèƒ½çŸ¥é“å…¶æ”¯æŒåº¦
         if(set.size()>0){
-        	System.out.println("set×îºóÎ»ÖÃÊÇ"+set.last());
+        	System.out.println("setæœ€åä½ç½®æ˜¯"+set.last());
         	last=set.last()+yes_attr;
         }
         else
-        {   System.out.println("¸Ã·ÖÖ§ÏÂÒÑ¾­Ã»ÓĞÔªËØ£¬·µ»ØµÄset¼¯ºÏÎª¿Õ£¡");
+        {   System.out.println("è¯¥åˆ†æ”¯ä¸‹å·²ç»æ²¡æœ‰å…ƒç´ ï¼Œè¿”å›çš„seté›†åˆä¸ºç©ºï¼");
         	return set;
         }
        
         if(set.add(last)){
-        System.out.println("¼ÓÈë³É¹¦£¡setµÄ×îºóÒ»¸öÔªËØ");
+        System.out.println("åŠ å…¥æˆåŠŸï¼setçš„æœ€åä¸€ä¸ªå…ƒç´ ");
         }
         else 
-        	System.out.println("¼ÓÈëÊ§°Ü£¡set×îºóÒ»¸öÔªËØ------");    //±íÃ÷×îºóÒ»¸öÔªËØÓëÖ®Ç°µÄÔªËØÖØ¸´£¬Ò²¼´yes_attr=0
+        	System.out.println("åŠ å…¥å¤±è´¥ï¼setæœ€åä¸€ä¸ªå…ƒç´ ------");    //è¡¨æ˜æœ€åä¸€ä¸ªå…ƒç´ ä¸ä¹‹å‰çš„å…ƒç´ é‡å¤ï¼Œä¹Ÿå³yes_attr=0
         Iterator<Integer> it=set.iterator();
         while(it.hasNext())
         	System.out.print(it.next()+"\t");
         return set;
     }
     
-    //¶ÔÓÚ¸ø¶¨µÄExcelĞĞÊısetÀ´¼ÆËãÆäĞÅÏ¢ÔöÒæ£¬ĞèÒªÖ¸¶¨ĞĞÊısetµÄ¼¯ºÏºÍµ±Ç°ĞèÒª¼ÆËãµÄÁíÍâÒ»¸öÊôĞÔ
+    //å¯¹äºç»™å®šçš„Excelè¡Œæ•°setæ¥è®¡ç®—å…¶ä¿¡æ¯å¢ç›Šï¼Œéœ€è¦æŒ‡å®šè¡Œæ•°setçš„é›†åˆå’Œå½“å‰éœ€è¦è®¡ç®—çš„å¦å¤–ä¸€ä¸ªå±æ€§
     public String computeGain(TreeSet<Integer> set,String local){
          ArrayList<String> list=new ArrayList<String>();   
     	 String gain="";
-    	int com=0;    //»ñÈ¡µ±Ç°ÊôĞÔËùÔÚÁĞ
-    	int cla=0;   //´ú±í·ÖÀàÊıÄ¿
-    	int part=0;   //×îÖÕ·ÖÀàËùÔÚÁĞÊı
+    	int com=0;    //è·å–å½“å‰å±æ€§æ‰€åœ¨åˆ—
+    	int cla=0;   //ä»£è¡¨åˆ†ç±»æ•°ç›®
+    	int part=0;   //æœ€ç»ˆåˆ†ç±»æ‰€åœ¨åˆ—æ•°
     	Iterator<Integer> allline=set.iterator();
     	String[] attr=PublicData.getAttr();
     	for(int i=0;i<attr.length;i++){
@@ -145,39 +148,39 @@ public class EveryStepGain {
     			part=i;
     		}
     	}
-    	int sum=set.size();    //×ÜĞĞÊı
+    	int sum=set.size();    //æ€»è¡Œæ•°
     	int[][] value=new int[30][2];
-    	int yes_to_attr=0;   //ÊôÓÚµ±Ç°ÀàµÄÊıÄ¿
+    	int yes_to_attr=0;   //å±äºå½“å‰ç±»çš„æ•°ç›®
     	int no_to_attr=0;
-    	BigDecimal info=new BigDecimal(0);     //¼ÆËãÔª×é·ÖÀàËùĞèµÄÆÚÍûĞÅÏ¢
-    	BigDecimal infoD=new BigDecimal(0);    //´æ´¢µ±Ç°ÁĞÊôĞÔµÄĞÅÏ¢ÔöÒæ
+    	BigDecimal info=new BigDecimal(0);     //è®¡ç®—å…ƒç»„åˆ†ç±»æ‰€éœ€çš„æœŸæœ›ä¿¡æ¯
+    	BigDecimal infoD=new BigDecimal(0);    //å­˜å‚¨å½“å‰åˆ—å±æ€§çš„ä¿¡æ¯å¢ç›Š
        	java.text.DecimalFormat DataFormat=(java.text.DecimalFormat)java.text.DecimalFormat.getInstance();
-	      //ÎªÁËµÃµ½ÕûÊıÏà´¦±£ÁôÈıÎ»Ğ¡ÊıµÄ½á¹û¡£×¢Òâ£¬¾­¹ıÕâÑùµÄ´¦Àíºó£¬¼ÆËãµÃµ½µÄ½á¹ûÊÇStringÀàĞÍ
-  	  DataFormat.applyPattern("#.####"); //ÎªÁËµÃµ½ÕûÊıÏà´¦±£ÁôÈıÎ»Ğ¡ÊıµÄ½á¹û
+	      //ä¸ºäº†å¾—åˆ°æ•´æ•°ç›¸å¤„ä¿ç•™ä¸‰ä½å°æ•°çš„ç»“æœã€‚æ³¨æ„ï¼Œç»è¿‡è¿™æ ·çš„å¤„ç†åï¼Œè®¡ç®—å¾—åˆ°çš„ç»“æœæ˜¯Stringç±»å‹
+  	  DataFormat.applyPattern("#.####"); //ä¸ºäº†å¾—åˆ°æ•´æ•°ç›¸å¤„ä¿ç•™ä¸‰ä½å°æ•°çš„ç»“æœ
   	  DecimalFormat df1 = new DecimalFormat("#.######");
   	   try {   
            Workbook book = Workbook.getWorkbook(new File(PublicData.getFile()));    
            Sheet sheet = book.getSheet(0);      
-           while(allline.hasNext())   //Ä¬ÈÏµÚÒ»ÁĞÎªÊôĞÔ±æ±ğÁĞ£¬²»²ÎÓë¼ÆËã
+           while(allline.hasNext())   //é»˜è®¤ç¬¬ä¸€åˆ—ä¸ºå±æ€§è¾¨åˆ«åˆ—ï¼Œä¸å‚ä¸è®¡ç®—
            {         int i=allline.next(); 	  
-          		     Cell cell = sheet.getCell(com, i);   //»ñÈ¡µ±Ç°ÊôĞÔËùÔÚÁĞ
-          		     Cell cell2=sheet.getCell(part,i);     //»ñÈ¡½á¹ûÁĞ£¬¼´ÑµÁ·Ôª×é×îÖÕ·ÖÀàÀà±ğÄÇÒ»ÁĞ
+          		     Cell cell = sheet.getCell(com, i);   //è·å–å½“å‰å±æ€§æ‰€åœ¨åˆ—
+          		     Cell cell2=sheet.getCell(part,i);     //è·å–ç»“æœåˆ—ï¼Œå³è®­ç»ƒå…ƒç»„æœ€ç»ˆåˆ†ç±»ç±»åˆ«é‚£ä¸€åˆ—
           		     String c2=cell2.getContents().replaceAll("\"", " ").trim();
                     String result = cell.getContents().replaceAll("\"", " ").trim();  
-                    if(list.contains(result)==false&&result!=null)      //½«ËùÑ¡ÊôĞÔ¼ÓÈëµ½listÖĞ
+                    if(list.contains(result)==false&&result!=null)      //å°†æ‰€é€‰å±æ€§åŠ å…¥åˆ°listä¸­
                     {   list.add(result);   cla=list.indexOf(result);   
                     }
                     else if(list.contains(result)==true)
-                   	  cla=list.indexOf(result);    //ÒÔµ±Ç°ÊôĞÔµÄÀà±ğ£¨StringÀàĞÍ£©ËùÔÚlistÖĞµÄË÷ÒıÎªvalueµÄµÚÒ»Î¬
-                    if(c2.equals("y")||c2.equals("yes"))   //ÒÔ¶şÎ¬Êı×évalueµÄµÚ¶şÎ¬µÄµÚÒ»ÁĞÀ´´æ´¢ÊôÓÚ×îÖÕÀàµÄ×ÜÊı
+                   	  cla=list.indexOf(result);    //ä»¥å½“å‰å±æ€§çš„ç±»åˆ«ï¼ˆStringç±»å‹ï¼‰æ‰€åœ¨listä¸­çš„ç´¢å¼•ä¸ºvalueçš„ç¬¬ä¸€ç»´
+                    if(c2.equals("y")||c2.equals("yes"))   //ä»¥äºŒç»´æ•°ç»„valueçš„ç¬¬äºŒç»´çš„ç¬¬ä¸€åˆ—æ¥å­˜å‚¨å±äºæœ€ç»ˆç±»çš„æ€»æ•°
                     {	
                    	    value[cla][0]++;
-                        yes_to_attr++;          //×îÖÕÁĞÖĞ·ûºÏÌõ¼şÕ¼±È
+                        yes_to_attr++;          //æœ€ç»ˆåˆ—ä¸­ç¬¦åˆæ¡ä»¶å æ¯”
                     }  
                     else  //if(c2.equals("n")||c2.equals("no"))
                     {
-                   	 value[cla][1]++;             //µÚ¶şÁĞÀ´´æ´¢²»ÊôÓÚ×îÖÕÁĞµÄ×ÜÊı
-                   	 no_to_attr++;            //ÓÃÀ´¼ÆËãĞÅÏ¢ÔöÒæ£¬Ôª×é·ÖÀàËùĞèµÄÆÚÍûĞÅÏ¢ 
+                   	 value[cla][1]++;             //ç¬¬äºŒåˆ—æ¥å­˜å‚¨ä¸å±äºæœ€ç»ˆåˆ—çš„æ€»æ•°
+                   	 no_to_attr++;            //ç”¨æ¥è®¡ç®—ä¿¡æ¯å¢ç›Šï¼Œå…ƒç»„åˆ†ç±»æ‰€éœ€çš„æœŸæœ›ä¿¡æ¯ 
                     }                                   
            }
            //writer.close(); 
@@ -186,11 +189,11 @@ public class EveryStepGain {
            e.printStackTrace();   
        }   	
        sum=yes_to_attr+no_to_attr;
-       if(yes_to_attr==0){       //Èç¹ûÈ«²¿¶¼ÊÇ·ñ¶¨½áµã£¬¾Í·µ»ØÒ¶×Ó
+       if(yes_to_attr==0){       //å¦‚æœå…¨éƒ¨éƒ½æ˜¯å¦å®šç»“ç‚¹ï¼Œå°±è¿”å›å¶å­
     	   gain="NLeaf";
     	   return gain;
        }
-       else if(no_to_attr==0){   //Èç¹ûÈ«²¿¶¼ÊÇ¿Ï¶¨½áµã£¬¾Í·µ»ØÒ¶×Ó
+       else if(no_to_attr==0){   //å¦‚æœå…¨éƒ¨éƒ½æ˜¯è‚¯å®šç»“ç‚¹ï¼Œå°±è¿”å›å¶å­
     	   gain="YLeaf";
     	   return gain;
        }
@@ -211,7 +214,7 @@ public class EveryStepGain {
    	       System.out.println("|"+list.get(p)+"| "+a+" | "+b+" |");
    	       int c=a+b;
    	       BigDecimal asum=mlog.getDivide(a,c );  
-   	       BigDecimal bsum=mlog.getDivide(b,c);   //asumÊÇ¿Ï¶¨×ÜÁ¿£¬bsumÊÇ·ñ¶¨×ÜÁ¿
+   	       BigDecimal bsum=mlog.getDivide(b,c);   //asumæ˜¯è‚¯å®šæ€»é‡ï¼Œbsumæ˜¯å¦å®šæ€»é‡
    	       BigDecimal csum=mlog.getDivide(c,sum);
    		    if(a==0&&b!=0)
    		        infoD=infoD.add((csum.multiply(bsum.multiply(mlog.getLog(bsum)))).abs());	   
@@ -223,20 +226,20 @@ public class EveryStepGain {
    		    	infoD=infoD.add(new BigDecimal(0));
       }
      gain=info.subtract(infoD).toString();
-	 System.out.println("µ±Ç°ÊôĞÔĞÅÏ¢ÔöÒæ£º"+infoD+"   ÊôĞÔÊÇ"+attr[com]+"     À´×ÔcomputeGain");
+	 System.out.println("å½“å‰å±æ€§ä¿¡æ¯å¢ç›Šï¼š"+infoD+"   å±æ€§æ˜¯"+attr[com]+"     æ¥è‡ªcomputeGain");
     return gain;
     }
     
     
-//Ê×ÏÈ»ñÈ¡ÎÒÃÇÔÚInformationGainÀàÖĞ²úÉúµÄËùÓĞÊôĞÔµÄĞÅÏ¢ÔöÒæ£¬´ÓÖĞ±È½ÏµÃ³ö×îºÃµÄÊôĞÔ£¬È»ºó°´ÕÕ¸ÃÊôĞÔÒÀ´ÎÏòºó±éÀúÆäËûÊôĞÔ
+//é¦–å…ˆè·å–æˆ‘ä»¬åœ¨InformationGainç±»ä¸­äº§ç”Ÿçš„æ‰€æœ‰å±æ€§çš„ä¿¡æ¯å¢ç›Šï¼Œä»ä¸­æ¯”è¾ƒå¾—å‡ºæœ€å¥½çš„å±æ€§ï¼Œç„¶åæŒ‰ç…§è¯¥å±æ€§ä¾æ¬¡å‘åéå†å…¶ä»–å±æ€§
 public LinkedList<TreeNode> SetTree(){
     	LinkedList<TreeNode> list=new LinkedList<TreeNode>();  
-    	PublicData.clearRule();                      //ÔÚÎÒÃÇ½ÓÏÂÀ´Éú³É¾ö²ßÊ÷¹æÔò±ØĞëÇå³ş¹æÔò
+    	PublicData.clearRule();                      //åœ¨æˆ‘ä»¬æ¥ä¸‹æ¥ç”Ÿæˆå†³ç­–æ ‘è§„åˆ™å¿…é¡»æ¸…æ¥šè§„åˆ™
     	String[] allgain=PublicData.getVarinformationgain().split(",");
         int tp=1;
-        //****************µÚÒ»²½ÏÈ´ÓÄ¬ÈÏÊı¾İÖĞĞÄPublicDataÖĞ»ñÈ¡ËùÑ¡ÊôĞÔµÄ×î¸ßĞÅÏ¢ÔöÒæÊôĞÔ×÷ÎªÍ·½áµã***************
-        int allline=0;//µÚÒ»¸öÊôĞÔµÄĞĞÊı£¬´ú±íÁËExcel±íµÄËùÓĞĞĞÊı
-        float MAX=0;   //×î´óĞÅÏ¢ÔöÒæ
+        //****************ç¬¬ä¸€æ­¥å…ˆä»é»˜è®¤æ•°æ®ä¸­å¿ƒPublicDataä¸­è·å–æ‰€é€‰å±æ€§çš„æœ€é«˜ä¿¡æ¯å¢ç›Šå±æ€§ä½œä¸ºå¤´ç»“ç‚¹***************
+        int allline=0;//ç¬¬ä¸€ä¸ªå±æ€§çš„è¡Œæ•°ï¼Œä»£è¡¨äº†Excelè¡¨çš„æ‰€æœ‰è¡Œæ•°
+        float MAX=0;   //æœ€å¤§ä¿¡æ¯å¢ç›Š
         String MAX_attr="";
     	while(tp<allgain.length){
     		String s=allgain[tp];
@@ -247,18 +250,18 @@ public LinkedList<TreeNode> SetTree(){
     		}
     		tp+=2;
     	}
-    	System.out.println("ĞÅÏ¢ÔöÒæ×î¸ßµÄÊÇ£º"+MAX+"\t"+"ÊôĞÔÊÇ£º"+MAX_attr);
-    	//ÏÈËãµÃÍ·½áµãĞÅÏ¢
+    	System.out.println("ä¿¡æ¯å¢ç›Šæœ€é«˜çš„æ˜¯ï¼š"+MAX+"\t"+"å±æ€§æ˜¯ï¼š"+MAX_attr);
+    	//å…ˆç®—å¾—å¤´ç»“ç‚¹ä¿¡æ¯
         String[] head=ing.getInformationGain(PublicData.getTarvar(),MAX_attr); 	
         float f1=Float.parseFloat(head[1]);
         float f2=Float.parseFloat(head[2]);
-        //Í·½áµãµÄÎ»ÖÃÊÇ0ĞĞ0ÁĞ
+        //å¤´ç»“ç‚¹çš„ä½ç½®æ˜¯0è¡Œ0åˆ—
         tree.addNode(MAX_attr, (int)f1, (int)f2, Float.parseFloat(head[0]), 0, 0);
     	list.add(new TreeNode(MAX_attr,(int)f1,(int)f2, Float.parseFloat(head[0]), 0, 0));
-    	//*****************ÒÑ¾­¼ÓÈë×îÖÕ´æ´¢½áµãÁ´±í**************************************
-    	System.out.println("¼ÓÈëÒÑ¾­³É¹¦£¬³¤¶ÈÊÇ"+list.size());
-    	System.out.println("ÒÔÏÂÊÇ¸÷¸öÖµ"+"\tÊôĞÔÃû"+list.get(0).name+"\tÖ§³Ö¶È"+list.get(0).YES+"\t·ñ¾ö¶È"+list.get(0).NO+"\tĞÅÏ¢ÔöÒæ"+list.get(0).gain);
-        //ÔÙ´Î´ò¿ªExcel±í£¬µÃµ½ËùÓĞµÄĞĞÊı
+    	//*****************å·²ç»åŠ å…¥æœ€ç»ˆå­˜å‚¨ç»“ç‚¹é“¾è¡¨**************************************
+    	System.out.println("åŠ å…¥å·²ç»æˆåŠŸï¼Œé•¿åº¦æ˜¯"+list.size());
+    	System.out.println("ä»¥ä¸‹æ˜¯å„ä¸ªå€¼"+"\tå±æ€§å"+list.get(0).name+"\tæ”¯æŒåº¦"+list.get(0).YES+"\tå¦å†³åº¦"+list.get(0).NO+"\tä¿¡æ¯å¢ç›Š"+list.get(0).gain);
+        //å†æ¬¡æ‰“å¼€Excelè¡¨ï¼Œå¾—åˆ°æ‰€æœ‰çš„è¡Œæ•°
     	try {   
             Workbook book = Workbook.getWorkbook(new File(PublicData.getFile()));    
             Sheet sheet = book.getSheet(0);
@@ -267,29 +270,29 @@ public LinkedList<TreeNode> SetTree(){
     } catch (Exception e) {   
         e.printStackTrace();   
     } 
-    TreeSet<Integer> HeadAttr=new TreeSet<Integer>();   //´æ´¢Í·½áµãµÄËùÓĞĞĞÊı
+    TreeSet<Integer> HeadAttr=new TreeSet<Integer>();   //å­˜å‚¨å¤´ç»“ç‚¹çš„æ‰€æœ‰è¡Œæ•°
     for(int i=0;i<allline;i++){
     	HeadAttr.add(i);
     }
    
-    //ÕıÊ½¿ªÊ¼±éÀú
-    HashMap<String,String[]> h=new HashMap<String,String[]>();    //ÏÈ½«±£´æÁËËùÓĞÊôĞÔ¼°Æä·ÖÖ§µÄMap¸´ÖÆµ½ĞÂµÄMapÖĞ£¬±ÜÃâ¶Ô¶Ô²Ù×÷Ôì³ÉºóÃæµÄÊ¹ÓÃÎÊÌâ
-    h.putAll(hs);         //Ö»ÓĞÕâÑù²ÅÊÇÕæÕıµÄ¸´ÖÆµ½ĞÂ±íÖĞ
-    System.out.println("Ô­ÓĞ±íµÄ³¤¶ÈÊÇ£º"+hs.size()+"ÊÇ·ñ°üº¬"+MAX_attr+hs.containsKey(MAX_attr));
-    System.out.println("ĞÂMap³¤¶ÈÊÇ£º"+h.size()+"ÊÇ·ñ°üº¬"+"credit"+h.containsKey("credit"));
+    //æ­£å¼å¼€å§‹éå†
+    HashMap<String,String[]> h=new HashMap<String,String[]>();    //å…ˆå°†ä¿å­˜äº†æ‰€æœ‰å±æ€§åŠå…¶åˆ†æ”¯çš„Mapå¤åˆ¶åˆ°æ–°çš„Mapä¸­ï¼Œé¿å…å¯¹å¯¹æ“ä½œé€ æˆåé¢çš„ä½¿ç”¨é—®é¢˜
+    h.putAll(hs);         //åªæœ‰è¿™æ ·æ‰æ˜¯çœŸæ­£çš„å¤åˆ¶åˆ°æ–°è¡¨ä¸­
+    System.out.println("åŸæœ‰è¡¨çš„é•¿åº¦æ˜¯ï¼š"+hs.size()+"æ˜¯å¦åŒ…å«"+MAX_attr+hs.containsKey(MAX_attr));
+    System.out.println("æ–°Mapé•¿åº¦æ˜¯ï¼š"+h.size()+"æ˜¯å¦åŒ…å«"+"credit"+h.containsKey("credit"));
    
-    //±éÀúÖ®Ç°´æ´¢ÊôĞÔ¼°Æä·ÖÖ§µÄHashMapÖĞËùÓĞvalue¼°String[] 
-    //ÏÈÉèÖÃºÃĞĞÊıºÍÁĞÊı±äÁ¿£¬HashMapµÄKeyÃ¿Ïòºó±éÀúÒ»´Î£¬ĞĞÊı±ØĞë¼ÓÒ»£¬HashMapµÄvalue¼´listÃ¿Ïòºó±éÀúÒ»´Î£¬ÁĞÊı¼ÓÒ»
+    //éå†ä¹‹å‰å­˜å‚¨å±æ€§åŠå…¶åˆ†æ”¯çš„HashMapä¸­æ‰€æœ‰valueåŠString[] 
+    //å…ˆè®¾ç½®å¥½è¡Œæ•°å’Œåˆ—æ•°å˜é‡ï¼ŒHashMapçš„Keyæ¯å‘åéå†ä¸€æ¬¡ï¼Œè¡Œæ•°å¿…é¡»åŠ ä¸€ï¼ŒHashMapçš„valueå³listæ¯å‘åéå†ä¸€æ¬¡ï¼Œåˆ—æ•°åŠ ä¸€
     
-    //ÏÈ½¨Á¢´¦ÀíMap£¬ÆäÖĞµÄkey´æ´¢µÄÊÇµ±Ç°·ÖÖ§µÄÁ¬½ÓString£¨Èç£ºage+yes+income...£©£¬ÆäÖĞvalue´æ´¢µÄÊÇµ±Ç°keyÏÂÊ£ÓàÊôĞÔÁĞ±í
-    //´¦Àí¹ı³Ì»á²»¶Ï¼ÓÈëĞÂµÄkey(±íÏÖÔÚ³¤¶ÈµÄÔö¼Ó),¶øvalueµÄ³¤¶È²»¶Ï¼õÉÙ£¨µ«ÊÇ»á²»¶ÏÔö¶à£©£¬ÅĞ¶ÏÌõ¼şÊÇvalueÊÇ·ñÈ«²¿¶¼ÊÇ¿Õ£¬Ê÷Ò¶½áµã»áÇå¿Õvalue
+    //å…ˆå»ºç«‹å¤„ç†Mapï¼Œå…¶ä¸­çš„keyå­˜å‚¨çš„æ˜¯å½“å‰åˆ†æ”¯çš„è¿æ¥Stringï¼ˆå¦‚ï¼šage+yes+income...ï¼‰ï¼Œå…¶ä¸­valueå­˜å‚¨çš„æ˜¯å½“å‰keyä¸‹å‰©ä½™å±æ€§åˆ—è¡¨
+    //å¤„ç†è¿‡ç¨‹ä¼šä¸æ–­åŠ å…¥æ–°çš„key(è¡¨ç°åœ¨é•¿åº¦çš„å¢åŠ ),è€Œvalueçš„é•¿åº¦ä¸æ–­å‡å°‘ï¼ˆä½†æ˜¯ä¼šä¸æ–­å¢å¤šï¼‰ï¼Œåˆ¤æ–­æ¡ä»¶æ˜¯valueæ˜¯å¦å…¨éƒ¨éƒ½æ˜¯ç©ºï¼Œæ ‘å¶ç»“ç‚¹ä¼šæ¸…ç©ºvalue
     HashMap<String,HashMap<String, String[]>> source=new HashMap<String,HashMap<String, String[]>>();
-	HashMap<String,HashMap<String, String[]>> newMap=new HashMap<String,HashMap<String, String[]>>();   //Á½¸öMap½»»»
-	HashMap<String,TreeSet<Integer>> sset=new HashMap<String,TreeSet<Integer>>();                        //ÓëHashMapÍ¬²½µÄ´æ´¢¸÷¸ö·ÖÖ§µÄÎ»ÖÃµÄ×ÓSet
+	HashMap<String,HashMap<String, String[]>> newMap=new HashMap<String,HashMap<String, String[]>>();   //ä¸¤ä¸ªMapäº¤æ¢
+	HashMap<String,TreeSet<Integer>> sset=new HashMap<String,TreeSet<Integer>>();                        //ä¸HashMapåŒæ­¥çš„å­˜å‚¨å„ä¸ªåˆ†æ”¯çš„ä½ç½®çš„å­Set
     source.put(MAX_attr,h);
     sset.put(MAX_attr,HeadAttr);
     int Att_length=1;
-    boolean flag=true;    //Õû¸ö³ÌĞòµÄÖĞĞÄ¿ØÖÆ
+    boolean flag=true;    //æ•´ä¸ªç¨‹åºçš„ä¸­å¿ƒæ§åˆ¶
     while(flag){
     	Set<Map.Entry<String, HashMap<String, String[]>>> souset = source.entrySet();
     	Iterator<Map.Entry<String, HashMap<String, String[]>>> souit=souset.iterator();
@@ -300,54 +303,54 @@ public LinkedList<TreeNode> SetTree(){
     	        HashMap<String,String[]> fg=souentry.getValue();
     	        String keyName=souentry.getKey();
     	        
-    	        System.out.println("fgµÄ³¤¶ÈÊÇ¶àÉÙ---"+fg.size());
+    	        System.out.println("fgçš„é•¿åº¦æ˜¯å¤šå°‘---"+fg.size());
     	        if(fg.size()>0)
     	        //if(keyName!="Leaf")
     	        {
     	           String[] allstr=keyName.split(",");
     	           TreeSet<Integer> parentset=sset.get(keyName);
     			   String key=allstr[allstr.length-1];
-    			   String[] part=hs.get(key);           //×îºóÒ»¸ö×Ö·û´®¼´·ÖÁÑµã,»ñÈ¡Æä·ÖÖ§ÊôĞÔ,×¢ÒâÕâÀï±ØĞëÊÇ´ÓÎ´ĞŞ¸ÄµÄhs£¬²»¿ÉÒÔÊÇfg
+    			   String[] part=hs.get(key);           //æœ€åä¸€ä¸ªå­—ç¬¦ä¸²å³åˆ†è£‚ç‚¹,è·å–å…¶åˆ†æ”¯å±æ€§,æ³¨æ„è¿™é‡Œå¿…é¡»æ˜¯ä»æœªä¿®æ”¹çš„hsï¼Œä¸å¯ä»¥æ˜¯fg
     			   HashMap<String,String[]> newFg=souentry.getValue();
-    			   newFg.putAll(fg);         //¼´½«±éÀúfgÖĞËùÓĞÊôĞÔ¼°Æä·ÖÖ§£¬ÎÒÃÇÖ»ÄÜÔÚÆäÌæ´ú±íÉÏÖ´ĞĞÉ¾³ı
+    			   newFg.putAll(fg);         //å³å°†éå†fgä¸­æ‰€æœ‰å±æ€§åŠå…¶åˆ†æ”¯ï¼Œæˆ‘ä»¬åªèƒ½åœ¨å…¶æ›¿ä»£è¡¨ä¸Šæ‰§è¡Œåˆ é™¤
     			   newFg.remove(key);
-    			   System.out.println("ÆğÊ¼µÄMap³¤¶ÈÊÇ£º£¨ÓÃÓÚ²é¿´MapÎªºÎÔçÔçÎª¿Õ£©"+newFg.size()); 			   
+    			   System.out.println("èµ·å§‹çš„Mapé•¿åº¦æ˜¯ï¼šï¼ˆç”¨äºæŸ¥çœ‹Mapä¸ºä½•æ—©æ—©ä¸ºç©ºï¼‰"+newFg.size()); 			   
     			   HashMap<String,String[]> tempMap=new HashMap<String,String[]>();  			   
     			   for(int i=0;i<part.length;i++)
     			     {
-    				   tempMap.putAll(newFg);          //ÁÙÊ±µÄMapÓÃÀ´¿ØÖÆ£¬·ÀÖ¹½ÓÏÂÀ´Ëæ×Å·ÖÖ§¶øÒÀ´ÎÉ¾³ı¶ø²»ÊÇ´ÓÔ­MapÖĞÉ¾³ıÒ»¸ö
-    				   System.out.println(part[i]+"·ÖÖ§\t-----------------------"+"³¤¶ÈÊÇ"+part.length);
-    				   TreeSet<Integer> s=this.setLocation(part[i],parentset);   //·µ»Ø¹şÏ£±íÖĞ·ÖÖ§ÊôĞÔÔÚExcel±íÖĞµÄÎ»ÖÃ,×¢Òâ¸Ãset×îºóÒ»¸öÔªËØ´æ´¢ÁËÖ§³Ö¶ÈĞÅÏ¢			
+    				   tempMap.putAll(newFg);          //ä¸´æ—¶çš„Mapç”¨æ¥æ§åˆ¶ï¼Œé˜²æ­¢æ¥ä¸‹æ¥éšç€åˆ†æ”¯è€Œä¾æ¬¡åˆ é™¤è€Œä¸æ˜¯ä»åŸMapä¸­åˆ é™¤ä¸€ä¸ª
+    				   System.out.println(part[i]+"åˆ†æ”¯\t-----------------------"+"é•¿åº¦æ˜¯"+part.length);
+    				   TreeSet<Integer> s=this.setLocation(part[i],parentset);   //è¿”å›å“ˆå¸Œè¡¨ä¸­åˆ†æ”¯å±æ€§åœ¨Excelè¡¨ä¸­çš„ä½ç½®,æ³¨æ„è¯¥setæœ€åä¸€ä¸ªå…ƒç´ å­˜å‚¨äº†æ”¯æŒåº¦ä¿¡æ¯			
     				   Iterator<Integer> its=s.iterator();
-    				   System.out.println("Ö´ĞĞÇó½»¼¯Ö®ºóµÄsetÔªËØ°üº¬");
+    				   System.out.println("æ‰§è¡Œæ±‚äº¤é›†ä¹‹åçš„setå…ƒç´ åŒ…å«");
     				   while(its.hasNext())
     					   System.out.print(its.next()+"\t");
     				   if(s.size()>0)
     				   { 
-                  	      int a=s.last();                 //ÓÉÓÚÉè¼ÆµÄÊ±ºòÊÇ½«×éºóµÄÒ»¸öÔªËØÔ­±¾µÄ×îºóÒ»¸öÔªËØ¼ÓÉÏÖ§³Ö¶ÈµÃµ½À´µÄ£¬ËùÒÔÊ¹ÓÃÇ°±ØĞëÏÈÒÆ³ı
+                  	      int a=s.last();                 //ç”±äºè®¾è®¡çš„æ—¶å€™æ˜¯å°†ç»„åçš„ä¸€ä¸ªå…ƒç´ åŸæœ¬çš„æœ€åä¸€ä¸ªå…ƒç´ åŠ ä¸Šæ”¯æŒåº¦å¾—åˆ°æ¥çš„ï¼Œæ‰€ä»¥ä½¿ç”¨å‰å¿…é¡»å…ˆç§»é™¤
                           s.remove(a);
-                          System.out.println("ÒÆ³ıÖ®ºóµÄset»¹Ê£ÏÂ¶àÉÙÔªËØ===="+s.size());
+                          System.out.println("ç§»é™¤ä¹‹åçš„setè¿˜å‰©ä¸‹å¤šå°‘å…ƒç´ ===="+s.size());
                           if(s.size()==0)
                         	  break;
                           int num=s.last();
-                          int yes=a-num;    //µÃµ½µ±Ç°ÊôĞÔ·ÖÖ§µÄÖ§³Ö¶È
-                          int no=s.size()-yes;   //µÃµ½µ±Ç°ÊôĞÔ·ÖÖ§µÄ·ñ¾ö¶È
-                          if(no<0){                  //Èç¹ûnoÎª¸ºÊı´ú±í×îºó¼ÓÈësetµÄÖµÎª0£¬Ò²¼´yesÎª0
-                        	  s.add(a);              //ÔÙ½«×îºóÒ»¸öÔªËØ·Å»ØÈ¥
+                          int yes=a-num;    //å¾—åˆ°å½“å‰å±æ€§åˆ†æ”¯çš„æ”¯æŒåº¦
+                          int no=s.size()-yes;   //å¾—åˆ°å½“å‰å±æ€§åˆ†æ”¯çš„å¦å†³åº¦
+                          if(no<0){                  //å¦‚æœnoä¸ºè´Ÿæ•°ä»£è¡¨æœ€ååŠ å…¥setçš„å€¼ä¸º0ï¼Œä¹Ÿå³yesä¸º0
+                        	  s.add(a);              //å†å°†æœ€åä¸€ä¸ªå…ƒç´ æ”¾å›å»
                         	  yes=0;
                         	  no=s.size();
                           }           
-                          System.out.println("²é¿´ÎªºÎyesºÍnoÖĞ´æÔÚ¸ºÊı,ÆäÖĞµÄset°üº¬ÔªËØ  "+s.size()+"  yesÓĞ¶àÉÙ   "+yes+"  noÓĞ¶àÉÙ    "+no);
-                          //µ±Ç°Ò»²½ÕÒ³öµ±Ç°ÊôĞÔµÄ·ÖÖ§ÏÂÏÂÒ»¸ö×î´óĞÅÏ¢ÔöÒæÊôĞÔ----µÚÈıÖØÑ­»·
+                          System.out.println("æŸ¥çœ‹ä¸ºä½•yeså’Œnoä¸­å­˜åœ¨è´Ÿæ•°,å…¶ä¸­çš„setåŒ…å«å…ƒç´   "+s.size()+"  yesæœ‰å¤šå°‘   "+yes+"  noæœ‰å¤šå°‘    "+no);
+                          //å½“å‰ä¸€æ­¥æ‰¾å‡ºå½“å‰å±æ€§çš„åˆ†æ”¯ä¸‹ä¸‹ä¸€ä¸ªæœ€å¤§ä¿¡æ¯å¢ç›Šå±æ€§----ç¬¬ä¸‰é‡å¾ªç¯
                           float MAX_gain=0;
-                          String MAX_at="³õÊ¼ÊôĞÔÖµ";    //±ê¼ÇÃ¿´ÎÇóµÃµÄ×î´óĞÅÏ¢ÔöÒæµÄÊôĞÔÃû³Æ
+                          String MAX_at="åˆå§‹å±æ€§å€¼";    //æ ‡è®°æ¯æ¬¡æ±‚å¾—çš„æœ€å¤§ä¿¡æ¯å¢ç›Šçš„å±æ€§åç§°
                           Column++; 
                           Set<Map.Entry<String, String[]>> hset=newFg.entrySet();                                                           
                    	      Iterator<Map.Entry<String, String[]>> hit=hset.iterator();
                           while(hit.hasNext())
                              {   
-                              Map.Entry<String, String[]> htmp=hit.next();   //´ÓÊ£ÏÂµÄÊôĞÔÖĞÑ°ÕÒ×î´óµÄĞÅÏ¢ÔöÒæÖµ
-                              String gain=this.computeGain(s,htmp.getKey() );    //·µ»ØÆäĞÅÏ¢ÔöÒæ
+                              Map.Entry<String, String[]> htmp=hit.next();   //ä»å‰©ä¸‹çš„å±æ€§ä¸­å¯»æ‰¾æœ€å¤§çš„ä¿¡æ¯å¢ç›Šå€¼
+                              String gain=this.computeGain(s,htmp.getKey() );    //è¿”å›å…¶ä¿¡æ¯å¢ç›Š
                               if(gain.equals("YLeaf")){
                             	  gain=1+"";
                             	  MAX_gain=1;
@@ -365,24 +368,24 @@ public LinkedList<TreeNode> SetTree(){
                            tree.addNode(part[i]+","+MAX_at,yes,no,MAX_gain,Att_length,Column);
                            list.add(new TreeNode(MAX_at,yes,no,MAX_gain,Att_length,Column));
                            tempMap.remove(MAX_at);
-                           System.out.println("ÆğÊ¼µÄMap³¤¶ÈÊÇ£º£¨ÓÃÓÚ²é¿´MapÎªºÎÔçÔçÎª¿Õ£©É¾³ıÖ®ºóÇé¿ö"+tempMap.size());
+                           System.out.println("èµ·å§‹çš„Mapé•¿åº¦æ˜¯ï¼šï¼ˆç”¨äºæŸ¥çœ‹Mapä¸ºä½•æ—©æ—©ä¸ºç©ºï¼‰åˆ é™¤ä¹‹åæƒ…å†µ"+tempMap.size());
                            String newKeyName=keyName+","+part[i]+","+MAX_at;
                            if(MAX_gain==0||MAX_gain==1){
                         	   tempMap.clear();
                            }
-                           System.out.println("tempMapÖĞ»¹ÓĞ¶àÉÙÔªËØ"+tempMap.size());
+                           System.out.println("tempMapä¸­è¿˜æœ‰å¤šå°‘å…ƒç´ "+tempMap.size());
                            newMap.put(newKeyName,tempMap);
                            sset.put(newKeyName,s);
     				     }
     			     }
     			    }	
              }
-                 Att_length+=2;                                   //ÓÉÓÚÃ¿´Î¼ÓÈëµÃ¶¼ÊÇ·ÖÖ§ºÍÏÂÒ»¸öÊôĞÔ»áÔö¼Ó2
+                 Att_length+=2;                                   //ç”±äºæ¯æ¬¡åŠ å…¥å¾—éƒ½æ˜¯åˆ†æ”¯å’Œä¸‹ä¸€ä¸ªå±æ€§ä¼šå¢åŠ 2
              	source.clear();
-            	source.putAll(newMap);                            //ÒÔĞÂµÄMapÌæ´úÔ­À´µÄ   
+            	source.putAll(newMap);                            //ä»¥æ–°çš„Mapæ›¿ä»£åŸæ¥çš„   
                 int null_num=0;
                 int Max_Attr_len=0;
-                //±éÀúĞÂMap£¬Èç¹ûÈ«²¿¶¼ÊÇnullµÄ»°±íÊ¾£¬ÒÑ¾­È«²¿±éÀúÍê³É
+                //éå†æ–°Mapï¼Œå¦‚æœå…¨éƒ¨éƒ½æ˜¯nullçš„è¯è¡¨ç¤ºï¼Œå·²ç»å…¨éƒ¨éå†å®Œæˆ
             	Set<Map.Entry<String, HashMap<String, String[]>>> checkset = source.entrySet();
             	Iterator<Map.Entry<String, HashMap<String, String[]>>> checkit=checkset.iterator();
             	while(checkit.hasNext())
@@ -392,18 +395,18 @@ public LinkedList<TreeNode> SetTree(){
          	         String LastName=checkentry.getKey();
          	         if(LastName.length()>Max_Attr_len)
          	        	      Max_Attr_len=LastName.length();
-         	         System.out.println("×îºóµÄ½áµãµ½µ×ÊÇÊ²Ã´--"+LastName+"×îºóµÄMap³¤¶ÈÊÇ"+lastfg.size());
-         	         //½«µÃµ½µÄ¹æÔòĞ´Èëµ½ÎÄ±¾ÖĞ
+         	         System.out.println("æœ€åçš„ç»“ç‚¹åˆ°åº•æ˜¯ä»€ä¹ˆ--"+LastName+"æœ€åçš„Mapé•¿åº¦æ˜¯"+lastfg.size());
+         	         //å°†å¾—åˆ°çš„è§„åˆ™å†™å…¥åˆ°æ–‡æœ¬ä¸­
          	         if(lastfg.size()==0){
          	        	 PublicData.setDescionTreeRule(LastName);
          	        	 PublicData.setDescionTreeRule("\r\n");
          	         }
-            	     if(lastfg.size()>1)           //ÖÁÓÚÎªºÎÊÇ´óÓÚ1¶ø²»ÊÇ0£¬ÎÒÒ²ÎŞ´Ó½âÊÍ¡£´óÓÚ0»áÓĞÎÊÌâ£¬È»¶ø´óÓÚ1È´ÄÜµÃµ½ÕıÈ·´ğ°¸
+            	     if(lastfg.size()>1)           //è‡³äºä¸ºä½•æ˜¯å¤§äº1è€Œä¸æ˜¯0ï¼Œæˆ‘ä¹Ÿæ— ä»è§£é‡Šã€‚å¤§äº0ä¼šæœ‰é—®é¢˜ï¼Œç„¶è€Œå¤§äº1å´èƒ½å¾—åˆ°æ­£ç¡®ç­”æ¡ˆ
             	        {
             	    	 null_num++;
             	        }
             	    }   
-            	//Èç¹ûÈ«²¿¶¼ÊÇnull,ÔòÌø³öÑ­»·
+            	//å¦‚æœå…¨éƒ¨éƒ½æ˜¯null,åˆ™è·³å‡ºå¾ªç¯
                 if(null_num==0){
                 	flag=false;
                 }           		

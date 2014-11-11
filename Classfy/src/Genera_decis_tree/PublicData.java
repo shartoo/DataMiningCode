@@ -8,24 +8,33 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-//¹«¹²Êı¾İÀà£¬Ö÷ÒªÊÇ²Ù×÷ÎÄ¼şµÄÎÄ¼şÃûºÍÊôĞÔÃû
+//æ¶“æ˜îœ…é„îˆ›å½æ¸šæ¶˜î‡®æ¶“ï¿½ç°ºéî„€å¡éç‰ˆåµé¨å‹¬æ·æµ£æ»„å¸´é™ï½†æŸŸå¨‰ï¿½
 public class PublicData {
-  // public static String file;   //ÎÄ¼şÃû
-   public  static String[] attr;   //ÊôĞÔÃû
+  // public static String file;   //é”Ÿä¾¥ç¡·æ‹·é”Ÿæ–¤æ‹·
+   public  static String[] attr;   //è¤°æ’³å¢ éç‰ˆåµéµï¿½æ¹çç‚´ï¿½é’æ¥„ã€ƒ
    //public static final String attr_and_part="d:/predata/attr_and_part.txt";
-   public static final String partrule="d:/predata/partrule.txt";    //´æ´¢¾ö²ßÊ÷·ÖÁÑµÄËùÓĞ¹æÔò£¬ËùÓĞ·ÖÖ§,Ã¿ĞĞÒ»Ìõ,ÓÉÍ·½áµãÍùÏÂÒÔ¶ººÅ·Ö¸ô
-                                                                   //ÉèÖÃÊ±£¬±ØĞë´«Èë¶şÎ¬Êı×é£¬»ñÈ¡Ê±Ò²ÊÇ¶şÎ¬Êı×é
-   public static final String FileDataStatic="d:/predata/FileDataSatic.txt"; 
-   public static final String filename="d:/predata/filename.txt";
-   public static final String attrname="d:/predata/attr.txt";
-   public static final String tarvar="d:/predata/tarvar.txt";    //´æ´¢¾ö²ßÊ÷ÖĞÄ¿±êÊôĞÔ
-   public static final String selvar="d:/predata/selvar.txt";   //´æ´¢¾ö²ßÊ÷ÖĞÑ¡Ôñ¶ÈÁ¿ÊôĞÔ
-   public static final String varInformationGain="d:/predata/varinfg.txt";  //´æ´¢ÊôĞÔµÄĞÅÏ¢ÔöÒæ£¬ÆæÊı(1,3,..)index´æ´¢ÔöÒæ£¬Å¼Êı´æ´¢ÊôĞÔ
-   public static final String  descionTreeRule="d:/predata/DescionTree/rule.txt";
-   public static final String clusterAttr="d:/predata/Cluster/SelAttr.txt";
-   public static final String clusterNum="d:/predata/Cluster/clusterNum.txt";
-   public static final String clusterResult="d:/predata/Cluster/clusterResult.txt";
-   public static final String clusterInitCore="d:/predata/Cluster/clusterInitCore.txt";
+   /**
+    * éå´‡ç“¥éæˆæ¸¶ç¼å ¢æ®‘éå´‡ç“¥é’å—˜æ•®é”›å±¼ç·¥æ¿¡å‚›åœæµ î„æ¹çç‚´ï¿½ wether(rain,sunny),windy(strong,weak),fish?[éå†²ç•¾çç‚´ï¿½](yes,no)
+    * é’æ¬å½²æµ ãƒ¦æ¹æ¿¡å‚™ç¬…ç‘™å‹«å¯é”›ï¿½rain,weak,no;    sunny,weak,yeséˆ¥ï¸¹ï¿½
+    */
+   public static final String partrule="/Data/partrule.txt";
+   
+   public static final String FileDataStatic="Data/DescionTree/FileDataSatic.txt";
+   public static final String filename="Data/DescionTree/filename.txt";//è¤°æ’³å¢ é¢ã„¦åŸ›éç‰ˆåµé‚å›¦æ¬¢éµï¿½æ¹ªé©î†¼ç¶
+   public static final String attrname="Data/DescionTree/attr.txt";    //è¤°æ’³å¢ é‚å›¦æ¬¢éµï¿½æ¹çç‚´ï¿½é’æ¥„ã€ƒ
+   public static final String tarvar="Data/DescionTree/tarvar.txt";    //é©î†½çˆ£çç‚´ï¿½æ¶”ç†·åµ†æµ£æ»€è´Ÿéˆï¿½ç²“é’å—™è¢«é¨å‹«ç˜é¬ï¿½
+   public static final String selvar="Data/DescionTree/selvar.txt";   //é¢ã„¦åŸ›é–«å¤‹å«¨æµœå——æ‘¢æµœæ¶˜ç˜é¬ï¿½
+   /**
+    * //å§£å¿é‡œçç‚´ï¿½é¨å‹ªä¿Šé­îˆšî–ƒé©å©ç´é¸å¤Œåæ¾¶Ñƒçš¬éºæ‘ç°­,éªæœµç¬–çç‚´ï¿½éšå¶„ç¬Œéèœ‚ç¶‹æ¾¶Ñƒçš¬é—‚æ’®æ®§å¯®ï¿½æ½µéŠ†å‚šç˜é¬Ñƒæ‚•ç»‰æ¿åé’î‚¢å´° 0,2,4éˆ¥ï¸¹ï¿½éèœ‚ç¶‹æ¾¶Ñƒçš¬é—ï¿½1,3,5éˆ¥ï¸¹ï¿½
+    */
+   public static final String varInformationGain="Data/DescionTree/varinfg.txt";  
+   public static final String  descionTreeRule="Data/DescionTree/rule.txt";
+   
+   /************************æµ ãƒ¤ç¬…é„îˆä»›ç»«å©šå„´é’å—™æ®‘éç‰ˆåµé¿å¶„ç¶”********************************/
+   public static final String clusterAttr="Data/Cluster/SelAttr.txt";    //é¢ã„¦åŸ›é–«å¤‹å«¨çç‚´ï¿½
+   public static final String clusterNum="Data/Cluster/clusterNum.txt";  //é¢ã„¦åŸ›é–«å¤‹å«¨æµœå——î™‹çæˆœé‡œé‘±æ°±è¢«æ¶“î…ç¸¾
+   public static final String clusterResult="Data/Cluster/clusterResult.txt";    //é‘±æ°±è¢«ç¼æ’´ç‰
+   public static final String clusterInitCore="Data/Cluster/clusterInitCore.txt";//é’æ¿†îŠé‘±æ°±è¢«æ¶“î…ç¸¾
    
    
 public static String getFile(){
@@ -33,11 +42,11 @@ public static String getFile(){
 	String f=null;
 	try {
 		read = new BufferedReader(new FileReader(filename));
-		f=read.readLine();                 //ÎÄ¼şÖĞÖ»»á´æ´¢ÎÄ¼şÃûÒ»ĞĞ
+		f=read.readLine();                 //é‚å›¦æ¬¢ç’ºîˆšç·æ¶“ï¿½åŸ‡æ¶“ï¿½î”‘æ¶”å¬ªå”´
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-		System.out.println("ÎÄ¼ş²»´æÔÚ£¡");
+		System.out.println("éµå¥ç¬‰é’ç‰ˆæƒæµ è®¹ç´’ç’‡è¯²å½‡é‚å›¦æ¬¢é–¿æ¬’î‡¤");
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -47,13 +56,13 @@ public static String getFile(){
 public static void setInformationGain(String gain){
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(varInformationGain)));
-	   writer.append(gain.replaceAll("\"", ""));   //È¥µôË«ÒıºÅ
+	   writer.append(gain.replaceAll("\"", ""));   //å»é”Ÿæ–¤æ‹·åŒé”Ÿæ–¤æ‹·é”Ÿï¿½
 	   writer.flush();
 	} catch (IOException e) {
 		e.printStackTrace();
 	}	
 }
-public static String getVarinformationgain() {           //½«·µ»ØÒ»¸ö³¤µÄ×Ö·û´®£¬°üº¬ÊôĞÔºÍĞÅÏ¢ÔöÒæ£¬¶şÕß½ô¸ú£¬È«²¿ÒÔ¶ººÅ·Ö¸ô
+public static String getVarinformationgain() {           //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¸€é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿè¡—å‡¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿçš†çŒ´æ‹·é”Ÿæ–¤æ‹·æ¯é”Ÿæ–¤æ‹·é”ŸèŠ¥ï¼Œé”Ÿæ–¤æ‹·é”Ÿç«­æ–¤æ‹·é”Ÿæ–¤æ‹·å…¨é”Ÿæ–¤æ‹·é”Ÿçš†è®¹æ‹·é”Ÿè„šåˆ†é©æ‹·
 	BufferedReader r;
 	String s=null;
 	try{
@@ -61,14 +70,14 @@ public static String getVarinformationgain() {           //½«·µ»ØÒ»¸ö³¤µÄ×Ö·û´®£
 		s=r.readLine();
 	}catch(IOException e){
          e.printStackTrace();		
-         System.out.println("»ñÈ¡ĞÅÏ¢ÔöÒæÊ§°Ü£¬Ã»ÓĞÕÒµ½ÎÄ¼ş");
+         System.out.println("è®¡ç®—ä¿¡æ¯å¢ç›Š");
 	}
 	return s;
 }
 public static void setFile(String f){
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filename)));
-	   writer.append(f.replaceAll("\"", ""));   //È¥µôË«ÒıºÅ
+	   writer.append(f.replaceAll("\"", ""));   //å»é”Ÿæ–¤æ‹·åŒé”Ÿæ–¤æ‹·é”Ÿï¿½
 	   writer.flush();
 	} catch (IOException e) {
 		e.printStackTrace();
@@ -80,14 +89,14 @@ public static String[] getAttr() {
 	try{
 		r=new BufferedReader(new FileReader(attrname));
 		s=r.readLine();
-		attr=s.split(",");                //¼ÙÈôÊôĞÔÓĞ¶àĞĞ¾Í»áÓĞÎÊÌâ
+		attr=s.split(",");                //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå«è®¹æ‹·é”Ÿå«å°±ä¼™æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 	}catch(IOException e){
          e.printStackTrace();		
-         System.out.println("Ã»ÓĞÕÒµ½ÎÄ¼ş");
+         System.out.println("æ²¡é”Ÿæ–¤æ‹·é”Ÿæ­ç¢‰æ‹·é”Ÿä¾¥ç¡·æ‹·");
 	}
 	return attr;
 }
-public static void setAttr(String[] attr) {    //ÆäÊµ¾ÍÊÇ½«ÊôĞÔÈ«²¿´æ´¢ÔÚattrnameÎÄ¼şÖĞ
+public static void setAttr(String[] attr) {    //é”Ÿæ–¤æ‹·å®é”Ÿæ–¤æ‹·é”Ÿè§’æ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å…¨é”Ÿæ–¤æ‹·é”ŸèŠ¥å‚¨é”Ÿæ–¤æ‹·attrnameé”Ÿä¾¥ç¡·æ‹·é”Ÿæ–¤æ‹·
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(attrname)));
 		for(int i=0;i<attr.length;i++){
@@ -95,7 +104,7 @@ public static void setAttr(String[] attr) {    //ÆäÊµ¾ÍÊÇ½«ÊôĞÔÈ«²¿´æ´¢ÔÚattrnam
 				writer.append(attr[i].replaceAll("\"", "").trim());
 			}
 			else{
-				writer.append(","+attr[i].replaceAll("\"", "").trim());	//È¥µôË«ÒıºÅ	
+				writer.append(","+attr[i].replaceAll("\"", "").trim());	//å»é”Ÿæ–¤æ‹·åŒé”Ÿæ–¤æ‹·é”Ÿï¿½
 			}
 			writer.flush();
 		}   
@@ -121,13 +130,13 @@ public static String[] getSelvar() {
 	try{
 		r=new BufferedReader(new FileReader(selvar));
 		s=r.readLine();
-		 var=s.split(",");                //¼ÙÈôÊôĞÔÓĞ¶àĞĞ¾Í»áÓĞÎÊÌâ
+		 var=s.split(",");                //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå«è®¹æ‹·é”Ÿå«å°±ä¼™æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 	}catch(IOException e){
          e.printStackTrace();		
 	}
 	return var;
 }
-  public void setSelvar(String[] sel){      //ÉèÖÃ¾ö²ßÊ÷ÖĞÒÑ¾­Ñ¡ÔñµÄÊôĞÔ
+  public void setSelvar(String[] sel){      //é”Ÿæ–¤æ‹·é”ŸçŸ«æ’…æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿçª–æ’…æ‹·é€‰é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿï¿½
 		try{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(selvar)));
 			writer.append(sel[0]);
@@ -140,7 +149,7 @@ public static String[] getSelvar() {
 		}
 	  
   }
-  public void setTarvar(String tar){              //ÉèÖÃ¾ö²ßÊ÷ÖĞÄ¿±êÊôĞÔ  
+  public void setTarvar(String tar){              //é”Ÿæ–¤æ‹·é”ŸçŸ«æ’…æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ç›®é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·  
 		try{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(tarvar)));
 		   writer.append(tar.replaceAll("\"", ""));
@@ -150,7 +159,7 @@ public static String[] getSelvar() {
 		}
 	  
   }
-  public static void setDescionTreeRule(String rule){              //ÉèÖÃ¾ö²ßÊ÷ÖĞÄ¿±êÊôĞÔ  
+  public static void setDescionTreeRule(String rule){              //é”Ÿæ–¤æ‹·é”ŸçŸ«æ’…æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ç›®é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·  
 		try{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(descionTreeRule),true));
 		   writer.append(rule.replaceAll("\"", ""));
@@ -160,7 +169,7 @@ public static String[] getSelvar() {
 		}
 	  
 }
-  //ÓÃÀ´Çå¿Õ¹æÔò£¬ÔÚÎÒÃÇÖØĞÂĞ´Èë¹æÔòÖ®Ç°
+  //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å±•é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå«è¾¾æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¹‹å‰
 public static void clearRule(){
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(descionTreeRule),true));
@@ -170,7 +179,7 @@ public static void clearRule(){
 		e.printStackTrace();
 	}
 }
-//============================================¾ÛÀàÓÃµÄÊı¾İ==========================
+//============================================é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”ŸçŸ«ç¢‰æ‹·é”Ÿæ–¤æ‹·é”Ÿï¿½=========================
 public static void setClusterAttr(String var) {
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(clusterAttr)));
@@ -188,7 +197,7 @@ public static String[] getClusterAttr() {
 	try{
 		r=new BufferedReader(new FileReader(clusterAttr));
 		s=r.readLine();
-		 var=s.split(",");                //¼ÙÈôÊôĞÔÓĞ¶àĞĞ¾Í»áÓĞÎÊÌâ
+		 var=s.split(",");                //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå«è®¹æ‹·é”Ÿå«å°±ä¼™æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 	}catch(IOException e){
          e.printStackTrace();		
 	}
@@ -216,7 +225,7 @@ public static int getClusterNum(){
 	}
 	return num;
 }
-//½«ÎÒÃÇËæ»ú³õÊ¼»¯µÄ¾ÛÀàÖĞĞÄ´æ´¢ÆğÀ´ÒÔ±ã±È½Ï
+//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å§‹é”Ÿæ–¤æ‹·é”Ÿä¾¥æ’…æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿä¾¥å­˜å‚¨é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿçš†æ†‹æ‹·å†‰é”Ÿï¿½
 public static void clearInitCore(){
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(clusterInitCore)));
@@ -238,7 +247,7 @@ public static void setClusterInitCore(String str){
 }
 
 
-//´æ´¢¾ÛÀà½á¹û
+//é”ŸèŠ¥å‚¨é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 public static void setClusterResult(String n){
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(clusterResult),true));
@@ -248,7 +257,7 @@ public static void setClusterResult(String n){
 		e.printStackTrace();
 	}
 }
-//Ã¿´Î¿ªÊ¼¾ÛÀàµÄÊ±ºò¶¼±ØĞëÏÈÇå³ıÖ®Ç°ÎÄ±¾µÄ¾ÛÀà½á¹û£¬ÎÒÃÇÉèÖÃÁËÇå¿Õ·½·¨
+//æ¯é”Ÿè½¿åŒ¡æ‹·å§‹é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿç»æ†‹æ‹·èš¨æ€¥é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¹‹å‰é”Ÿä¾¥æ†‹æ‹·é”Ÿä¾¥æ’…æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·è¾—é”Ÿæ–¤æ‹·é”Ÿï¿½
 public static void clearCluster(){
 	try{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(clusterResult)));
@@ -258,11 +267,11 @@ public static void clearCluster(){
 		e.printStackTrace();
 	}
 }
-  //***********************************************ÔİÊ±Î´Ê¹ÓÃ
+  //***********************************************é”Ÿæ–¤æ‹·æ—¶æœªä½¿é”Ÿæ–¤æ‹·
   public static void setStaticData(String f){
 		try{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(FileDataStatic),true));
-		   writer.append(f.replaceAll("\"", ""));   //È¥µôË«ÒıºÅ
+		   writer.append(f.replaceAll("\"", ""));   //å»é”Ÿæ–¤æ‹·åŒé”Ÿæ–¤æ‹·é”Ÿï¿½
 		   writer.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

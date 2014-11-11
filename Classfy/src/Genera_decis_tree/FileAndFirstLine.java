@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -30,17 +32,17 @@ public class FileAndFirstLine extends JFrame implements ActionListener{
  	   Image icon = Toolkit.getDefaultToolkit().getImage("D:\\predata\\120.jpg");
 	   this.setIconImage(icon);
     
-        this.add(new Label("Ä¬ÈÏÒÔµÚÒ»ĞĞ×÷ÎªÊôĞÔÃû"),"North");
+        this.add(new JLabel("è®¾ç½®æ–‡ä»¶æ•°æ®ä¸­å±æ€§åç§°åˆ—è¡¨"),"North");
         Panel p1=new Panel();
         p1.setLayout(new GridLayout(1,2));  
-        p1.add(new Label("ÊôĞÔÁĞ±í-ÒÔ¶ººÅ·Ö¸ô"));
+        p1.add(new JLabel("é»˜è®¤ä»¥é€—å·åˆ†éš”"));
         tf=new TextArea();
         p1.add(tf);
         this.add(p1,"Center");
         
         Panel p2=new Panel();
-        Button submit=new Button("Ìá½»");
-        Button reset=new Button("ÖØÖÃ");
+        JButton submit=new JButton("æäº¤");
+        JButton reset=new JButton("é‡ç½®");
         submit.addActionListener(this);
         reset.addActionListener(this);
         p2.add(submit);
@@ -54,7 +56,7 @@ public class FileAndFirstLine extends JFrame implements ActionListener{
     public void UpdateAttr(){
     	String str=null;
     	  try {   
-	             Workbook book = Workbook.getWorkbook(new File(PublicData.getFile()));// ½«ËùÓĞµÄÊı¾İ±ä»¯¶¼·ÅÔÚPublicDataÖĞ   
+	             Workbook book = Workbook.getWorkbook(new File(PublicData.getFile()));// ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½İ±ä»¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½PublicDataï¿½ï¿½   
 	             Sheet sheet = book.getSheet(0);                  
 	            	  for(int j=0;j<sheet.getColumns();j++){
 	            		     Cell cell = sheet.getCell(j, 0);   
@@ -82,20 +84,20 @@ public class FileAndFirstLine extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s=e.getActionCommand();
-		if(s.equals("Ìá½»")){
-				PublicData.setAttr(tf.getText().split(","));       //½«ÓÃ»§ÊäÈëµÄÊôĞÔÁĞÍ¬²½µ½Êı¾İÖĞĞÄ				
+		if(s.equals("æäº¤")){
+				PublicData.setAttr(tf.getText().split(","));       //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½				
                 String[] str=PublicData.getAttr();
                 for(int i=0;i<PublicData.getAttr().length;i++){
                       System.out.println(str[i]);	
                 }                
-                createXls.create(PublicData.getFile(),PublicData.getAttr());   //µ±Ìá½»µÄÊ±ºòË³±ãÒÑ³ÉÉú³ÉÏàÓ¦ExcelÎÄ¼ş
-                //ÔÚÉÏÃæ´´½¨ExcelÎÄ¼şÖĞÒÑ¾­¿ÉÒÔÏÈ×ª»»³ÉxlsÎÄ¼ş
-                String[] tempfile=PublicData.getFile().split("\\.");     //ÒÔµãºÅÎª·Ö¸ô½«Ö®Ç°µÄtxtÎÄ¼ş·Ö¸ô,×¢ÒâµãºÅ·Ö¸ô·ûµÄÌØÊâ£¬ĞèÒª×ªÒå
-                PublicData.setFile(tempfile[0]+".xls");               //ĞÂÎÄ¼şÃû½«»á±»ÃüÃûÎªxlsÎÄ¼ş
+                createXls.create(PublicData.getFile(),PublicData.getAttr());   //ï¿½ï¿½ï¿½á½»ï¿½ï¿½Ê±ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦Excelï¿½Ä¼ï¿½
+                //ï¿½ï¿½ï¿½ï¿½ï¿½æ´´ï¿½ï¿½Excelï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½xlsï¿½Ä¼ï¿½
+                String[] tempfile=PublicData.getFile().split("\\.");     //ï¿½Ôµï¿½ï¿½Îªï¿½Ö¸ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½txtï¿½Ä¼ï¿½ï¿½Ö¸ï¿½,×¢ï¿½ï¿½ï¿½Å·Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½Òª×ªï¿½ï¿½
+                PublicData.setFile(tempfile[0]+".xls");               //ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½Îªxlsï¿½Ä¼ï¿½
                 
-                this.dispose();    //Ö»ÊÇÈÃµ±Ç°´°¿ÚÍË³ö
+                this.dispose();    //Ö»ï¿½ï¿½ï¿½Ãµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½
 		}
-		else if(s.equals("ÖØÖÃ")){
+		else if(s.equals("é‡ç½®")){
 			tf.setText("");
 		}
 	}

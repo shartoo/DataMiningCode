@@ -17,14 +17,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import Genera_decis_tree.PublicData;
 
 public class ShowClusterResult {
-	 public static final String clusterResult="d:/predata/Cluster/clusterResult.txt";
-	 public static final String clusterInitCore="d:/predata/Cluster/clusterInitCore.txt";
+	 public static final String clusterResult="Data/Cluster/clusterResult.txt";
+	 public static final String clusterInitCore="Data/Cluster/clusterInitCore.txt";
 	 public static final Color color[]={Color.cyan,Color.lightGray,Color.blue,Color.green,Color.magenta,Color.orange,Color.pink};
    	 public int clusternum=PublicData.getClusterNum();
 	 public String[] attr=PublicData.getClusterAttr();
      JFrame f=new JFrame("快速聚类结果显示");
      DefaultTableCellRenderer tcr;
-     Image icon = Toolkit.getDefaultToolkit().getImage("D:\\predata\\120.jpg");
+     Image icon = Toolkit.getDefaultToolkit().getImage("img/logo.jpg");
      public void show()
      {
     	 f.setIconImage(icon);

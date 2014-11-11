@@ -15,70 +15,78 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 public class InformationGain {
-	ArrayList<Set<String>> attr_and_part=new ArrayList<Set<String>>();   //ÓÃÀ´´æ´¢ËùÓĞÊôĞÔ¼°Æä·ÖÖ§£¬Ã¿¸öÊôĞÔÃûÔÚsetµÄ0Î»ÖÃÆäÓàµÄÊÇÆä·ÖÖ§
-	int[][] value;   //´ú±í´Ë·ÖÀàµÄÊôĞÔµÄ×ÜÊı
+	ArrayList<Set<String>> attr_and_part=new ArrayList<Set<String>>();   //ç”¨æ¥å­˜å‚¨æ‰€æœ‰å±æ€§åŠå…¶åˆ†æ”¯ï¼Œæ¯ä¸ªå±æ€§ååœ¨setçš„0ä½ç½®å…¶ä½™çš„æ˜¯å…¶åˆ†æ”¯
+	int[][] value;   //ä»£è¡¨æ­¤åˆ†ç±»çš„å±æ€§çš„æ€»æ•°
 	public ArrayList<String> list=new ArrayList<String>();          
-	MathLog mlog=new MathLog();      //ÒıÓÃ×Ô¶¨ÒåµÄ¼ÆËã2µÄ¶ÔÊıº¯Êı£¬´Ëº¯ÊıÓĞgetLog()·½·¨
-	//ShowTreePane treepane=new ShowTreePane();      //½«ËùÓĞÊôĞÔ¼°Æä·ÖÖ§¸üĞÂµ½TreeÖĞ£¬ÒÔ±ã²éÔÄ
+	MathLog mlog=new MathLog();      //å¼•ç”¨è‡ªå®šä¹‰çš„è®¡ç®—2çš„å¯¹æ•°å‡½æ•°ï¼Œæ­¤å‡½æ•°æœ‰getLog()æ–¹æ³•
+	//ShowTreePane treepane=new ShowTreePane();      //å°†æ‰€æœ‰å±æ€§åŠå…¶åˆ†æ”¯æ›´æ–°åˆ°Treeä¸­ï¼Œä»¥ä¾¿æŸ¥é˜…
 	public String attr_part="";
-	public static final String HEAD="d:/predata/";
+	public static final String HEAD="Data/DescionTree/";
 	public static final String LAST=".txt";
-   public String[] getInformationGain(String pt,String t){
+	/**
+	 * è·å–æ•°æ®è¡¨ä¸­æŸä¸ªå±æ€§çš„ä¿¡æ¯å¢ç›Š
+	 * @param pt  éœ€è¦è®¡ç®—ä¿¡æ¯å¢ç›Šçš„å±æ€§
+	 * @param t   åˆ¤æ–­å±æ€§ï¼Œä¹Ÿå³å±æ€§ptåˆ†ç±»æ—¶çš„ä¾æ®å±æ€§ã€‚
+	 * @return    å±æ€§ptçš„ä¿¡æ¯å¢ç›Š
+	 */
+    public String[] getInformationGain(String pt,String t){
     	String[] gain_and_support=new String[3];
 	    String gain=null;
-    	int cla=0;    //´ú±í·ÖÀàÊıÄ¿
+    	int cla=0;    //ä»£è¡¨åˆ†ç±»æ•°ç›®
     	BufferedWriter writer = null;
     	int part=0;
     	int target=0;
     	String[] attr=PublicData.getAttr();
-    	for(int p=0;p<attr.length;p++){
+    	for(int p=0;p<attr.length;p++)
+    	{
     		if(attr[p].equals(pt))
     			{
     			part=p;
-    		    System.out.println("·ÖÀàÊôĞÔÊÇ£º"+attr[p]);
+    		    System.out.println("åˆ†ç±»å±æ€§æ˜¯ï¼š"+attr[p]);
     			}
     		if(attr[p].equals(t))
     		{
     			target=p;
-    			System.out.println("ËùÑ¡ÊôĞÔÊÇ£º"+attr[p]);
+    			System.out.println("æ‰€é€‰å±æ€§æ˜¯ï¼š"+attr[p]);
     		}	
     	}
-    	/**ËùÓĞ²ÎÓë¼ÆËãµÄ±äÁ¿±ØĞë¶¼·Åµ½·½·¨ÄÚ²¿À´£¬±ÜÃâÏÂ´Î¼ÆËãÊ±ÖØ¸´*/
-    	float yes_to_attr=0;   //ÊôÓÚµ±Ç°ÀàµÄÊıÄ¿
+    	/**æ‰€æœ‰å‚ä¸è®¡ç®—çš„å˜é‡å¿…é¡»éƒ½æ”¾åˆ°æ–¹æ³•å†…éƒ¨æ¥ï¼Œé¿å…ä¸‹æ¬¡è®¡ç®—æ—¶é‡å¤*/
+    	float yes_to_attr=0;   //å±äºå½“å‰ç±»çš„æ•°ç›®
     	float no_to_attr=0;
-    	BigDecimal info=new BigDecimal(0);     //¼ÆËãÔª×é·ÖÀàËùĞèµÄÆÚÍûĞÅÏ¢
-    	BigDecimal infoD=new BigDecimal(0);    //´æ´¢µ±Ç°ÁĞÊôĞÔµÄĞÅÏ¢ÔöÒæ
-       	float sum=0;     //´æ´¢×ÜĞĞÊı
+    	BigDecimal info=new BigDecimal(0);     //è®¡ç®—å…ƒç»„åˆ†ç±»æ‰€éœ€çš„æœŸæœ›ä¿¡æ¯
+    	BigDecimal infoD=new BigDecimal(0);    //å­˜å‚¨å½“å‰åˆ—å±æ€§çš„ä¿¡æ¯å¢ç›Š
+       	float sum=0;     //å­˜å‚¨æ€»è¡Œæ•°
     	java.text.DecimalFormat DataFormat=(java.text.DecimalFormat)java.text.DecimalFormat.getInstance();
-	      //ÎªÁËµÃµ½ÕûÊıÏà´¦±£ÁôÈıÎ»Ğ¡ÊıµÄ½á¹û¡£×¢Òâ£¬¾­¹ıÕâÑùµÄ´¦Àíºó£¬¼ÆËãµÃµ½µÄ½á¹ûÊÇStringÀàĞÍ
-    	DataFormat.applyPattern("##.###"); //ÎªÁËµÃµ½ÕûÊıÏà´¦±£ÁôÈıÎ»Ğ¡ÊıµÄ½á¹û
+	      //ä¸ºäº†å¾—åˆ°æ•´æ•°ç›¸å¤„ä¿ç•™ä¸‰ä½å°æ•°çš„ç»“æœã€‚æ³¨æ„ï¼Œç»è¿‡è¿™æ ·çš„å¤„ç†åï¼Œè®¡ç®—å¾—åˆ°çš„ç»“æœæ˜¯Stringç±»å‹
+    	DataFormat.applyPattern("##.###"); //ä¸ºäº†å¾—åˆ°æ•´æ•°ç›¸å¤„ä¿ç•™ä¸‰ä½å°æ•°çš„ç»“æœ
     	value=new int[50][2];
-    	//ÒÔÏÂÊÇÓÃÀ´¶ÁÈ¡ExcelÎÄ¼şÖĞµÄµ¥ÔªÖµ
+    	//ä»¥ä¸‹æ˜¯ç”¨æ¥è¯»å–Excelæ–‡ä»¶ä¸­çš„å•å…ƒå€¼
     	try {   
             Workbook book = Workbook.getWorkbook(new File(PublicData.getFile()));    
             Sheet sheet = book.getSheet(0);      
-            for(int i=1;i<sheet.getRows();i++)   //Ä¬ÈÏµÚÒ»ĞĞÎªÊôĞÔ±æ±ğĞĞ£¬²»²ÎÓë¼ÆËã
+            for(int i=1;i<sheet.getRows();i++)   //é»˜è®¤ç¬¬ä¸€è¡Œä¸ºå±æ€§è¾¨åˆ«è¡Œï¼Œä¸å‚ä¸è®¡ç®—
             {        	  
-           		     Cell cell = sheet.getCell(target, i);   //»ñÈ¡µ±Ç°ÊôĞÔËùÔÚÁĞ
-           		     Cell cell2=sheet.getCell(part,i);       //»ñÈ¡½á¹ûÁĞ£¬¼´ÑµÁ·Ôª×é×îÖÕ·ÖÀàÀà±ğÄÇÒ»ÁĞ
-           		     String c2=cell2.getContents().replaceAll("\"", "").trim();
-                     String result = cell.getContents().replaceAll("\"", " ").trim();  
-                     if(list.contains(result)==false&&result!=null)      //½«ËùÑ¡ÊôĞÔ¼ÓÈëµ½listÖĞ
-                     {   list.add(result);   cla=list.indexOf(result);   
-                        
-                     }
-                     else if(list.contains(result)==true)
-                    	  cla=list.indexOf(result);    //ÒÔµ±Ç°ÊôĞÔµÄÀà±ğ£¨StringÀàĞÍ£©ËùÔÚlistÖĞµÄË÷ÒıÎªvalueµÄµÚÒ»Î¬
-                     if(c2.equals("y")||c2.equals("yes"))   //ÒÔ¶şÎ¬Êı×évalueµÄµÚ¶şÎ¬µÄµÚÒ»ÁĞÀ´´æ´¢ÊôÓÚ×îÖÕÀàµÄ×ÜÊı
-                     {	
-                    	 value[cla][0]++;
-                         yes_to_attr++;          //×îÖÕÁĞÖĞ·ûºÏÌõ¼şÕ¼±È
-                     }  
-                     else  //if(c2.equals("n")||c2.equals("no"))
-                     {
-                    	 value[cla][1]++;             //µÚ¶şÁĞÀ´´æ´¢²»ÊôÓÚ×îÖÕÁĞµÄ×ÜÊı
-                    	 no_to_attr++;            //ÓÃÀ´¼ÆËãĞÅÏ¢ÔöÒæ£¬Ôª×é·ÖÀàËùĞèµÄÆÚÍûĞÅÏ¢ 
-                     }                 
+           		 Cell cell = sheet.getCell(target, i);   //è·å–å½“å‰å±æ€§æ‰€åœ¨åˆ—
+           		 Cell cell2=sheet.getCell(part,i);       //è·å–ç»“æœåˆ—ï¼Œå³è®­ç»ƒå…ƒç»„æœ€ç»ˆåˆ†ç±»ç±»åˆ«é‚£ä¸€åˆ—
+           		 String c2=cell2.getContents().replaceAll("\"", "").trim();
+                 String result = cell.getContents().replaceAll("\"", " ").trim();  
+                 if(list.contains(result)==false&&result!=null)      //å°†æ‰€é€‰å±æ€§åŠ å…¥åˆ°listä¸­
+                 {  
+                	 list.add(result); 
+                	 cla=list.indexOf(result);        
+                  }
+                 else if(list.contains(result)==true)
+                     cla=list.indexOf(result);    //ä»¥å½“å‰å±æ€§çš„ç±»åˆ«ï¼ˆStringç±»å‹ï¼‰æ‰€åœ¨listä¸­çš„ç´¢å¼•ä¸ºvalueçš„ç¬¬ä¸€ç»´
+                 if(c2.equals("y")||c2.equals("yes"))   //ä»¥äºŒç»´æ•°ç»„valueçš„ç¬¬äºŒç»´çš„ç¬¬ä¸€åˆ—æ¥å­˜å‚¨å±äºæœ€ç»ˆç±»çš„æ€»æ•°
+                  {	
+                     value[cla][0]++;
+                     yes_to_attr++;          //å…¨éƒ¨æ•°æ®ä¸­ç¬¦åˆæ¡ä»¶å æ¯”
+                  }  
+                  else  //if(c2.equals("n")||c2.equals("no"))
+                   {
+                      value[cla][1]++;          //ç¬¬äºŒåˆ—æ¥å­˜å‚¨ä¸å±äºæœ€ç»ˆåˆ—çš„æ€»æ•°
+                      no_to_attr++;            //å…¨éƒ¨æ•°æ®ä¸­ä¸ç¬¦åˆæ•°é‡ 
+                   }                 
                    
             }
             //writer.close(); 
@@ -86,50 +94,56 @@ public class InformationGain {
         } catch (Exception e) {   
             e.printStackTrace();   
         }   	
-    	//ÒÔÏÂÊÇÓÃÀ´¼ÆËãĞÅÏ¢ÔöÒæµÄ³ÌĞò¶Î
-        System.out.println("ÊôĞÔ³¤¶È"+list.size());
+    	//ä»¥ä¸‹æ˜¯ç”¨æ¥è®¡ç®—ä¿¡æ¯å¢ç›Šçš„ç¨‹åºæ®µ
+        System.out.println("å±æ€§é•¿åº¦"+list.size());
         sum=yes_to_attr+no_to_attr;
         BigDecimal ysum=mlog.getDivide(yes_to_attr,sum);
         BigDecimal nsum=mlog.getDivide(no_to_attr,sum);
         info=(nsum.multiply(mlog.getLog(nsum))).abs().add((ysum.multiply(mlog.getLog(ysum))).abs());  
     	String[] at=new String[list.size()];
-    	System.out.println("ÊôĞÔ³¤¶È-------------"+list.size());
-    	 for(int p=0;p<list.size();p++)                
-     	   {   if(!(list.get(p).equals("")||list.get(p).equals(null)))
-     	                     { at[p]=list.get(p);    }
-     		   int a=value[p][0];
-     	       int b=value[p][1];
-     	       System.out.println("|"+list.get(p)+"| "+a+" | "+b+" |");
-     	       int c=a+b;
-     	       BigDecimal asum=mlog.getDivide(a,c );  
-     	       BigDecimal bsum=mlog.getDivide(b,c);   //asumÊÇ¿Ï¶¨×ÜÁ¿£¬bsumÊÇ·ñ¶¨×ÜÁ¿
-     	       BigDecimal csum=mlog.getDivide(c,sum);
-     		    if(a==0&&b!=0)
-     		        infoD=infoD.add((csum.multiply(bsum.multiply(mlog.getLog(bsum)))).abs());	   
-     		    else if(b==0&&a!=0)
-     		    	infoD=infoD.add((csum.multiply(asum.multiply(mlog.getLog(asum)))).abs());
-     		    else if(a!=0&&b!=0)   
-     		    	infoD=infoD.add(((csum.multiply(asum.multiply(mlog.getLog(asum)))).abs()).add((csum.multiply(bsum.multiply(mlog.getLog(bsum)))).abs()));
-     		    else if(a==0&&b==0)
-     		    	infoD=infoD.add(new BigDecimal(0));
+    	System.out.println("å±æ€§é•¿åº¦-------------"+list.size());
+        for(int p=0;p<list.size();p++)                
+     	 {  
+        	if(!(list.get(p).equals("")||list.get(p).equals(null)))
+     	       { 
+        		at[p]=list.get(p); 
+        		}
+     		int a=value[p][0];
+     	    int b=value[p][1];
+     	    System.out.println("|"+list.get(p)+"| "+a+" | "+b+" |");
+     	    int c=a+b;
+     	    BigDecimal asum=mlog.getDivide(a,c );  
+     	    BigDecimal bsum=mlog.getDivide(b,c);   //asumæ˜¯è‚¯å®šæ€»é‡ï¼Œbsumæ˜¯å¦å®šæ€»é‡
+     	    BigDecimal csum=mlog.getDivide(c,sum);
+     		if(a==0&&b!=0)
+     		   infoD=infoD.add((csum.multiply(bsum.multiply(mlog.getLog(bsum)))).abs());	   
+     		else if(b==0&&a!=0)
+     		    infoD=infoD.add((csum.multiply(asum.multiply(mlog.getLog(asum)))).abs());
+     		else if(a!=0&&b!=0)   
+     		    infoD=infoD.add(((csum.multiply(asum.multiply(mlog.getLog(asum)))).abs()).add((csum.multiply(bsum.multiply(mlog.getLog(bsum)))).abs()));
+     		else if(a==0&&b==0)
+     		    infoD=infoD.add(new BigDecimal(0));
         }
-
-    	
-    	for(int i=0;i<at.length;i++){
-    		if(i==0&&at[i]!=null){
+    	for(int i=0;i<at.length;i++)
+    	{
+    		if(i==0&&at[i]!=null)
+    		{
     			attr_part=at[i];
     		}
-    		else{
-    			if(at[i]!=null)
-    			{ attr_part=attr_part+","+at[i];}
+    		else
+    		{
+    		  if(at[i]!=null)
+    			 { 
+    			  attr_part=attr_part+","+at[i];
+    			  }
     		}
     	}
-    	System.out.println("attr_part³¤¶ÈÊÇ£º"+attr_part.length());
+    	System.out.println("attr_parté•¿åº¦æ˜¯ï¼š"+attr_part.length());
     	try{
     		String f=HEAD+t+LAST;
-    		System.out.println("ÕıÔÚ³¢ÊÔĞ´ÈëÎÄ¼ş-------"+f);
+    		System.out.println("æ­£åœ¨å°è¯•å†™å…¥æ–‡ä»¶-------"+f);
     		BufferedWriter w = new BufferedWriter(new FileWriter(new File(f)));
-    	   w.append(attr_part.trim());   //È¥µôË«ÒıºÅ  
+    	   w.append(attr_part.trim());   //å»æ‰åŒå¼•å·  
     	   w.flush();
            w.close();
     	} catch (IOException e) {
@@ -137,18 +151,18 @@ public class InformationGain {
     	}     
     	attr_part="";
     	gain=info.subtract(infoD).toString();
-    	System.out.println("µ±Ç°ÊôĞÔĞÅÏ¢ÔöÒæ£º"+infoD);
+    	System.out.println("å½“å‰å±æ€§ä¿¡æ¯å¢ç›Šï¼š"+infoD);
     	list.clear();     
-    	//Çå¿Õlist±í£¬ÒÔ±ãÏÂ´Î´æ´¢Ê±²»»áÓÉÓÚÇ°ÃæµÄ²åÈëÔªËØÊÜ¸ÉÈÅ
+    	//æ¸…ç©ºlistè¡¨ï¼Œä»¥ä¾¿ä¸‹æ¬¡å­˜å‚¨æ—¶ä¸ä¼šç”±äºå‰é¢çš„æ’å…¥å…ƒç´ å—å¹²æ‰°
     	gain_and_support[0]=gain;
     	gain_and_support[1]=yes_to_attr+"";
     	gain_and_support[2]=no_to_attr-1+"";
     	return gain_and_support;
     }
 
-    public void writeInformation(){//ÓÉÓÚµ÷ÓÃ getMap·½·¨ÖĞ°üº¬´Ë·½·¨£¬ËùÒÔÏÖÔÚ»ù±¾Ã»ÓÃ
+    public void writeInformation(){//ç”±äºè°ƒç”¨ getMapæ–¹æ³•ä¸­åŒ…å«æ­¤æ–¹æ³•ï¼Œæ‰€ä»¥ç°åœ¨åŸºæœ¬æ²¡ç”¨
     	String informationGain="";    	
-    	String[] attall=PublicData.getSelvar();    //Ö»¿¼ÂÇÓÃ»§Ñ¡ÔñµÄÊôĞÔµÄĞÅÏ¢ÔöÒæÖµ
+    	String[] attall=PublicData.getSelvar();    //åªè€ƒè™‘ç”¨æˆ·é€‰æ‹©çš„å±æ€§çš„ä¿¡æ¯å¢ç›Šå€¼
     	for(int a=0;a<attall.length;a++){
     		if(a==0){
     			informationGain=attall[a]+","+this.getInformationGain(PublicData.getTarvar(),attall[a])[0];
@@ -157,7 +171,6 @@ public class InformationGain {
     		 informationGain=informationGain+","+attall[a]+","+this.getInformationGain(PublicData.getTarvar(),attall[a])[0];
     	}
     	PublicData.setInformationGain(informationGain);
-    
     }
 
     public static void main(String[] args){
@@ -166,10 +179,10 @@ public class InformationGain {
     	String tar=PublicData.getTarvar();
     	 HashMap<String,String[]> h=ing.getMap();
     	for(int i=0;i<sel.length;i++){
-    		System.out.println("µ±Ç°²âÊÔÊôĞÔµÄĞÅÏ¢ÔöÒæ£º"+ing.getInformationGain(tar,sel[i])[0]);
-    		System.out.println("µ±Ç°²âÊÔÊôĞÔÖ§³Ö¶È£º"+ing.getInformationGain(tar,sel[i])[1]);
-    		System.out.println("µ±Ç°²âÊÔÊôĞÔ·ñ¾ö¶È£º"+ing.getInformationGain(tar,sel[i])[2]);
-    		System.out.println("ÊôĞÔ"+sel[i]+"°üÀ¨");
+    		System.out.println("å½“å‰æµ‹è¯•å±æ€§çš„ä¿¡æ¯å¢ç›Šï¼š"+ing.getInformationGain(tar,sel[i])[0]);
+    		System.out.println("å½“å‰æµ‹è¯•å±æ€§æ”¯æŒåº¦ï¼š"+ing.getInformationGain(tar,sel[i])[1]);
+    		System.out.println("å½“å‰æµ‹è¯•å±æ€§å¦å†³åº¦ï¼š"+ing.getInformationGain(tar,sel[i])[2]);
+    		System.out.println("å±æ€§"+sel[i]+"åŒ…æ‹¬");
     		for(int j=0;j<h.get(sel[i]).length;j++){
     			System.out.print(h.get(sel[i])[j]+"\t");
     		}
@@ -177,8 +190,11 @@ public class InformationGain {
     	//ing.writeInformation();
     	System.out.println("MAP=="+ing.getMap().size());
     }
-    
-   public HashMap<String,String[]> getMap(){    //·µ»ØÒ»¸öÊôĞÔÓëÆä·ÖÖ¦µÄMap¶ÔÓ¦±í£¬²¢ÇÒ½«Ã¿¸öÊôĞÔµÄĞÅÏ¢ÔöÒæĞ´Èëd:/predata/varinfg.txtÎÄ¼şÖĞ,×÷ÎªÖ´ĞĞµÚÒ»²½
+  /**
+   * è¿”å›ä¸€ä¸ªå±æ€§ä¸å…¶åˆ†æçš„Mapå¯¹åº”è¡¨ï¼Œå¹¶ä¸”å°†æ¯ä¸ªå±æ€§çš„ä¿¡æ¯å¢ç›Šå†™å…¥ Data/DescionTree/varinfg.txtæ–‡ä»¶ä¸­,ä½œä¸ºæ‰§è¡Œç¬¬ä¸€æ­¥  
+   * @return å±æ€§ä¸å…¶åˆ†æçš„Mapå¯¹åº”è¡¨
+   */
+   public HashMap<String,String[]> getMap(){    
 	   String informationGain="";  
 	   HashMap<String,String[]> hs=new HashMap<String,String[]>();
 	   String[] sel=PublicData.getSelvar();
@@ -188,32 +204,33 @@ public class InformationGain {
     		String s=null;
     		String fl=HEAD+sel[i]+LAST;
     		try{
-    			    r=new BufferedReader(new FileReader(fl));
-    			    s=r.readLine();     
+    			r=new BufferedReader(new FileReader(fl));
+    			s=r.readLine();     
     		}catch(IOException e){
     	         e.printStackTrace();		
     		 }
-    		//ÎÄ¼ş±»»º´æÔÚ×Ö·û´® s ÖĞ£¬Ö®ºó½èÓÃÕâ¸ötry-catchÁ¢ÂíÉ¾³ıÆäÎÄ¼ş£¬¶ÔÓÃ»§¶øÑÔÊÇÍ¸Ã÷µÄ
-
+    	//æ–‡ä»¶è¢«ç¼“å­˜åœ¨å­—ç¬¦ä¸² s ä¸­ï¼Œä¹‹åå€Ÿç”¨è¿™ä¸ªtry-catchç«‹é©¬åˆ é™¤å…¶æ–‡ä»¶ï¼Œå¯¹ç”¨æˆ·è€Œè¨€æ˜¯é€æ˜çš„
          File file=new File(fl);
-    	if(file.isFile()&&file.exists()){
+    	 if(file.isFile()&&file.exists())
+    	 {
     		file.delete();
-    		System.out.println("É¾³ıÎÄ¼ş"+fl+"³É¹¦£¡");
-    	}
- 
-    		
-    		if(i==0){
-    			informationGain=sel[i]+","+this.getInformationGain(PublicData.getTarvar(),sel[i])[0];
-    		}
-    		else{
-    		 informationGain=informationGain+","+sel[i]+","+this.getInformationGain(PublicData.getTarvar(),sel[i])[0];
-    	      }
-    	  String[] str=s.split(",");	
-    	  hs.put(sel[i],str);
+    		System.out.println("åˆ é™¤æ–‡ä»¶"+fl+"æˆåŠŸï¼");
+    	  }	
+    	//å†™å…¥ä¿¡æ¯å¢ç›Šç›¸å…³ä¿¡æ¯ã€‚informationGain=age,0.003,student,0.098,.....
+    	 if(i==0)
+    	 {   
+    		 System.out.println("PublucData.getTarVar=="+PublicData.getTarvar()+"\t"+sel[i]);
+    		 informationGain=sel[i]+","+this.getInformationGain(PublicData.getTarvar(),sel[i])[0];
+    	 }
+    	else
+    	  {
+    	   informationGain=informationGain+","+sel[i]+","+this.getInformationGain(PublicData.getTarvar(),sel[i])[0];
+    	  }
+    	 String[] str=s.split(",");	
+    	 hs.put(sel[i],str);
     	}
        PublicData.setInformationGain(informationGain);	
-       System.out.println("hsÓĞ¶àÉÙÔªËØ£º"+hs.size());
-	   return hs;
-	   
+       System.out.println("hsæœ‰å¤šå°‘å…ƒç´ ï¼š"+hs.size());
+	   return hs;   
    }
 }

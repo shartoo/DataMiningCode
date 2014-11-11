@@ -36,6 +36,7 @@ public class MyListener implements TreeSelectionListener,MouseListener{
 			System.out.println(e.getPath().toString());
 		}
 	}
+	/**
 	 MouseListener ml = new MouseAdapter() {
 	     public void mousePressed(MouseEvent e) {
 	         int selRow = tree.getRowForLocation(e.getX(), e.getY());
@@ -50,8 +51,8 @@ public class MyListener implements TreeSelectionListener,MouseListener{
 	         }
 	     }
 	 };
-	 tree.addMouseListener(ml);
-
+	 //tree.addMouseListener(ml);
+	*/
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

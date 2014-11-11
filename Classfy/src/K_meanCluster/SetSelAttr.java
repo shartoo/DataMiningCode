@@ -29,21 +29,21 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
      JList selList=new JList();
      DefaultListModel modeAll=null;
      DefaultListModel modeSel=null;
-     JLabel allAttr=new JLabel("ËùÓĞÊôĞÔ");
-     JLabel selAttr=new JLabel("¾ÛÀàÊôĞÔ");
-     JLabel tip=new JLabel("ÇëÖ¸¶¨¾ÛÀà¸öÊıK");
-     JButton setAttr=new JButton("ÉèÖÃ¾ÛÀàÊôĞÔ");
-     JButton submit=new JButton("Ìá½»");
-     final Choice clusterNum = new Choice();    //ÓÃ»§Ñ¡Ôñ¾ÛÀà¸öÊı
+     JLabel allAttr=new JLabel("æ‰€æœ‰å±æ€§");
+     JLabel selAttr=new JLabel("é€‰æ‹©å±æ€§");
+     JLabel tip=new JLabel("èšç±»ä¸­å¿ƒæ•°ç›®");
+     JButton setAttr=new JButton("è®¾ç½®å±æ€§");
+     JButton submit=new JButton("æäº¤");
+     final Choice clusterNum = new Choice();    //ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      
      JScrollPane allPane=new JScrollPane();
      JScrollPane selPane=new JScrollPane();
-     Boolean right=false;   //ÊôĞÔÓÒÒÆ¿ª¹Ø
-     Boolean left=false;    //ÊôĞÔ×óÒÆ¿ª¹Ø
-     public int index=0;    //ÉèÖÃÔÚJListÖĞÊôĞÔµÄË÷Òı
+     Boolean right=false;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½
+     Boolean left=false;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½
+     public int index=0;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JListï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½
      public int cluNum=0;
-     final JFrame f=new JFrame("ÉèÖÃ¾ÛÀàµÄÊôĞÔ");
-     public String[] all=PublicData.getAttr();   //»ñÈ¡Êı¾İ±íÖĞµÄËùÓĞÊôĞÔ
+     final JFrame f=new JFrame("å¿«é€Ÿå‡å€¼èšç±»è®¾ç½®");
+     public String[] all=PublicData.getAttr();   //ï¿½ï¿½È¡ï¿½ï¿½İ±ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      
      public void CreateUI()
      {   
@@ -54,23 +54,23 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
         	 public void itemStateChanged(ItemEvent arg0) 
         	   {  		 
         		  cluNum=clusterNum.getSelectedIndex()+2;
-        		  System.out.println("²úÉúµÄ¸öÊıÊÇ"+cluNum+"--------À´×ÔitemStateChanged");
+        		  System.out.println("å‡å€¼èšç±»å±æ€§è®¾ç½®"+cluNum+"--------itemStateChanged");
         	      submit.addMouseListener(new MouseListener(){
         	      public void mouseClicked(MouseEvent arg0) 
         	      {
-        	             // TODO ×Ô¶¯Éú³É·½·¨´æ¸ù
+        	             // TODO ï¿½Ô¶ï¿½ï¿½ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         	      }
         	      public void mouseEntered(MouseEvent arg0) 
         	      {
-        	         // TODO ×Ô¶¯Éú³É·½·¨´æ¸ù
+        	         // TODO ï¿½Ô¶ï¿½ï¿½ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         	      }
         	      public void mouseExited(MouseEvent arg0) 
         	      {
-        	         // TODO ×Ô¶¯Éú³É·½·¨´æ¸ù
+        	         // TODO ï¿½Ô¶ï¿½ï¿½ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         	      }
         	     public void mousePressed(MouseEvent arg0) 
         	      {
-        	        // TODO ×Ô¶¯Éú³É·½·¨´æ¸ù
+        	        // TODO ï¿½Ô¶ï¿½ï¿½ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         	      }
         	     public void mouseReleased(MouseEvent arg0) 
         	     {
@@ -78,31 +78,31 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
         	    });
         	 }
         	 });     
-         //Ìí¼Ó2--10µÄ¾ÛÀà¸öÊı
+         //ï¿½ï¿½ï¿½2--10ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          for(int i=0;i<9;i++)
          {
         	 String s=i+2+"";
         	 clusterNum.addItem(s);
          }              
-         Image icon = Toolkit.getDefaultToolkit().getImage("D:\\predata\\120.jpg");
+         Image icon = Toolkit.getDefaultToolkit().getImage("img/logo.jpg");
      	 f.setIconImage(icon);
      	//Container contentPane=f.getContentPane();
     	//contentPane.setLayout(new GridLayout(3,3));
     	f.setLayout(new GridLayout(3,3));
      	modeAll=new DataModel(1);
     	allList=new JList(modeAll);
-    	allList.setBorder(BorderFactory.createTitledBorder("µ±Ç°ËùÓĞÊôĞÔ"));
-    	allList.addMouseListener(this);//Ò»Óöµ½Êó±êÊÂ¼şÁ¢¼´Ö´ĞĞ.
+    	allList.setBorder(BorderFactory.createTitledBorder("æ•°æ®å…¨éƒ¨å±æ€§åˆ—è¡¨"));
+    	allList.addMouseListener(this);//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½.
 
     	modeSel=new DataModel(2);
     	selList=new JList(modeSel);
-    	selList.setBorder(BorderFactory.createTitledBorder("×÷Îª×Ô±äÁ¿µÄÊôĞÔ"));
-    	selList.addMouseListener(this);//Ò»Óöµ½Êó±êÊÂ¼şÁ¢¼´Ö´ĞĞ.
+    	selList.setBorder(BorderFactory.createTitledBorder("éœ€è¦èšç±»åˆ†æå±æ€§"));
+    	selList.addMouseListener(this);//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½.
     	 
     	allPane.setViewportView(allList);
     	selPane.setViewportView(selList);
     	f.add(allAttr);
-    	f.add(new JLabel(""));   //²åÈë¿Õ°×±êÇ©ÒÔĞÎ³É3*3¸ö×é¼ş
+    	f.add(new JLabel(""));   //ï¿½ï¿½ï¿½ï¿½Õ°×±ï¿½Ç©ï¿½ï¿½ï¿½Î³ï¿½3*3ï¿½ï¿½ï¿½ï¿½ï¿½
     	f.add(selAttr);
     	
     	f.add(allPane);
@@ -128,8 +128,8 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String s=e.getActionCommand();
-		//¿ØÖÆJListÏîÓÒÒÆ
-		if(s.equals("ÉèÖÃ¾ÛÀàÊôĞÔ")&&right==true)
+		//ï¿½ï¿½ï¿½ï¿½JListï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if(s.equals("è®¾ç½®å±æ€§")&&right==true)
 		{  
 			String tmp=(String) modeAll.getElementAt(index);
 			 modeSel .addElement(tmp);
@@ -138,8 +138,8 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 		     allList.setModel(modeAll);
 			
 		}
-		//¿ØÖÆJListÏî×óÒÆ
-		else if(s.equals("ÉèÖÃ¾ÛÀàÊôĞÔ")&&left==true)
+		//ï¿½ï¿½ï¿½ï¿½JListï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		else if(s.equals("è®¾ç½®å±æ€§")&&left==true)
 		{  
 			String tmp=(String) modeSel.getElementAt(index);
 			 modeAll .addElement(tmp);
@@ -148,8 +148,8 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 		     selList.setModel(modeSel);
 			
 		}	
-		else if(s.equals("Ìá½»")){
-			System.out.println("ÓÃ»§Ñ¡ÔñµÄ¾ÛÀà¸öÊıÊÇ"+this.getclusterNum());
+		else if(s.equals("æäº¤")){
+			System.out.println("ç”¨æˆ·é€‰æ‹©äº†èšç±»ä¸­å¿ƒæ•°ç›®"+this.getclusterNum());
 		    String clusterAttr=null;
 			f.dispose();
 			f.invalidate();
@@ -160,7 +160,7 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 				else
 					clusterAttr=clusterAttr+","+(String)selList.getModel().getElementAt(i);
 			}
-			  PublicData.setClusterAttr(clusterAttr);     //½«ÓÃ»§Ñ¡ÔñµÄÓÃÓÚ¾ÛÀàµÄÊôĞÔ¸üĞÂµ½Êı¾İÖĞĞÄ
+			  PublicData.setClusterAttr(clusterAttr);     //ï¿½ï¿½ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			  String num=this.getclusterNum()+"";
 			  PublicData.setClusterNum(num);
 			  Cluster clu=new Cluster();
@@ -175,12 +175,8 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 		      }
 		   }
 		}  
-	//´¦ÀíÊó±ê¼ü»÷ÊÂ¼ş.
+
 	public void mouseClicked(MouseEvent e){
-	    /*¶Ôlist1¶øÑÔ£¬µ±Êó±êÔÚÄ³¸öÏîÄ¿Á¬Ğø°´Á½ÏÂÊ±£¬ÎÒÃÇÀûÓÃJListËùÌá¹©µÄlocationToIndex()·½·¨£¬ÕÒµ½Ëù¼ü»÷µÄÏîÄ¿£¬²¢
-	     *ÓÉtmpÈ¡µÃ´ËÏîÄ¿µÄÏîÄ¿Öµ£¬È»ºó½«´ËÏîÄ¿ÖµÔö¼Óµ½mode2ÖĞ[mode2.addElement(tmp)],ÓÃsetModelÖØĞÂÉèÖÃlist2µÄ
-	     *ListModel,Ê¹list2¿ÉÏÔÊ¾³öËùÔö¼ÓµÄÏîÄ¿£¬½«¸Õ¸ÕÔÚlist1Ë«»÷µÄÏîÄ¿É¾³ı.
-	     */
 		if (e.getSource()==allList){
 	    	right=true;
 	    	left=false;
@@ -188,7 +184,7 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 	      }
 		if (e.getSource()==selList){
 	    	left=true;
-	    	right=false;   //ÊÇÒ»¶Ô¿ª¹Ø  	
+	    	right=false;   //ï¿½ï¿½Ò»ï¿½Ô¿ï¿½ï¿½ï¿½  	
 	       index=selList.locationToIndex(e.getPoint());
 	      }
 	 }
@@ -199,7 +195,7 @@ public class SetSelAttr extends MouseAdapter implements ActionListener{
 	public static void main(String[] args){
 		SetSelAttr ssa=new SetSelAttr();
 		ssa.CreateUI();
-		System.out.println("ÓÃ»§Ñ¡ÔñµÄ¾ÛÀà¸öÊıÊÇ(Ö÷º¯Êıµ÷ÓÃ---)"+ssa.getclusterNum());
+		System.out.println("ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½---)"+ssa.getclusterNum());
 	}
    */
 }

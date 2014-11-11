@@ -25,9 +25,9 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 public class ShowPieChart extends JFrame{
 	public static ArrayList<String> list=new ArrayList<String>(); 
-	public int[] v=new int[100];   //Èç¹û²»³õÊ¼»¯£¬ºóÃæµÄ»áÄ¬ÈÏÖ»ÓÐÒ»¸öÔªËØnull£¬È»ºóÖ¸Ïòi>2Ê±¾Í»áoutofindex´íÎó
+	public int[] v=new int[100];   //ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½Ä¬ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ï¿½nullï¿½ï¿½È»ï¿½ï¿½Ö¸ï¿½ï¿½i>2Ê±ï¿½Í»ï¿½outofindexï¿½ï¿½ï¿½ï¿½
 	int p=0;
-	String name=PublicData.getTarvar()+"ÊôÐÔ±ý×´Í¼";               //Í³¼ÆÊôÐÔ
+	String name=PublicData.getTarvar()+"ï¿½ï¿½ï¿½Ô±ï¿½×´Í¼";               //Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DefaultPieDataset piedata = new DefaultPieDataset();
 	public static void main(String[] args){
 		ShowPieChart s=new ShowPieChart();
@@ -36,9 +36,9 @@ public class ShowPieChart extends JFrame{
 	    public JFreeChart createPaiChart() {
 	        //DefaultPieDataset data = getDataSet();
 	        DefaultPieDataset data = getDataSet();
-	        JFreeChart chart = ChartFactory.createPieChart3D(name,  // Í¼±í±êÌâ
+	        JFreeChart chart = ChartFactory.createPieChart3D(name,  // Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
 	        data,
-	        true, // ÊÇ·ñÏÔÊ¾Í¼Àý
+	        true, // ï¿½Ç·ï¿½ï¿½ï¿½Ê¾Í¼ï¿½ï¿½
 	        false,
 	        false
 	        );
@@ -49,29 +49,29 @@ public class ShowPieChart extends JFrame{
 	   
 	    private  void resetPiePlot(PiePlot plot) {
 	    	 /* 
-	         * ÊÇ±êÇ©¸ñÊ½£¨Ä¬ÈÏÊÇ¡°{0} = {1}¡±ÕâÑùÊÇÏÔÊ¾Êý¾Ý£©£¬ 
-	         * {0}ÊÇÀà±ðÃû£¬{1}ÊÇÊµ¼ÊÊý¾Ý£¬ºóÃæµÄ{2}ÊÇ°Ù·Ö±È¡£ 
+	         * ï¿½Ç±ï¿½Ç©ï¿½ï¿½Ê½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½Ç¡ï¿½{0} = {1}ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ 
+	         * {0}ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{1}ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{2}ï¿½Ç°Ù·Ö±È¡ï¿½ 
 	         */  
 	        String unitSytle = "{0}={1}({2})";
-	        plot.setNoDataMessage("ÎÞ¶ÔÓ¦µÄÊý¾Ý£¬ÇëÖØÐÂ²éÑ¯¡£");
+	        plot.setNoDataMessage("ï¿½Þ¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â²ï¿½Ñ¯ï¿½ï¿½");
 	        plot.setNoDataMessagePaint(Color.red);
-	        //Ö¸¶¨ section ÂÖÀªÏßµÄºñ¶È(OutlinePaint²»ÄÜÎªnull)
+	        //Ö¸ï¿½ï¿½ section ï¿½ï¿½ï¿½ï¿½ï¿½ßµÄºï¿½ï¿½(OutlinePaintï¿½ï¿½ï¿½ï¿½Îªnull)
 	        plot.setOutlineStroke(new BasicStroke(0));
-	        //ÉèÖÃµÚÒ»¸ö section µÄ¿ªÊ¼Î»ÖÃ£¬Ä¬ÈÏÊÇ12µãÖÓ·½Ïò
+	        //ï¿½ï¿½ï¿½Ãµï¿½Ò»ï¿½ï¿½ section ï¿½Ä¿ï¿½Ê¼Î»ï¿½Ã£ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½12ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½
 	        plot.setStartAngle(90);        
 	        plot.setToolTipGenerator(new StandardPieToolTipGenerator(unitSytle,
 	                NumberFormat.getNumberInstance(),
 	                new DecimalFormat("0.00%")));
 	       
-	        //Ö¸¶¨Í¼Æ¬µÄÍ¸Ã÷¶È
+	        //Ö¸ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
 	        plot.setForegroundAlpha(0.65f);
 	       
-	        //Òý³ö±êÇ©ÏÔÊ¾ÑùÊ½
+	        //ï¿½ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½Ê¾ï¿½ï¿½Ê½
 	        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(unitSytle,
 	                NumberFormat.getNumberInstance(),
 	                new DecimalFormat("0.00%")));
 	           
-	        //Í¼ÀýÏÔÊ¾ÑùÊ½
+	        //Í¼ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ê½
 	        plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator(unitSytle,
 	                NumberFormat.getNumberInstance(),
 	                new DecimalFormat("0.00%")));
@@ -93,7 +93,7 @@ public class ShowPieChart extends JFrame{
 			  BufferedReader br=new BufferedReader(new FileReader(file));
 			  String s;
 			  while((s=br.readLine())!=null){
-				String[] msg=new String(s).trim().split(",|£¬");
+				String[] msg=new String(s).trim().split(",|ï¿½ï¿½");
 				for(int i=0;i<msg.length;i++){
 					  if(i%2==0){
 						  if(list.contains(msg[i])==false){
@@ -118,33 +118,27 @@ public class ShowPieChart extends JFrame{
 			  }			  
 		  }catch(IOException e){
 			  e.printStackTrace();
-			  System.out.println("ÎÄ¼þ²»´æÔÚ£¡ÇëºË¶Ô");
+			  System.out.println("ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Ë¶ï¿½");
 		  }
 		  for(int e=0;e<list.size();e++)
 		  {
-			System.out.println(list.get(e)+"ÓÐ"+v[e]);  
+			System.out.println(list.get(e)+"ï¿½ï¿½"+v[e]);  
 		  }
 	 }
 //public static void main(String[] args){
 public void Look(){
 		 System.out.println("Why not show?");
 		 ShowPieChart ss=new ShowPieChart();
-		 ss.setTitle("±ý×´Í¼");
+		 ss.setTitle("åœ†é¥¼å›¾");
 		 ss.readFile();	 
 		
 		 JFreeChart pie=ss.createPaiChart();
 		
-		 JScrollPane jp=new JScrollPane();
-		 //°ÑÁ½¸öchart±ä³Épanel¼ÓÈëµ½frameÖÐ
-		
+		 JScrollPane jp=new JScrollPane();		
 		 ChartPanel pane2=new ChartPanel(pie,false);		
 		 jp.setViewportView(pane2);
 		 ss.add(jp,"North");
 		 ss.setSize(600,800);
 		 ss.setVisible(true);
-		 //ÒÔÏÂÊÇÖ»ÓÃÒ»¸öframeÏÔÊ¾µÄ´úÂë
-		 //ChartFrame frame=new ChartFrame("±ý×´Í¼²âÊÔ",jc); 
-		 //frame.pack();
-		 //frame.setVisible(true);
 	 }		 
 }

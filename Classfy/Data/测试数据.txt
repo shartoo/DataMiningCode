@@ -1,0 +1,15 @@
+youth,high,no,fair,n
+youth,high,no,excellent,n
+middle_aged,high,no,fair,y
+senior,medium,no,fair,y
+senior,low,yes,fair,y
+senior,low,yes,excellent,n
+middle_aged,low,yes,excellent,y
+youth,medium,no,fair,n
+youth,low,yes,fair,y
+senior,medium,yes,fair,y
+youth,medium,yes,excellent,y
+middle_aged,medium,no,excellent,y
+middle_aged,high,yes,fair,y
+senior,medium,no,excellent,n
+

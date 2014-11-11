@@ -5,22 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
-/**
- * ÎÒÃÇÀ´¿´ÈçºÎ´¦ÀíÔÚJListÉÏË«»÷Êó±êµÄ²Ù×÷¡£ÓÉÓÚJList±¾Éí²¢ÎŞÌá¹©ÕâÑùµÄEventListener,Òò´ËÎÒÃÇ±ØĞëÀûÓÃ
-MouseListenerÀ´´ïµ½²¶»ñË«»÷Êó±êµÄÊÂ¼ş¡£ÖÁÓÚÒªÔõÃ´ÖªµÀÎÒÃÇµ½µ×ÔÚÄÄ¸öÏîÄ¿ÉÏË«»÷Êó±êÄØ£¿ÎÒÃÇ¿ÉÒÔÀûÓÃJListÀàËùÌá¹©µÄ
-LocatToindex()·½·¨µÃÖª¡£ÒÔÏÂÎªÎÒÃÇËù¾ÙµÄ·¶Àı:
-   Õâ¸öÀı×ÓÒ»¿ªÊ¼×ó±ßÁĞÓĞ¹úÕâÃû³Æ£¬µ±ÄãÔÚÄ³¸ö¹ú¼ÒÃû³ÆÉÏË«»÷Êó±ê£¬Õâ¸ö¹ú¼ÒÃû³Æ¾Í»áÒÆµ½ÓÒ±ßÈ¥£¬·´Ö®ÒàÍ¬¡£
-   1.Õâ¸ö·¶ÀıÎÒÃÇÓ¦ÓÃDefaultListModelÀà£¬ÒòÖ÷DefaultListModelÀàÊµ×÷ÁËVectorÖĞµÄ·½·¨£¬Ê¹ÎÒÃÇÔÚ´¦Àí¶¯Ì¬µÄJListÏîÄ¿Öµ 
-     ±È½ÏÈİÒ×.
-   2.ÓÉÓÚÎÒÃÇÒª´¦ÀíÊó±êÊÂ¼ş£¬ÎªÁË±àĞ´·½±ã£¬ÔÚ³ÌĞòÖĞÎÒÃÇ¼Ì³ĞMouseAdapte³éÏóÀà.
-   3.ÔÚ³ÌĞòÖĞ£¬ÎÒÃÇ½¨Á¢Á½¸öDataModel£¬µÚÒ»¸öJList,Ò²¾ÍÊÇlist1Ò»¿ªÊ¼Ê±»á½«String Array sÖĞµÄËùÓĞÖµÒÀ´Î·ÅÈëlist1µÄÏî
-     Ä¿ÖĞ£¬¶ølist2Ò»¿ªÊ¼Îª¿Õ°×¡£
- *
- */
+
 public class Desion_Tree_SetAttr extends MouseAdapter implements ActionListener{
-	/**
-	 * ¾ö²ßÊ÷ÖĞÓÃÀ´ÉèÖÃ·ÖÀàÊôĞÔµÄframe
-	 */
 JList allattrlist=null; 
 JList classattrlist=null; 
 JList tarlist=null;
@@ -28,14 +14,14 @@ DefaultListModel mode1=null;
 DefaultListModel mode2=null;
 DefaultListModel mode3=null;
 
-JLabel var=new JLabel("±äÁ¿");
-//JLabel selvar=new JLabel("×Ô±äÁ¿");
-JLabel tarvar=new JLabel("Òò±äÁ¿");
+JLabel var=new JLabel("å…¨éƒ¨å±æ€§");
+//JLabel selvar=new JLabel("ï¿½Ô±ï¿½ï¿½ï¿½");
+JLabel tarvar=new JLabel("ç›®æ ‡å±æ€§");
 JPanel right=new JPanel();
-JButton tarBut=new JButton("ÉèÖÃÒò±äÁ¿");
-JButton selBut=new JButton("ÉèÖÃ×Ô±äÁ¿");
-JButton submit=new JButton("Ìá½»");
-JLabel blank=new JLabel();     //¿Õ°×±êÇ©£¬ÓÃÀ´²¼¾ÖÊ±½«Ìá½»°´Å¥·ÅÔÚ×îÓÒ±ß
+JButton tarBut=new JButton("ç§»åŠ¨å†³ç­–å±æ€§");
+JButton selBut=new JButton("ç§»åŠ¨ä¸€èˆ¬å±æ€§");
+JButton submit=new JButton("æäº¤");
+JLabel blank=new JLabel();     
 
 JScrollPane varpane=new JScrollPane();
 JScrollPane tarpane=new JScrollPane();
@@ -43,19 +29,19 @@ JScrollPane selpane=new JScrollPane();
 
 PublicData pd=new PublicData();
 /**
- * ¿ØÖÆÊÇ·ñ¿ÉÒÔ×óÓÒÒÆ¶¯
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
  */
 public static boolean leftFlag=false;
 public static boolean rightFlag=false;
 
-public int index=0;                    //Õû¸öÀà¹«ÓÃµÄ ´æ´¢µ±Ç°Ñ¡ÔñµÄlistÏîµÄË÷Òı
+public int index=0;                    //ï¿½ï¿½ï¿½ï¿½à¹«ï¿½Ãµï¿½ ï¿½æ´¢ï¿½ï¿½Ç°Ñ¡ï¿½ï¿½ï¿½listï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 String[] s = PublicData.getAttr();
-public static JFrame f=new JFrame("¾ö²ßÊ÷ÊôĞÔÉèÖÃ");                 //²»·ÅÔÚÍâÃæ£¬»áµ¼ÖÂµã»÷´°¿ÚÍË³öÊ±È«²¿ÍË³ö
+public static JFrame f=new JFrame("å†³ç­–æ ‘è®¾ç½®åˆ†ç±»å±æ€§åŠæ™®é€šå±æ€§");                 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½áµ¼ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½Ê±È«ï¿½ï¿½ï¿½Ë³ï¿½
 EveryStepGain  evegain=new EveryStepGain();
 public void creatUI(){
 	s = PublicData.getAttr();
-	Image icon = Toolkit.getDefaultToolkit().getImage("D:\\predata\\120.jpg");
+	Image icon = Toolkit.getDefaultToolkit().getImage("img/120.jpg");
 	f.setIconImage(icon);
     f.setLayout(new GridLayout(3,2));
 	submit.setLocation(650,350);
@@ -68,19 +54,19 @@ public void creatUI(){
 
 	mode1=new DataModel(1);
 	allattrlist=new JList(mode1);
-	allattrlist.setBorder(BorderFactory.createTitledBorder("µ±Ç°ËùÓĞÊôĞÔ"));
-	allattrlist.addMouseListener(this);//Ò»Óöµ½Êó±êÊÂ¼şÁ¢¼´Ö´ĞĞ.
+	allattrlist.setBorder(BorderFactory.createTitledBorder("å…¨éƒ¨å±æ€§"));
+	allattrlist.addMouseListener(this);//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½.
 
 	mode2=new DataModel(2);
 	classattrlist=new JList(mode2);
-	classattrlist.setBorder(BorderFactory.createTitledBorder("×÷Îª×Ô±äÁ¿µÄÊôĞÔ"));
-	classattrlist.addMouseListener(this);//Ò»Óöµ½Êó±êÊÂ¼şÁ¢¼´Ö´ĞĞ.
+	classattrlist.setBorder(BorderFactory.createTitledBorder("ä¸€èˆ¬å±æ€§"));
+	classattrlist.addMouseListener(this);//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½.
 
 	mode3=new DataModel(3);
 	tarlist=new JList(mode3);
-	tarlist.setVisibleRowCount(1);           //ÉèÖÃÆäÏÔÊ¾ĞĞÊı£¬Ö»ÏÔÊ¾Ò»ĞĞ
+	tarlist.setVisibleRowCount(1);           //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ê¾Ò»ï¿½ï¿½
 	tarlist.addMouseListener(this);
-	tarlist.setBorder(BorderFactory.createTitledBorder("×÷ÎªÒò±äÁ¿µÄÊôĞÔ"));
+	tarlist.setBorder(BorderFactory.createTitledBorder("å†³ç­–å±æ€§"));
 	
 	var.setBounds(420,120,20,15);
 	//var.setSize(20,15);
@@ -104,7 +90,7 @@ public void creatUI(){
     //selpane.setSize(60,200);
     
     varpane.setViewportView(allattrlist);
-   tarpane.setViewportView(tarlist);
+    tarpane.setViewportView(tarlist);
     selpane.setViewportView(classattrlist);
     
 	right.setLayout(new GridLayout(2,2));
@@ -125,7 +111,7 @@ public void creatUI(){
 	f.add(blank);
 	f.add(submit);
  
-	f.setBounds(400,100,300,400);
+	f.setBounds(400,100,500,500);
     f.setVisible(true);
     f.addWindowListener(new WindowAdapter(){
       public void windowClosing(WindowEvent e){
@@ -143,37 +129,37 @@ class DataModel extends DefaultListModel{
 @Override
 public void actionPerformed(ActionEvent e) {
 	String s=e.getActionCommand();
-	if(s.equals("ÉèÖÃÒò±äÁ¿")&&(tarlist.getModel().getSize()==0)&&rightFlag==true){            //ÏòÄ¿±ê±äÁ¿ListÖĞÌí¼Ó½áµã
+	if(s.equals("ç§»åŠ¨å†³ç­–å±æ€§")&&(tarlist.getModel().getSize()==0)&&rightFlag==true){            //ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Listï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½
 		String tmp=(String)mode1.getElementAt(index);
-	    System.out.println("Ìí¼ÓÒò±äÁ¿"); 
+	    System.out.println("ç§»åŠ¨å†³ç­–å±æ€§"); 
 		 mode3 .addElement(tmp);
 	     tarlist.setModel(mode3);
 	     mode1.removeElementAt(index);
 	     allattrlist.setModel(mode1);
 	}
-	else if(s.equals("ÉèÖÃÒò±äÁ¿")&&tarlist.getModel().getSize()>0&&leftFlag==true){   //´ÓÄ¿±ê±äÁ¿ListÖĞÒÆ³ı½áµã
+	else if(s.equals("ç§»åŠ¨å†³ç­–å±æ€§")&&tarlist.getModel().getSize()>0&&leftFlag==true){   //ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Listï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½
 		String tmp=(String)mode3.getElementAt(index);
-		System.out.println("ÒÆ³ıÒò±äÁ¿");
+		System.out.println("ç§»åŠ¨å†³ç­–å±æ€§");
 		mode1.addElement(tmp);
 		allattrlist.setModel(mode1);
 		mode3.removeElementAt(index);
 		tarlist.setModel(mode3);
 	}
-	else if(s.equals("ÉèÖÃ×Ô±äÁ¿")&&rightFlag==true){
+	else if(s.equals("ç§»åŠ¨ä¸€èˆ¬å±æ€§")&&rightFlag==true){
 		String tmp=(String)mode1.getElementAt(index);
 		mode2.addElement(tmp);
 		classattrlist.setModel(mode2);
 		mode1.removeElementAt(index);
 		allattrlist.setModel(mode1);
 	}
-	else if(s.equals("ÉèÖÃ×Ô±äÁ¿")&&leftFlag==true){
+	else if(s.equals("ç§»åŠ¨ä¸€èˆ¬å±æ€§")&&leftFlag==true){
 		String tmp=(String)mode2.getElementAt(index);
 		mode1.addElement(tmp);
 		allattrlist.setModel(mode1);
 		mode2.removeElementAt(index);
 		classattrlist.setModel(mode2);	
 	}
-	else if(s.equals("Ìá½»"))
+	else if(s.equals("æäº¤"))
 	{
 		String tmp=null;
 		//allattrlist.clearSelection();
@@ -201,12 +187,7 @@ public void actionPerformed(ActionEvent e) {
 	}
 }
 
-//´¦ÀíÊó±ê¼ü»÷ÊÂ¼ş.Èç¹û·ÅÔÚactionPerformedÇ°Ãæ»áµ¼ÖÂ
 public void mouseClicked(MouseEvent e){
-    /*¶Ôlist1¶øÑÔ£¬µ±Êó±êÔÚÄ³¸öÏîÄ¿Á¬Ğø°´Á½ÏÂÊ±£¬ÎÒÃÇÀûÓÃJListËùÌá¹©µÄlocationToIndex()·½·¨£¬ÕÒµ½Ëù¼ü»÷µÄÏîÄ¿£¬²¢
-     *ÓÉtmpÈ¡µÃ´ËÏîÄ¿µÄÏîÄ¿Öµ£¬È»ºó½«´ËÏîÄ¿ÖµÔö¼Óµ½mode2ÖĞ[mode2.addElement(tmp)],ÓÃsetModelÖØĞÂÉèÖÃlist2µÄ
-     *ListModel,Ê¹list2¿ÉÏÔÊ¾³öËùÔö¼ÓµÄÏîÄ¿£¬½«¸Õ¸ÕÔÚlist1Ë«»÷µÄÏîÄ¿É¾³ı.
-     */
 	if (e.getSource()==allattrlist){
     	rightFlag=true;
     	leftFlag=false;  	
@@ -214,7 +195,7 @@ public void mouseClicked(MouseEvent e){
       }
 	if (e.getSource()==classattrlist){
     	leftFlag=true;
-    	rightFlag=false;   //ÊÇÒ»¶Ô¿ª¹Ø  	
+    	rightFlag=false;   //ï¿½ï¿½Ò»ï¿½Ô¿ï¿½ï¿½ï¿½  	
        index=classattrlist.locationToIndex(e.getPoint());
       }
 	if(e.getSource()==tarlist){
