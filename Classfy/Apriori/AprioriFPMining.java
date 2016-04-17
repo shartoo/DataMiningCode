@@ -12,17 +12,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**Æµ·±Ä£Ê½ÍÚ¾òËã·¨AprioriÊµÏÖ
- * @author yangliu
- * @qq 772330184
- * @blog http://blog.csdn.net/yangliuy
- * @mail yang.liu@pku.edu.cn
+ /
  *
  */
 
 public class AprioriFPMining {
-	private int minSup;//×îĞ¡Ö§³Ö¶È
-	private static List<Set<String>> dataTrans;//ÒÔList<Set<String>>¸ñÊ½±£´æµÄÊÂÎïÊı¾İ¿â,ÀûÓÃSetµÄÓĞĞòĞÔ
+	private int minSup;//æœ€å°æ”¯æŒåº¦
+	private static List<Set<String>> dataTrans;//ä»¥List<Set<String>>æ ¼å¼ä¿å­˜çš„äº‹ç‰©æ•°æ®åº“,åˆ©ç”¨Setçš„æœ‰åºæ€§
 	
 	public int getMinSup() {
 		return minSup;
@@ -37,26 +33,26 @@ public class AprioriFPMining {
 	 */
 	 public static void main(String[] args) throws IOException { 
 		AprioriFPMining apriori = new AprioriFPMining();
-		double [] threshold = {0.25, 0.20, 0.15, 0.10, 0.05};   //ÖÃĞÅ¶È£¿  »¹ÊÇÖ§³Ö¶È
+		double [] threshold = {0.25, 0.20, 0.15, 0.10, 0.05};   //ç½®ä¿¡åº¦ï¼Ÿ  è¿˜æ˜¯æ”¯æŒåº¦
 		String srcFile = "D:/predata/mushroom.dat";
-		String shortFileName = srcFile.split("/")[2];      //¼´Mushroom.dat
+		String shortFileName = srcFile.split("/")[2];      //å³Mushroom.dat
         String targetFile = "D:/predata/" + shortFileName.substring(0, shortFileName.indexOf("."))+"_fp_threshold";
-        //ÔÚD:/predata/Ä¿Â¼ÏÂÎªÃ¿¸öÊı¾İÃ¿¸öÖ§³Ö¶È·Ö±ğ´æ´¢ÆäÏêÏ¸µÄÆµ·±Ïî
-        //substring(int beginIndex,int endIndex) ·µ»Ø Ò»¸öĞÂµÄ×Ö·û´®£¬ËüÊÇ´Ë×Ö·û»»µÄÒ»¸ö×Ó´®
+        //åœ¨D:/predata/ç›®å½•ä¸‹ä¸ºæ¯ä¸ªæ•°æ®æ¯ä¸ªæ”¯æŒåº¦åˆ†åˆ«å­˜å‚¨å…¶è¯¦ç»†çš„é¢‘ç¹é¡¹
+        //substring(int beginIndex,int endIndex) è¿”å› ä¸€ä¸ªæ–°çš„å­—ç¬¦ä¸²ï¼Œå®ƒæ˜¯æ­¤å­—ç¬¦æ¢çš„ä¸€ä¸ªå­ä¸²
 		dataTrans = apriori.readTrans(srcFile);
-		for(int k = 0; k < threshold.length; k++){               //¶Ô²»Í¬ÖÃĞÅ¶È·Ö±ğÖ´ĞĞ¸ÃËã·¨
+		for(int k = 0; k < threshold.length; k++){               //å¯¹ä¸åŒç½®ä¿¡åº¦åˆ†åˆ«æ‰§è¡Œè¯¥ç®—æ³•
 			System.out.println(srcFile + " threshold: " + threshold[k]);
 			long totalItem = 0;
 			long totalTime = 0;
 			FileWriter tgFileWriter = new FileWriter(targetFile + (threshold[k]*100));
 			apriori.setMinSup((int)(dataTrans.size() * threshold[k]));
-			//Æµ·±Ä£Ê½ËùÕ¼°ë·Ö±È*ÊÂÎñ×ÜÊı=Æµ·±Ä£Ê½×Ü¸öÊı
-			//Ô­Ê¼Ä¢¹½µÄÊı¾İ0.25Ö»ĞèÒª67ÃëÅÜ³ö½á¹û£¬±Èlwl¿ì15±¶
+			//é¢‘ç¹æ¨¡å¼æ‰€å åŠåˆ†æ¯”*äº‹åŠ¡æ€»æ•°=é¢‘ç¹æ¨¡å¼æ€»ä¸ªæ•°
+			//åŸå§‹è˜‘è‡çš„æ•°æ®0.25åªéœ€è¦67ç§’è·‘å‡ºç»“æœï¼Œæ¯”lwlå¿«15å€
 			long startTime = System.currentTimeMillis();
 			Map<String, Integer> f1Set = apriori.findFP1Items(dataTrans);
 			long endTime = System.currentTimeMillis();
 			totalTime += endTime - startTime;
-			//Æµ·±1Ïî¼¯ĞÅÏ¢µÃ¼ÓÈëÖ§³Ö¶È
+			//é¢‘ç¹1é¡¹é›†ä¿¡æ¯å¾—åŠ å…¥æ”¯æŒåº¦
 			Map<Set<String>, Integer> f1Map = new HashMap<Set<String>, Integer>();
 			for(Map.Entry<String, Integer> f1Item : f1Set.entrySet()){
 				Set<String> fs = new HashSet<String>();
@@ -74,15 +70,15 @@ public class AprioriFPMining {
 				totalItem += apriori.printMap(result, tgFileWriter);
 			} while(result.size() != 0);
 			tgFileWriter.close();
-			System.out.println("¹²ÓÃÊ±£º" + totalTime + "ms");
-			System.out.println("¹²ÓĞ" + totalItem + "ÏîÆµ·±Ä£Ê½");
+			System.out.println("å…±ç”¨æ—¶ï¼š" + totalTime + "ms");
+			System.out.println("å…±æœ‰" + totalItem + "é¡¹é¢‘ç¹æ¨¡å¼");
 		}
 	}
 
-	 /**ÓÉÆµ·±K-1Ïî¼¯Éú³ÉÆµ·±KÏî¼¯
-	 * @param preMap ±£´æÆµ·±KÏî¼¯µÄmap
-	 * @param tgFileWriter Êä³öÎÄ¼ş¾ä±ú
-	 * @return int Æµ·±iÏî¼¯µÄÊıÄ¿
+	 /**ç”±é¢‘ç¹K-1é¡¹é›†ç”Ÿæˆé¢‘ç¹Ké¡¹é›†
+	 * @param preMap ä¿å­˜é¢‘ç¹Ké¡¹é›†çš„map
+	 * @param tgFileWriter è¾“å‡ºæ–‡ä»¶å¥æŸ„
+	 * @return int é¢‘ç¹ié¡¹é›†çš„æ•°ç›®
 	 * @throws IOException 
 	 */
 	private Map<Set<String>, Integer> genNextKItem(Map<Set<String>, Integer> preMap) {
@@ -93,50 +89,50 @@ public class AprioriFPMining {
 		long endTime = 0;
 		long totalTime=0;
 			
-		//±éÀúÁ½¸ök-1Ïî¼¯Éú³ÉkÏî¼¯
-		List<Set<String>> preSetArray = new ArrayList<Set<String>>();   //ÓÃlistÔİ´æ´«Èë²ÎÊıMapÀàĞÍµÄkey£¨¼´Æµ·±Ä£Ê½£©
-		                    //Èç¹û²»ÊÇÀàĞÍ²»Ò»ÖÂ»òĞí¿ÉÒÔÖ±½ÓÊ¹ÓÃĞÎ²Î ÁË
+		//éå†ä¸¤ä¸ªk-1é¡¹é›†ç”Ÿæˆké¡¹é›†
+		List<Set<String>> preSetArray = new ArrayList<Set<String>>();   //ç”¨listæš‚å­˜ä¼ å…¥å‚æ•°Mapç±»å‹çš„keyï¼ˆå³é¢‘ç¹æ¨¡å¼ï¼‰
+		                    //å¦‚æœä¸æ˜¯ç±»å‹ä¸ä¸€è‡´æˆ–è®¸å¯ä»¥ç›´æ¥ä½¿ç”¨å½¢å‚ äº†
 		for(Map.Entry<Set<String>, Integer> preMapItem : preMap.entrySet()){
 			preSetArray.add(preMapItem.getKey());
 		}
 		int preSetLength = preSetArray.size();
-		/*************************************Á¬½Ó²½Öè********************/
+		/*************************************è¿æ¥æ­¥éª¤********************/
 		for (int i = 0; i < preSetLength - 1; i++) {                                 
 			for (int j = i + 1; j < preSetLength; j++) {
 				String[] strA1 = preSetArray.get(i).toArray(new String[0]);
 				String[] strA2 = preSetArray.get(j).toArray(new String[0]);
-				if (isCanLink(strA1, strA2)) { // ÅĞ¶ÏÁ½¸ök-1Ïî¼¯ÊÇ·ñ·ûºÏÁ¬½Ó³ÉkÏî¼¯µÄÌõ¼ş¡¡
-					Set<String> set = new TreeSet<String>();    //¹¹ÔìÒ»¸öĞÂµÄ¿Õ set£¬¸Ã set °´ÕÕÔªËØµÄ×ÔÈ»Ë³ĞòÅÅĞò
-					//×¢Òâ£ºTreeSet ÊµÀı½«Ê¹ÓÃÆä compareTo£¨»ò compare£©·½·¨Ö´ĞĞËùÓĞµÄ¼ü±È½Ï
+				if (isCanLink(strA1, strA2)) { // åˆ¤æ–­ä¸¤ä¸ªk-1é¡¹é›†æ˜¯å¦ç¬¦åˆè¿æ¥æˆké¡¹é›†çš„æ¡ä»¶ã€€
+					Set<String> set = new TreeSet<String>();    //æ„é€ ä¸€ä¸ªæ–°çš„ç©º setï¼Œè¯¥ set æŒ‰ç…§å…ƒç´ çš„è‡ªç„¶é¡ºåºæ’åº
+					//æ³¨æ„ï¼šTreeSet å®ä¾‹å°†ä½¿ç”¨å…¶ compareToï¼ˆæˆ– compareï¼‰æ–¹æ³•æ‰§è¡Œæ‰€æœ‰çš„é”®æ¯”è¾ƒ
 					for (String str : strA1) {
-						set.add(str);                  //ÏÈ¼ÓÈëA1µÄËùÓĞÔªËØ
+						set.add(str);                  //å…ˆåŠ å…¥A1çš„æ‰€æœ‰å…ƒç´ 
 					}
-					set.add((String) strA2[strA2.length - 1]); //ÔÙ¼ÓÈëÓëA1ÖĞÇ°k-1ÏîÏàÍ¬µ«×îºóÒ»Ïî²»Í¬µÄA2µÄ×îºóÒ»Ïî   Á¬½Ó³ÉkÏî¼¯
-					// ÅĞ¶ÏkÏî¼¯ÊÇ·ñĞèÒª¼ôÇĞµô£¬Èç¹û²»ĞèÒª±»cutµô£¬Ôò¼ÓÈëµ½kÏî¼¯ÁĞ±íÖĞ
-		/***********************************¼ôÖ¦²½Öè**********************************/
+					set.add((String) strA2[strA2.length - 1]); //å†åŠ å…¥ä¸A1ä¸­å‰k-1é¡¹ç›¸åŒä½†æœ€åä¸€é¡¹ä¸åŒçš„A2çš„æœ€åä¸€é¡¹   è¿æ¥æˆké¡¹é›†
+					// åˆ¤æ–­ké¡¹é›†æ˜¯å¦éœ€è¦å‰ªåˆ‡æ‰ï¼Œå¦‚æœä¸éœ€è¦è¢«cutæ‰ï¼Œåˆ™åŠ å…¥åˆ°ké¡¹é›†åˆ—è¡¨ä¸­
+		/***********************************å‰ªææ­¥éª¤**********************************/
 					startTime = System.currentTimeMillis();
-					if (!isNeedCut(preMap, set)) {//ÓÉÓÚµ¥µ÷ĞÔ£¬±ØĞë±£Ö¤kÏî¼¯µÄËùÓĞk-1Ïî×Ó¼¯¶¼ÔÚpreMapÖĞ³öÏÖ£¬·ñÔò¾Í¸Ã¼ôÇĞ¸ÃkÏî¼¯
+					if (!isNeedCut(preMap, set)) {//ç”±äºå•è°ƒæ€§ï¼Œå¿…é¡»ä¿è¯ké¡¹é›†çš„æ‰€æœ‰k-1é¡¹å­é›†éƒ½åœ¨preMapä¸­å‡ºç°ï¼Œå¦åˆ™å°±è¯¥å‰ªåˆ‡è¯¥ké¡¹é›†
 						result.put(set, 0);
 					}
 					endTime=System.currentTimeMillis();
 					totalTime+= endTime - startTime;
-					System.out.println("¼ì²âÊÇ·ñ¼õÈ¥²»ºÍÌõ¼şÄ£Ê½ºÄÊ±£º"+totalTime+"ms");          //ÓÃÀ´¼ÆËã¼õÖ¦²½ÖèºÄÊ±
+					System.out.println("æ£€æµ‹æ˜¯å¦å‡å»ä¸å’Œæ¡ä»¶æ¨¡å¼è€—æ—¶ï¼š"+totalTime+"ms");          //ç”¨æ¥è®¡ç®—å‡ææ­¥éª¤è€—æ—¶
 				}
 			}
 		}
-		return assertFP(result);//±éÀúÊÂÎïÊı¾İ¿â£¬ÇóÖ§³Ö¶È£¬È·±£ÎªÆµ·±Ïî¼¯
+		return assertFP(result);//éå†äº‹ç‰©æ•°æ®åº“ï¼Œæ±‚æ”¯æŒåº¦ï¼Œç¡®ä¿ä¸ºé¢‘ç¹é¡¹é›†
 	}
 	
-	/**¼ì²âkÏî¼¯ÊÇ·ñ¸Ã¼ôÇĞ¡£ÓÉÓÚµ¥µ÷ĞÔ£¬±ØĞë±£Ö¤kÏî¼¯µÄËùÓĞk-1Ïî×Ó¼¯¶¼ÔÚpreMapÖĞ³öÏÖ£¬·ñÔò¾Í¸Ã¼ôÇĞ¸ÃkÏî¼¯
-	 * @param preMap k-1ÏîÆµ·±¼¯map
-	 * @param set ´ı¼ì²âµÄkÏî¼¯
-	 * @return boolean ÊÇ·ñ¸Ã¼ôÇĞ
+	/**æ£€æµ‹ké¡¹é›†æ˜¯å¦è¯¥å‰ªåˆ‡ã€‚ç”±äºå•è°ƒæ€§ï¼Œå¿…é¡»ä¿è¯ké¡¹é›†çš„æ‰€æœ‰k-1é¡¹å­é›†éƒ½åœ¨preMapä¸­å‡ºç°ï¼Œå¦åˆ™å°±è¯¥å‰ªåˆ‡è¯¥ké¡¹é›†
+	 * @param preMap k-1é¡¹é¢‘ç¹é›†map
+	 * @param set å¾…æ£€æµ‹çš„ké¡¹é›†
+	 * @return boolean æ˜¯å¦è¯¥å‰ªåˆ‡
 	 * @throws IOException 
 	 */
 	private boolean isNeedCut(Map<Set<String>, Integer> preMap, Set<String> set) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		List<Set<String>> subSets = getSubSets(set);    //ÏÈ»ñÈ¡kÏî¼¯setµÄk-1×ÓÏî¼¯ºÏ
+		List<Set<String>> subSets = getSubSets(set);    //å…ˆè·å–ké¡¹é›†setçš„k-1å­é¡¹é›†åˆ
 		for(Set<String> subSet : subSets){
 			if(!preMap.containsKey(subSet)){
 				flag = true;
@@ -146,8 +142,8 @@ public class AprioriFPMining {
 		
 		return flag;
 	}
-/**ÎÒ×Ô¼ºĞ´µÄÅĞ¶ÏÊÇ·ñĞèÒª¼ôÇĞ²½Öè£¬Ë¼Â·ÊÇÉú³Ék-1Ïî¼¯AµÄËùÓĞÔªËØ¹¹³ÉµÄÈ«¼¯O£¬È»ºó°ÑÈ±Ê§µÄ²¿·Ö¼´O-AÉèÎªB
- * ÔÙÅĞ¶Ï£¬Èç¹ûKÏî¼¯°üº¬BÔò¼ôÇĞ¡£
+/**æˆ‘è‡ªå·±å†™çš„åˆ¤æ–­æ˜¯å¦éœ€è¦å‰ªåˆ‡æ­¥éª¤ï¼Œæ€è·¯æ˜¯ç”Ÿæˆk-1é¡¹é›†Açš„æ‰€æœ‰å…ƒç´ æ„æˆçš„å…¨é›†Oï¼Œç„¶åæŠŠç¼ºå¤±çš„éƒ¨åˆ†å³O-Aè®¾ä¸ºB
+ * å†åˆ¤æ–­ï¼Œå¦‚æœKé¡¹é›†åŒ…å«Båˆ™å‰ªåˆ‡ã€‚
  * */
 	
 	private boolean isMyNeedCut(Map<Set<String>, Integer> preMap, Set<String> set) {
@@ -171,29 +167,29 @@ public class AprioriFPMining {
 	
 	
 	
-	/**»ñÈ¡kÏî¼¯setµÄËùÓĞk-1Ïî×Ó¼¯
-	 * @param set Æµ·±kÏî¼¯
-	 * @return List<Set<String>> ËùÓĞk-1Ïî×Ó¼¯ÈİÆ÷
+	/**è·å–ké¡¹é›†setçš„æ‰€æœ‰k-1é¡¹å­é›†
+	 * @param set é¢‘ç¹ké¡¹é›†
+	 * @return List<Set<String>> æ‰€æœ‰k-1é¡¹å­é›†å®¹å™¨
 	 * @throws IOException 
 	 */
 	private List<Set<String>> getSubSets(Set<String> set) {
 		// TODO Auto-generated method stub
-		String[] setArray = set.toArray(new String[0]);    //set.toArray()  ·µ»ØÒ»¸ö°üº¬ set ÖĞËùÓĞÔªËØµÄÊı×é
+		String[] setArray = set.toArray(new String[0]);    //set.toArray()  è¿”å›ä¸€ä¸ªåŒ…å« set ä¸­æ‰€æœ‰å…ƒç´ çš„æ•°ç»„
 		List<Set<String>> result = new ArrayList<Set<String>>();
 		for(int i = 0; i < setArray.length; i++){
-			Set<String> subSet = new HashSet<String>();           //subsetÊÇsetÀàĞÍÈç£º{12,345,6,7}
+			Set<String> subSet = new HashSet<String>();           //subsetæ˜¯setç±»å‹å¦‚ï¼š{12,345,6,7}
 			for(int j = 0; j < setArray.length; j++){
-				if(j != i) subSet.add(setArray[j]);               //subsetÖĞÃ¿´Î¶¼»áÈ±Ê§Ò»¸ösetÖĞµÄÏî£¬Ö±µ½È«²¿ÂÖ»ØÒ»±é
+				if(j != i) subSet.add(setArray[j]);               //subsetä¸­æ¯æ¬¡éƒ½ä¼šç¼ºå¤±ä¸€ä¸ªsetä¸­çš„é¡¹ï¼Œç›´åˆ°å…¨éƒ¨è½®å›ä¸€é
 			}
-			result.add(subSet);                                    //resultÊÇlistÀàĞÍ£¬Ã¿´Î¼ÓÍêsubset£¬subsetÓÖÖØĞÂ³õÊ¼»¯
-			                                                   //Èç£º{{12,345,6,7},{234,5645,345,234},{.........}........}
+			result.add(subSet);                                    //resultæ˜¯listç±»å‹ï¼Œæ¯æ¬¡åŠ å®Œsubsetï¼Œsubsetåˆé‡æ–°åˆå§‹åŒ–
+			                                                   //å¦‚ï¼š{{12,345,6,7},{234,5645,345,234},{.........}........}
 		}
 		return result;
 	}
 
-	/**±éÀúÊÂÎïÊı¾İ¿â£¬ÇóÖ§³Ö¶È£¬È·±£ÎªÆµ·±Ïî¼¯
-	 * @param allKItem ºòÑ¡Æµ·±kÏî¼¯
-	 * @return Map<Set<String>, Integer> Ö§³Ö¶È´óÓÚãĞÖµµÄÆµ·±Ïî¼¯ºÍÖ§³Ö¶Èmap
+	/**éå†äº‹ç‰©æ•°æ®åº“ï¼Œæ±‚æ”¯æŒåº¦ï¼Œç¡®ä¿ä¸ºé¢‘ç¹é¡¹é›†
+	 * @param allKItem å€™é€‰é¢‘ç¹ké¡¹é›†
+	 * @return Map<Set<String>, Integer> æ”¯æŒåº¦å¤§äºé˜ˆå€¼çš„é¢‘ç¹é¡¹é›†å’Œæ”¯æŒåº¦map
 	 * @throws IOException 
 	 */
 	private Map<Set<String>, Integer> assertFP(
@@ -218,10 +214,10 @@ public class AprioriFPMining {
 		return result;
 	}
 
-	/**¼ì²âÁ½¸öÆµ·±KÏî¼¯ÊÇ·ñ¿ÉÒÔÁ¬½Ó£¬Á¬½ÓÌõ¼şÊÇÖ»ÓĞ×îºóÒ»¸öÏî²»Í¬
-	 * @param strA1 kÏî¼¯1
-	 * @param strA1 kÏî¼¯2
-	 * @return boolean ÊÇ·ñ¿ÉÒÔÁ¬½Ó
+	/**æ£€æµ‹ä¸¤ä¸ªé¢‘ç¹Ké¡¹é›†æ˜¯å¦å¯ä»¥è¿æ¥ï¼Œè¿æ¥æ¡ä»¶æ˜¯åªæœ‰æœ€åä¸€ä¸ªé¡¹ä¸åŒ
+	 * @param strA1 ké¡¹é›†1
+	 * @param strA1 ké¡¹é›†2
+	 * @return boolean æ˜¯å¦å¯ä»¥è¿æ¥
 	 * @throws IOException 
 	 */
 	private boolean isCanLink(String[] strA1, String[] strA2) {
@@ -230,23 +226,23 @@ public class AprioriFPMining {
 		if(strA1.length != strA2.length){
 			return false;
 		}else {
-			for(int i = 0; i < strA1.length - 1; i++){               //Ç°k-1Ïî±ØĞëÏàµÈ
+			for(int i = 0; i < strA1.length - 1; i++){               //å‰k-1é¡¹å¿…é¡»ç›¸ç­‰
 				if(!strA1[i].equals(strA2[i])){
 					flag = false;
 					break;
 				}
 			}
-			if(strA1[strA1.length -1].equals(strA2[strA1.length -1])){   //×îºóÒ»ÏîÈ´²»ÄÜÏàµÈ
+			if(strA1[strA1.length -1].equals(strA2[strA1.length -1])){   //æœ€åä¸€é¡¹å´ä¸èƒ½ç›¸ç­‰
 				flag = false;
 			}
 		}
 		return flag;
 	}
 
-	/**½«Æµ·±iÏî¼¯µÄÄÚÈİ¼°Ö§³Ö¶ÈÊä³öµ½ÎÄ¼ş ¸ñÊ½Îª Ä£Ê½:Ö§³Ö¶È
-	 * @param f1Map ±£´æÆµ·±iÏî¼¯µÄÈİÆ÷<iÏî¼¯ , Ö§³Ö¶È>
-	 * @param tgFileWriter Êä³öÎÄ¼ş¾ä±ú
-	 * @return int Æµ·±iÏî¼¯µÄÊıÄ¿
+	/**å°†é¢‘ç¹ié¡¹é›†çš„å†…å®¹åŠæ”¯æŒåº¦è¾“å‡ºåˆ°æ–‡ä»¶ æ ¼å¼ä¸º æ¨¡å¼:æ”¯æŒåº¦
+	 * @param f1Map ä¿å­˜é¢‘ç¹ié¡¹é›†çš„å®¹å™¨<ié¡¹é›† , æ”¯æŒåº¦>
+	 * @param tgFileWriter è¾“å‡ºæ–‡ä»¶å¥æŸ„
+	 * @return int é¢‘ç¹ié¡¹é›†çš„æ•°ç›®
 	 * @throws IOException 
 	 */
 	private int printMap(Map<Set<String>, Integer> f1Map, FileWriter tgFileWriter) throws IOException {
@@ -260,19 +256,19 @@ public class AprioriFPMining {
 		tgFileWriter.flush();
 		return f1Map.size();
 	}	
-	/**Éú³ÉÆµ·±1Ïî¼¯
-	 * @param fileDir ÊÂÎñÎÄ¼şÄ¿Â¼
-	 * @return Map<String, Integer> ±£´æÆµ·±1Ïî¼¯µÄÈİÆ÷<1Ïî¼¯ , Ö§³Ö¶È>
+	/**ç”Ÿæˆé¢‘ç¹1é¡¹é›†
+	 * @param fileDir äº‹åŠ¡æ–‡ä»¶ç›®å½•
+	 * @return Map<String, Integer> ä¿å­˜é¢‘ç¹1é¡¹é›†çš„å®¹å™¨<1é¡¹é›† , æ”¯æŒåº¦>
 	 * @throws IOException 
 	 */
 	private Map<String, Integer> findFP1Items(List<Set<String>> dataTrans) {
 		// TODO Auto-generated method stub
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		Map<String, Integer> itemCount = new HashMap<String, Integer>(); //´æ´¢ÊÂÎñµÄÏî£¬Èç{I1,I2,I3}ÖĞÒ»Ïî¼¯I1µÄ¸öÊı
+		Map<String, Integer> itemCount = new HashMap<String, Integer>(); //å­˜å‚¨äº‹åŠ¡çš„é¡¹ï¼Œå¦‚{I1,I2,I3}ä¸­ä¸€é¡¹é›†I1çš„ä¸ªæ•°
 		for(Set<String> ds : dataTrans){
 			for(String d : ds){
 				if(itemCount.containsKey(d)){
-					itemCount.put(d, itemCount.get(d) + 1); //Èç¹û´æ´¢¼¯ÖĞÒÑ¾­°üº¬¸ÃÏî£¬¾Í+1
+					itemCount.put(d, itemCount.get(d) + 1); //å¦‚æœå­˜å‚¨é›†ä¸­å·²ç»åŒ…å«è¯¥é¡¹ï¼Œå°±+1
 				} else {
 					itemCount.put(d, 1);
 				}
@@ -280,20 +276,20 @@ public class AprioriFPMining {
 		}
 		
 		for(Map.Entry<String, Integer> ic : itemCount.entrySet()){   
-			//Ó³ÉäÏî£¨¼ü-Öµ¶Ô£©¡£Map.entrySet ·½·¨·µ»ØÓ³ÉäµÄ collection ÊÓÍ¼£¬ÆäÖĞµÄÔªËØÊôÓÚ´ËÀà¡£
-			//»ñµÃÓ³ÉäÏîÒıÓÃµÄÎ©Ò» ·½·¨ÊÇÍ¨¹ı´Ë collection ÊÓÍ¼µÄµü´úÆ÷À´ÊµÏÖ
-			// entrySet()·µ»Ø´ËÓ³ÉäÖĞ°üº¬µÄÓ³Éä¹ØÏµµÄ set ÊÓÍ¼¡£
-			//·µ»ØµÄ set ÖĞµÄÃ¿¸öÔªËØ¶¼ÊÇÒ»¸ö Map.Entry¡£¸Ã set ÊÜÓ³ÉäÖ§³Ö£¬ËùÒÔ¶ÔÓ³ÉäµÄ¸Ä±ä¿ÉÔÚ´Ë set ÖĞ·´Ó³³öÀ´£¬·´Ö®ÒàÈ»¡£
+			//æ˜ å°„é¡¹ï¼ˆé”®-å€¼å¯¹ï¼‰ã€‚Map.entrySet æ–¹æ³•è¿”å›æ˜ å°„çš„ collection è§†å›¾ï¼Œå…¶ä¸­çš„å…ƒç´ å±äºæ­¤ç±»ã€‚
+			//è·å¾—æ˜ å°„é¡¹å¼•ç”¨çš„æƒŸä¸€ æ–¹æ³•æ˜¯é€šè¿‡æ­¤ collection è§†å›¾çš„è¿­ä»£å™¨æ¥å®ç°
+			// entrySet()è¿”å›æ­¤æ˜ å°„ä¸­åŒ…å«çš„æ˜ å°„å…³ç³»çš„ set è§†å›¾ã€‚
+			//è¿”å›çš„ set ä¸­çš„æ¯ä¸ªå…ƒç´ éƒ½æ˜¯ä¸€ä¸ª Map.Entryã€‚è¯¥ set å—æ˜ å°„æ”¯æŒï¼Œæ‰€ä»¥å¯¹æ˜ å°„çš„æ”¹å˜å¯åœ¨æ­¤ set ä¸­åæ˜ å‡ºæ¥ï¼Œåä¹‹äº¦ç„¶ã€‚
 			if(ic.getValue() >= minSup){
-				result.put(ic.getKey(), ic.getValue());  //½«Âú×ã·§ÖµµÃÏî·ÅÈë½á¹û¼¯ºÏ
+				result.put(ic.getKey(), ic.getValue());  //å°†æ»¡è¶³é˜€å€¼å¾—é¡¹æ”¾å…¥ç»“æœé›†åˆ
 			}
 		}
 		return result;
 	}
 
-	/**¶ÁÈ¡ÊÂÎñÊı¾İ¿â
-	 * @param fileDir ÊÂÎñÎÄ¼şÄ¿Â¼
-	 * @return List<String> ±£´æÊÂÎñµÄÈİÆ÷
+	/**è¯»å–äº‹åŠ¡æ•°æ®åº“
+	 * @param fileDir äº‹åŠ¡æ–‡ä»¶ç›®å½•
+	 * @return List<String> ä¿å­˜äº‹åŠ¡çš„å®¹å™¨
 	 * @throws IOException 
 	 */
 	private List<Set<String>> readTrans(String fileDir) {
@@ -315,7 +311,7 @@ public class AprioriFPMining {
                 } 
             } 
         } catch (IOException e) { 
-            System.out.println("¶ÁÈ¡ÊÂÎñÎÄ¼şÊ§°Ü¡£"); 
+            System.out.println("è¯»å–äº‹åŠ¡æ–‡ä»¶å¤±è´¥ã€‚"); 
             System.exit(-2); 
         } 
         return records; 
